@@ -2,9 +2,13 @@ import os
 import sqlite3
 
 class DatabaseManager:
-    def __init__(self, db_file="../database/database.db", schema_file="../config/schema.sql"):
-        self.db_file = db_file
-        self.schema_file = schema_file
+    def __init__(self, db_file=None, schema_file=None):
+        # Get the directory of this script file
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+        # Set default paths relative to the base directory
+        self.db_file = db_file or os.path.join(base_dir, "database", "database.db")
+        self.schema_file = schema_file or os.path.join(base_dir, "config", "schema.sql")
         self.conn = None
         self.connect()
 

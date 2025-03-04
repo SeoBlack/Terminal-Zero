@@ -29,7 +29,6 @@ class Game:
         #create object for each airport to give us access to each of them
         #TODO: create a random resources distribution
         db_airports = self.db_manager.get_all_airports()
-        print(db_airports)
         for airport in db_airports:
             self.airports.append(Airport(airport[0], airport[1], airport[2], airport[3], airport[4]))
 
