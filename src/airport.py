@@ -1,3 +1,5 @@
+import random
+
 class Airport:
     def __init__(self, name, resources=None, danger_level=0):
         """Initialize an airport with resources and danger level."""
@@ -12,3 +14,8 @@ class Airport:
             print("You found:", self.resources)
         else:
             print("Nothing useful here.")
+
+    def get_random_airport(self, airports):
+        random_airport = random.choice(airports)
+        return random_airport
+
