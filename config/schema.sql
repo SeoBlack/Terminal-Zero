@@ -23,11 +23,11 @@ CREATE TABLE players (
 );
 -- Inventory Table
 CREATE TABLE inventory (
-    inventory_id SERIAL PRIMARY KEY,
+    inventory_id INTEGER PRIMARY KEY AUTOINCREMENT,
     player_id INT NOT NULL,
     item_name VARCHAR(255) NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
-    FOREIGN KEY (player_id) REFERENCES players(player_id)
+    FOREIGN KEY (player_id) REFERENCES players(id)
 );
 
 -- Insert sample data into the country table
