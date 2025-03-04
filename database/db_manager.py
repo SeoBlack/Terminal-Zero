@@ -45,7 +45,10 @@ class DatabaseManager:
         """Execute a SQL query and return the result."""
         self.cursor.execute(query, params)
         self.conn.commit()
-        return self.cursor.fetchall()
+        # Only fetch results for SELECT queries
+        if query.strip().upper().startswith("SELECT"):
+            return self.cursor.fetchall()
+        return None
 
     def get_all_airports(self):
         query = "SELECT * FROM airports"
