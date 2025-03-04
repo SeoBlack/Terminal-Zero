@@ -7,8 +7,8 @@ class Airport:
         self.name = name
         self.resources = resources or {}
         self.danger_level = danger_level
-        self.lat = lat,
-        self.lng = lng,
+        self.lat = lat
+        self.lng = lng
         self.iso_country = iso_country #need this to get the country from country table
         self.is_explored = False
 
