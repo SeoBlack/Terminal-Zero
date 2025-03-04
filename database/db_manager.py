@@ -24,11 +24,16 @@ class DatabaseManager:
     def initialize_database(self):
         """Initialize the database with schema.sql if it's a new database."""
         if os.path.exists(self.schema_file):
-            with open(self.schema_file, "r") as f:
-                schema = f.read()
-                self.cursor.executescript(schema)
-                self.conn.commit()
-                print("Database initialized with schema.")
+            try:
+                with open(self.schema_file, "r") as f:
+                    schema = f.read()
+                    self.cursor.executescript(schema)
+                    self.conn.commit()
+                    print("Database initialized with schema.")
+            except sqlite3.Error as e:
+                print(f"Database initialization error: {e}")
+            except IOError as e:
+                print(f"Error reading schema file: {e}")
         else:
             print("Schema file not found. Database is empty.")
 
