@@ -5,6 +5,7 @@ class Player:
         self.health = 100
         self.fuel = 50
         self.inventory = []
+        self.location = None
 
     def move(self):
         """Move the player to a different airport."""
