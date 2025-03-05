@@ -3,7 +3,7 @@ import random
 from database.db_manager import DatabaseManager
 from player import Player
 from airport import Airport
-from src.Helpers import get_random_airport
+from src.Helpers import get_random_airport, inventory_items
 from ui import display_intro, display_menu
 
 class Game:
@@ -20,6 +20,8 @@ class Game:
         self.initiate_game()
         while not self.game_over:
             print("You are now at ", self.player.location.name)
+            for airport in self.airports:
+                print("Airport: ", airport.name, airport.resources)
             display_menu()
             action = input("Choose an action: ").strip().lower()
             self.handle_action(action)
@@ -29,8 +31,21 @@ class Game:
         #create object for each airport to give us access to each of them
         #TODO: create a random resources distribution
         db_airports = self.db_manager.get_all_airports()
+
         for airport in db_airports:
-            self.airports.append(Airport(airport[0], airport[1], airport[2], airport[3], airport[4]))
+
+            # TODO: create a random resource list
+            random_resources = random.choices(inventory_items, k=2)
+            resources_with_values = []
+            for resource in random_resources:
+                max_random_value = 0
+                if resource == 'weapon':
+                    max_random_value = 5
+                else:
+                    max_random_value = 50
+                resources_with_values.append({resource:random.randint(1,max_random_value)})
+
+            self.airports.append(Airport(airport[0], airport[1], airport[2], airport[3], airport[4], resources_with_values))
 
 
     def initiate_game(self):
