@@ -10,7 +10,7 @@ def slow_print(text,color=Fore.RED,delay=0.02):
     """Prints text with a slight delay for dramatic effect."""
     for char in text:
         print(color + char + Style.RESET_ALL, end="")
-        time.sleep(delay)
+        # time.sleep(delay)
     # Newline at the end
     print()
 
