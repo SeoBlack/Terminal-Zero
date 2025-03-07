@@ -14,7 +14,3 @@ class Player:
         """Move the player to a different airport."""
         self.player.location = airport
         print("You moved to a new location.")
-
-    def show_inventory(self):
-        """Display player's inventory."""
-        print("Inventory:", self.inventory)

@@ -34,18 +34,7 @@ class Game:
 
         for airport in db_airports:
 
-            # TODO: create a random resource list
-            random_resources = random.choices(inventory_items, k=2)
-            resources_with_values = []
-            for resource in random_resources:
-                max_random_value = 0
-                if resource == 'weapon':
-                    max_random_value = 5
-                else:
-                    max_random_value = 50
-                resources_with_values.append({resource:random.randint(1,max_random_value)})
-
-            self.airports.append(Airport(airport[0], airport[1], airport[2], airport[3], airport[4], resources_with_values))
+            self.airports.append(Airport(airport[0], airport[1], airport[2], airport[3], airport[4]))
 
 
     def initiate_game(self):
