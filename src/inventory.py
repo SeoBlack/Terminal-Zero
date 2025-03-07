@@ -1,3 +1,6 @@
+from src.ui import display_inventory
+
+
 class Inventory:
     def __init__(self):
         """Initialize an empty inventory."""
@@ -12,7 +15,7 @@ class Inventory:
 
     def show_inventory(self):
         """Display inventory contents."""
-        print("Inventory:", self.items)
+        display_inventory(self.items)
 
     def use_item(self, item):
         """Use an item from inventory."""

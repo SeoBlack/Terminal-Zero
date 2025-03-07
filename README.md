@@ -14,6 +14,10 @@ Terminal Zero is a **text-based survival game** where players navigate through a
 ### Prerequisites
 - Python 3.x
 - SQLite3 (for database management)
+### [!] NOTE
+if you are using Pycharm, make sure to enable terminal emulator to activate the colored output:
+- 1. ![img.png](img.png)
+- 2. ![img_1.png](img_1.png)
 
 ### Installation Steps
 1. **Clone the repository:**
