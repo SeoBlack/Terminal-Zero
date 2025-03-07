@@ -11,7 +11,7 @@ def slow_print(text, style="bold red", delay=0.02):
     """Prints text with a slight delay while preserving rich styling."""
     for char in text:
         console.print(f"[{style}]{char}[/]", end="", highlight=False)
-        time.sleep(delay)
+        # time.sleep(delay)
     console.print()  # Newline at the end
 
 def display_ascii_art():
@@ -31,35 +31,35 @@ def display_ascii_art():
                                       ╚══════╝╚══════╝╚═╝   ╚═╝ ╚═════╝
 [/]"""
     console.print(Panel(art, title="[bold red]TERMINAL ZERO[/]", border_style="red", expand=False))
-    time.sleep(1)
+    # time.sleep(1)
 
 def display_intro():
     """Displays the game intro with dramatic effect."""
     display_ascii_art()
 
     slow_print("[!] The world as you knew it... is gone.", "bold red")
-    time.sleep(1)
+    # time.sleep(1)
 
     slow_print("[!] A deadly virus has swept across the planet, turning people into flesh-eating monsters.", "bold yellow")
     slow_print("[!] The last safe places are fortified airports, where the infected are kept at bay.", "bold cyan")
 
-    time.sleep(1)
+    # time.sleep(1)
 
     slow_print("[!] You are one of the last survivors.", "bold white")
     slow_print("[!] Your only hope is to travel between airports, scavenging for supplies and staying alive.", "bold green")
 
-    time.sleep(1)
+    # time.sleep(1)
 
     slow_print("[!] But time is running out...", "bold red")
     slow_print("[!] Zombies are everywhere. Supplies are scarce.", "bold yellow")
     slow_print("[!] And not all survivors can be trusted.", "bold magenta")
 
-    time.sleep(1.5)
+    # time.sleep(1.5)
 
     slow_print("[!] Will you make it to the final sanctuary, or will you become one of the infected?", "bold cyan")
 
     console.print("\n[bold green]Welcome to TERMINAL ZERO.[/]")
-    time.sleep(2)
+    # time.sleep(2)
 
 def display_status(player):
     """Displays the player's current status in a clean, structured format."""
@@ -76,16 +76,15 @@ def display_status(player):
 def display_inventory(inventory):
     """Displays the player's inventory in a clean, structured table format."""
     if not inventory:
-        console.print(Panel("[bold red]Empty Inventory[/]", title="🎒 Inventory", border_style="red"))
+        console.print(Panel("[bold red]Empty Inventory[/]", title="🎒 Inventory", border_style="red", expand=False))
         return
 
     table = Table(title="🎒 Inventory", style="bold green")
     table.add_column("Item", style="bold white", justify="left")
     table.add_column("Quantity", style="bold yellow", justify="center")
 
-    for item in inventory:
-        for item_name, quantity in item.items():
-            table.add_row(item_name, f"[bold yellow]{quantity}[/]")
+    for item_name, quantity in inventory.items.items():
+        table.add_row(item_name, f"[bold yellow]{quantity}[/]")
 
     console.print(table)
 
@@ -99,6 +98,8 @@ def display_menu(actions):
             console.print(f"[bold cyan][{i}] Move to another location ✈️  (move)[/]")
         elif option == "inventory":
             console.print(f"[bold yellow][{i}] Check inventory 🎒  (inventory)[/]")
+        elif option == "status":
+            console.print(f"[bold white][{i}] Check Current Status 🎒  (status)[/]")
         elif option == "quit":
             console.print(f"[bold red][{i}] Quit ❌  (quit)[/]")
 
@@ -116,3 +117,12 @@ def animate_travel(destination):
     console.print(Panel("[bold white]You are at a new airport. What would you like to do?[/]", title="📍 Arrival",
                         border_style="cyan", expand=False))
 
+def display_error_message(message):
+    console.print(Panel(f"[bold red][⛔] {message}[/]",
+                        border_style="red", expand=False))
+def display_success_message(message):
+    console.print(Panel(f"[bold green][✅] {message}[/]",
+                        border_style="green", expand=False))
+def display_warning_message(message):
+    console.print(Panel(f"[bold yellow][⚠️] {message}[/]",
+                        border_style="yellow", expand=False))
