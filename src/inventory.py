@@ -12,13 +12,10 @@ class Inventory:
 
     def add_item(self, item, quantity=1):
         """Add an item to the inventory."""
-        print("adding",item, quantity)
         if item in self.items:
             self.items[item] += quantity
         else:
             self.items[item] = quantity
-        print(self.items)
-
     def show_inventory(self):
         """Display inventory contents."""
         display_inventory(self.items)

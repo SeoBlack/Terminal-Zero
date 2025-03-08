@@ -11,7 +11,6 @@ def get_random_airport(airports):
 # resurssit
 event_types = [
     "fuel",
-    "tools",
     "food",
     "weapon",
     "water",
@@ -37,6 +36,7 @@ max_values = {
     "tools": 1,
     "clothing": 12,
     "damage": -10,
+    "huge_damage": -20,
 }
 
 events_with_texts = [
@@ -45,6 +45,9 @@ events_with_texts = [
     },
     {
         "damage":"You were attacked by zombies!"
+    },
+    {
+        "huge_damage": "You were attacked by juggernaut "
     },
 
     {
