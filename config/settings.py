@@ -2,7 +2,8 @@
 SETTINGS = {
     "max_danger_level":3,
     "max_inventory_size": 10,
-    "zombie_spawn_rate": 0.2,
-    "fuel_usage_per_flight": 10,
-    "max_health":100
+    "fuel_usage_per_km": 10,
+    "max_health":100,
+    'max_fuel':500,
+    'max_distance_km': 600,
 }

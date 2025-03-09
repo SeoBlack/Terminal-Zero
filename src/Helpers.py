@@ -60,5 +60,5 @@ events_with_texts = [
     },
     {
         "weapon":"You found weapons!"
-    }
+    },
 ]
