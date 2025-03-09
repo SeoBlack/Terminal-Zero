@@ -16,7 +16,8 @@ event_types = [
     "water",
     "tools",
     "clothing",
-    "damage"
+    "damage",
+    "huge_damage"
 ]
 
 storable_items = [
