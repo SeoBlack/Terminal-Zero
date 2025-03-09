@@ -6,7 +6,7 @@ from src.events import Event
 
 
 class Airport:
-    def __init__(self, ident, name, lat, lng, iso_country, events = None, danger_level=1):
+    def __init__(self, ident, name, lat, lng, country, events = None, danger_level=1):
         """Initialize an airport with resources and danger level."""
         self.ident = ident
         self.name = name
@@ -14,7 +14,7 @@ class Airport:
         self.danger_level = danger_level or random.randint(1, SETTINGS.get("max_danger_level"))
         self.lat = lat
         self.lng = lng
-        self.iso_country = iso_country
+        self.country = country
         self.generate_events()
 
     def generate_events(self):

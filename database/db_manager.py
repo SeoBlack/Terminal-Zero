@@ -53,6 +53,12 @@ class DatabaseManager:
     def get_all_airports(self):
         query = "SELECT * FROM airports"
         return self.execute_query(query)
+    def get_country_by_code(self, code):
+        query = "Select name from country where iso_country = ?"
+        result = self.execute_query(query, (code,))
+        if result and len(result) > 0:
+            return result[0][0]
+        return "Unknown"  # or raise a specific exception
 
     def close(self):
         """Close the database connection."""

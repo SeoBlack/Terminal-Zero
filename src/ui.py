@@ -3,7 +3,6 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
-
 # Initialize Rich console
 console = Console()
 
@@ -37,26 +36,26 @@ def display_intro():
     """Displays the game intro with dramatic effect."""
     display_ascii_art()
 
-    slow_print("[!] The world as you knew it... is gone.", "bold red")
+    slow_print("[⚠️] The world as you knew it... is gone.", "bold red")
     # time.sleep(1)
 
-    slow_print("[!] A deadly virus has swept across the planet, turning people into flesh-eating monsters.", "bold yellow")
-    slow_print("[!] The last safe places are fortified airports, where the infected are kept at bay.", "bold cyan")
-
-    # time.sleep(1)
-
-    slow_print("[!] You are one of the last survivors.", "bold white")
-    slow_print("[!] Your only hope is to travel between airports, scavenging for supplies and staying alive.", "bold green")
+    slow_print("[⚠️] A deadly virus has swept across the planet, turning people into flesh-eating monsters.", "bold yellow")
+    slow_print("[⚠️] The last safe places are fortified airports, where the infected are kept at bay.", "bold cyan")
 
     # time.sleep(1)
 
-    slow_print("[!] But time is running out...", "bold red")
-    slow_print("[!] Zombies are everywhere. Supplies are scarce.", "bold yellow")
-    slow_print("[!] And not all survivors can be trusted.", "bold magenta")
+    slow_print("[⚠️] You are one of the last survivors.", "bold white")
+    slow_print("[⚠️] Your only hope is to travel between airports, scavenging for supplies and staying alive.", "bold green")
+
+    # time.sleep(1)
+
+    slow_print("[⚠️] But time is running out...", "bold red")
+    slow_print("[⚠️] Zombies are everywhere. Supplies are scarce.", "bold yellow")
+    slow_print("[⚠️] And not all survivors can be trusted.", "bold magenta")
 
     # time.sleep(1.5)
 
-    slow_print("[!] Will you make it to the final sanctuary, or will you become one of the infected?", "bold cyan")
+    slow_print("[⚠️] Will you make it to the final sanctuary, or will you become one of the infected?", "bold cyan")
 
     console.print("\n[bold green]Welcome to TERMINAL ZERO.[/]")
     # time.sleep(2)
@@ -70,6 +69,8 @@ def display_status(player):
     table.add_row("🩸 Health", f"[bold red]{player.health}/100[/]")
     table.add_row("⛽ Fuel", f"[bold yellow]{player.fuel} L[/]")
     table.add_row("📍 Location", f"[bold blue]{player.location.name}[/]")
+    table.add_row("🌐 Country",f"[bold green]{player.location.country}[/]")
+    table.add_row("🎒 Inventory", f"[bold yellow]{sum(player.inventory.items.values())} items[/]")
 
     console.print(table)
 
@@ -99,7 +100,7 @@ def display_menu(actions):
         elif option == "inventory":
             console.print(f"[bold yellow][{i}] Check inventory 🎒  (inventory)[/]")
         elif option == "status":
-            console.print(f"[bold white][{i}] Check Current Status 🎒  (status)[/]")
+            console.print(f"[bold white][{i}] Check Current Status 📈  (status)[/]")
         elif option == "quit":
             console.print(f"[bold red][{i}] Quit ❌  (quit)[/]")
 
