@@ -1,5 +1,7 @@
 import random
 
+from geopy import distance
+
 from config.settings import SETTINGS
 from src.Helpers import max_values, events_with_texts  # Tuodaan molemmat
 from src.events import Event
@@ -29,8 +31,9 @@ class Airport:
                 }
                 self.events.append(Event(description, effect))
 
-
-
+    def calculate_distance(self, destination):
+        result = distance.distance((self.lat, self.lng), (destination.lat, destination.lng)).km
+        return round(result, 2)
 
 
 

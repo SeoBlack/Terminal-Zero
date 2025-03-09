@@ -31,6 +31,15 @@ def display_ascii_art():
 [/]"""
     console.print(Panel(art, title="[bold red]TERMINAL ZERO[/]", border_style="red", expand=False))
     # time.sleep(1)
+    table = Table( style="cyan")
+    table.add_column("authors", style="bold white", justify="center")
+
+    table.add_row(f"[bold red]Soreen Oraibi[/]")
+    table.add_row(f"[bold yellow]Nikita Soo[/]")
+    table.add_row(f"[bold blue]Isla Mannerheimo[/]")
+    table.add_row(f"[bold white]Alabass Alkhrsany[/]")
+    console.print(table)
+
 
 def display_intro():
     """Displays the game intro with dramatic effect."""
@@ -67,7 +76,7 @@ def display_status(player):
     table.add_column("Value", style="bold yellow", justify="center")
 
     table.add_row("🩸 Health", f"[bold red]{player.health}/100[/]")
-    table.add_row("⛽ Fuel", f"[bold yellow]{player.fuel} L[/]")
+    table.add_row("⛽  Fuel", f"[bold yellow]{player.fuel} L[/]")
     table.add_row("📍 Location", f"[bold blue]{player.location.name}[/]")
     table.add_row("🌐 Country",f"[bold green]{player.location.country}[/]")
     table.add_row("🎒 Inventory", f"[bold yellow]{sum(player.inventory.items.values())} items[/]")
@@ -105,7 +114,7 @@ def display_menu(actions):
             console.print(f"[bold red][{i}] Quit ❌  (quit)[/]")
 
 
-def animate_travel(destination):
+def animate_travel(destination, distance , fuel):
     """Displays an animated transition when moving to a new location."""
     console.print("\n[bold cyan]✈️ Preparing for departure...[/]")
     time.sleep(1)
@@ -114,6 +123,9 @@ def animate_travel(destination):
     console.print(f"[bold blue]🌍 Flying to {destination}...[/]")
     time.sleep(2)
     console.print(f"[bold green]🛬 You have arrived at {destination}![/]")
+    time.sleep(1)
+    console.print(f"[bold yellow]⛽  Fuel used {fuel}L![/]")
+    console.print(f"[bold yellow]📈 Traveled distance {distance}km![/]")
     time.sleep(1)
     console.print(Panel("[bold white]You are at a new airport. What would you like to do?[/]", title="📍 Arrival",
                         border_style="cyan", expand=False))
