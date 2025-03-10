@@ -12,12 +12,12 @@ class Inventory:
 
     def add_item(self, item, quantity=1):
         """Add an item to the inventory."""
-        print("adding",item, quantity)
+        #print("adding",item, quantity)
         if item in self.items:
             self.items[item] += quantity
         else:
             self.items[item] = quantity
-        print(self.items)
+        #print(self.items)
 
     def show_inventory(self):
         """Display inventory contents."""
@@ -27,9 +27,14 @@ class Inventory:
         """Use an item from inventory."""
         if item in self.items and self.items[item] > 0:
             self.items[item] -= 1
-            print(f"Used {item}. Remaining: {self.items[item]}")
+            print(f"You used {item}. Remaining: {self.items[item]}")
+            if self.items[item] == 0:
+                del self.items[item]
+            return True
         else:
-            print(f"{item} not available.")
+            print(f"{item} not available in inventory.")
+            return False
+
     def generate_random_items(self):
         """Generate random items at the start"""
         random_inventory_items = random.sample(storable_items, 3)

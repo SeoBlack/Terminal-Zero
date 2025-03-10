@@ -7,6 +7,8 @@ from src import player
 from src.Helpers import get_random_airport
 from src.ui import display_status, display_error_message, display_warning_message, display_inventory
 from ui import display_intro, display_menu
+from src.Helpers import storable_items  # Lisää tämä rivi
+
 
 class Game:
     def __init__(self):
@@ -16,7 +18,7 @@ class Game:
         self.db_manager  = DatabaseManager()
         self.airports = [] ##list of the available airports to travel to
         self.initiate_game()
-        self.actions = ["explore","move", "inventory", "status","quit"]
+        self.actions = ["explore", "move", "inventory", "status", "use", "quit"]
 
 
     def run(self):
@@ -53,28 +55,45 @@ class Game:
             self.handle_inventory()
         elif action == "status" or action == "4":
             display_status(self.player)
-        elif action == "quit" or action == "5":
+        elif action == "use" or action == "5":
+            self.handle_use_item()
+        elif action == "quit" or action == "6":
             self.handle_game_over()
         else:
             print("Invalid action. Try again.")
 
+
     def handle_explore_location(self):
-        #loop through the events of the airport
+        """Pelaaja tutkii lentokenttää ja löytää mahdollisia resursseja."""
         if len(self.player.location.events) == 0:
             display_warning_message("There are no resources available in this location.")
             return
+
         for event in self.player.location.events:
-            event.apply_event(self.player)
-            self.player.location.is_explored = True
-        return
+            item = random.choice(storable_items)  # Satunnainen löydettävä tavara
+            amount = random.randint(1, 3)  # Satunnainen määrä
+            self.player.inventory.add_item(item, amount)
+            print(f"You found {amount} {item}!")
+
+        self.player.location.is_explored = True
 
     def handle_move(self):
         self.player.move(random.choice(self.airports))
         #TODO: handle player movement and fuel calculations
     def handle_inventory(self):
-        display_inventory(self.player.inventory)
+        """Näytä pelaajan inventaario."""
+        self.player.inventory.show_inventory()
         #TODO: handle player inventory opening and items usage.
     def handle_game_over(self):
         self.game_over = True
     def handle_status(self):
         display_status(self.player)
+
+    def handle_use_item(self):
+        """Käsittele esineen käyttö pelaajan inventorysta."""
+        item = input("What item do you want to use? ").strip().lower()
+        success = self.player.inventory.use_item(item)
+        if success:
+            print(f"{item} was used successfully.")
+        else:
+            print(f"{item} could not be used or is not available.")
