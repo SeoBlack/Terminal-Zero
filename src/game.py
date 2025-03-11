@@ -26,7 +26,6 @@ class Game:
         """Main game loop."""
         self.start_time = datetime.now()
         self.player.name = input("Enter your name:")
-        self.player.location.is_safe = True
         while not self.game_over:
             display_menu(actions=self.actions)
             action = input("Choose an action: ").strip().lower()
@@ -76,13 +75,12 @@ class Game:
         if self.check_win():
             return
         #loop through the events of the airport
-
+        self.player.location.is_explored = True
         if len(self.player.location.events) == 0:
             display_warning_message("There are no resources available in this location.")
             return
         for event in self.player.location.events:
             event.apply_event(self.player)
-            self.player.location.is_explored = True
         return
 
     def handle_move(self):
