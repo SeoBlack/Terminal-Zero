@@ -29,6 +29,11 @@ class Inventory:
                     player.fuel = SETTINGS['max_fuel']
                 else:
                     player.fuel += SETTINGS['fuel_can_capacity']
+            elif item == "medicine":
+                if player.health + SETTINGS['medicine_health'] > SETTINGS['max_health']:
+                    player.health = SETTINGS['max_health']
+                else:
+                    player.health += SETTINGS['medicine_can_health']
             elif item == "food":
                 if player.health + SETTINGS['food_can_health'] > SETTINGS['max_health']:
                     player.health = SETTINGS['max_health']

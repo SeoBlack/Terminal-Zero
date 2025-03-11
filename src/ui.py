@@ -3,14 +3,17 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
+
+from config.settings import SETTINGS
+
 # Initialize Rich console
 console = Console()
 
-def slow_print(text, style="bold red", delay=0.02):
+def slow_print(text, style="bold red", delay=SETTINGS["animation_delay_s"]):
     """Prints text with a slight delay while preserving rich styling."""
     for char in text:
         console.print(f"[{style}]{char}[/]", end="", highlight=False)
-        time.sleep(delay)
+        time.sleep(delay/20)
     console.print()  # Newline at the end
 
 def display_ascii_art():
@@ -46,28 +49,28 @@ def display_intro():
     display_ascii_art()
 
     slow_print("[⚠️] The world as you knew it... is gone.", "bold red")
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
 
     slow_print("[⚠️] A deadly virus has swept across the planet, turning people into flesh-eating monsters.", "bold yellow")
     slow_print("[⚠️] The last safe places are fortified airports, where the infected are kept at bay.", "bold cyan")
 
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
 
     slow_print("[⚠️] You are one of the last survivors.", "bold white")
     slow_print("[⚠️] Your only hope is to travel between airports, scavenging for supplies and staying alive.", "bold green")
 
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
 
     slow_print("[⚠️] But time is running out...", "bold red")
     slow_print("[⚠️] Zombies are everywhere. Supplies are scarce.", "bold yellow")
     slow_print("[⚠️] And not all survivors can be trusted.", "bold magenta")
 
-    time.sleep(1.5)
+    time.sleep(SETTINGS["animation_delay_s"])
 
     slow_print("[⚠️] Will you make it to the final sanctuary, or will you become one of the infected?", "bold cyan")
 
     console.print("\n[bold green]Welcome to TERMINAL ZERO.[/]")
-    time.sleep(2)
+    time.sleep(SETTINGS["animation_delay_s"])
 
 def display_status(player):
     """Displays the player's current status in a clean, structured format."""
@@ -119,16 +122,16 @@ def display_menu(actions):
 def animate_travel(destination, distance , fuel):
     """Displays an animated transition when moving to a new location."""
     console.print("\n[bold cyan]✈️ Preparing for departure...[/]")
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
     console.print("[bold yellow]🚀 Taking off...[/]")
-    time.sleep(1.5)
+    time.sleep(SETTINGS["animation_delay_s"])
     console.print(f"[bold blue]🌍 Flying to {destination}...[/]")
-    time.sleep(2)
+    time.sleep(SETTINGS["animation_delay_s"])
     console.print(f"[bold green]🛬 You have arrived at {destination}![/]")
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
     console.print(f"[bold yellow]⛽  Fuel used {fuel}L![/]")
     console.print(f"[bold yellow]📈 Traveled distance {distance}km![/]")
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
     console.print(Panel("[bold white]You are at a new airport. What would you like to do?[/]", title="📍 Arrival",
                         border_style="cyan", expand=False))
 
@@ -194,30 +197,30 @@ def display_win_screen(completion_time, player):
     # Clear screen and display win screen
     console.clear()
     console.print(Panel(ascii_art, title="[bold green]TERMINAL ZERO[/]", border_style="green", expand=False))
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
 
     win_message = Text(f"🎉 Congratulations, {player.name}! 🎉", style="bold green")
 
     console.print(Panel(win_message, border_style="green", title="🏆 Victory Achieved! 🏆", padding=(1, 2), expand=False))
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
     slow_print("Against all odds, you have navigated through the chaos, ", style="bold white")
     slow_print("battled the undead, ", style="bold red")
     slow_print("and outlasted the dangers of a dying world.\n\n", style="bold white")
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
     slow_print("You have finally reached the last ", style="bold white")
     slow_print("SAFE AIRPORT ✈️ ", style="bold green")
     slow_print("— a sanctuary where humanity's last survivors gather in hope.\n\n", style="bold white")
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
 
     slow_print("The nightmare is over... ", style="bold magenta")
     slow_print("for now.\n\n", style="bold white")
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
 
     slow_print("Will you help ", style="bold white")
     slow_print("rebuild civilization", style="bold cyan")
     slow_print(", or will you return to the outside world ", style="bold white")
     slow_print("to rescue those still trapped?", style="bold yellow")
-    time.sleep(1)
+    time.sleep(SETTINGS["animation_delay_s"])
 
     win_status_table = Table(title="📈 Player Records", style="bold cyan")
 

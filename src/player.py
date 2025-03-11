@@ -16,6 +16,10 @@ class Player:
     def move(self, airport):
         """Move the player to a different airport."""
         # laskee matkan pituuden sekä tarvittava poltoaine
+        if airport.is_explored:
+            choice = input ("You have already visited this airport, would you like to continue? y/n")
+            if choice.lower() == "n":
+                return
         matka  = self.location.calculate_distance(airport)
         fuel =  round(matka/SETTINGS["fuel_usage_per_km"])
         if fuel > self.fuel:
