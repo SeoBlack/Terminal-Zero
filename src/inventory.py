@@ -1,7 +1,8 @@
 import random
 
+from config.settings import SETTINGS
 from src.Helpers import storable_items
-from src.ui import display_inventory
+from src.ui import display_inventory, display_success_message, display_error_message, display_warning_message
 
 
 class Inventory:
@@ -20,13 +21,31 @@ class Inventory:
         """Display inventory contents."""
         display_inventory(self.items)
 
-    def use_item(self, item):
+    def use_item(self, item, player):
         """Use an item from inventory."""
-        if item in self.items and self.items[item] > 0:
+        if item in self.items.keys() and self.items[item] > 0:
+            if item == "fuel":
+                if player.fuel + SETTINGS['fuel_can_capacity'] > SETTINGS['max_fuel']:
+                    player.fuel = SETTINGS['max_fuel']
+                else:
+                    player.fuel += SETTINGS['fuel_can_capacity']
+            elif item == "food":
+                if player.health + SETTINGS['food_can_health'] > SETTINGS['max_health']:
+                    player.health = SETTINGS['max_health']
+                else:
+                    player.health += SETTINGS['food_can_health']
+            elif item == "water":
+                if player.health + SETTINGS['water_can_health'] > SETTINGS['max_health']:
+                    player.health = SETTINGS['max_health']
+                else:
+                    player.health += SETTINGS['water_can_health']
+            elif item == "weapon":
+                display_warning_message("Weapon can't be used directly, they will automatically be used to defend  against zombies attacks")
+                return
             self.items[item] -= 1
-            print(f"Used {item}. Remaining: {self.items[item]}")
+            display_success_message(f"Used {item}. Remaining: {self.items[item]}")
         else:
-            print(f"{item} not available.")
+            display_error_message(f"{item} not available.")
     def generate_random_items(self):
         """Generate random items at the start"""
         random_inventory_items = random.sample(storable_items, 3)

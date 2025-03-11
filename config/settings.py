@@ -6,4 +6,8 @@ SETTINGS = {
     "max_health":100,
     'max_fuel':500,
     'max_distance_km': 600,
+    'fuel_can_capacity': 50,
+    'food_can_health': 5,
+    'water_can_health': 5,
+    'weapon_damage':5,
 }

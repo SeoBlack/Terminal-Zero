@@ -14,7 +14,6 @@ event_types = [
     "food",
     "weapon",
     "water",
-    "tools",
     "clothing",
     "damage",
     "huge_damage"
@@ -23,7 +22,6 @@ event_types = [
 storable_items = [
     "weapon",
     "water",
-    "tools",
     "clothing",
     "food",
 ]

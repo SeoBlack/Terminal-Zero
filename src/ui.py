@@ -110,6 +110,8 @@ def display_menu(actions):
             console.print(f"[bold yellow][{i}] Check inventory 🎒  (inventory)[/]")
         elif option == "status":
             console.print(f"[bold white][{i}] Check Current Status 📈  (status)[/]")
+        elif option == "use":
+            console.print(f"[bold blue][{i}] Use inventory item 🪴  (use)[/]")
         elif option == "quit":
             console.print(f"[bold red][{i}] Quit ❌  (quit)[/]")
 

@@ -5,9 +5,6 @@ from config.settings import SETTINGS
 from database.db_manager import DatabaseManager
 from player import Player
 from airport import Airport
-from src import player
-from src.Helpers import get_random_airport
-from src.events import Event
 from src.ui import display_status, display_error_message, display_warning_message, display_inventory, display_airports, \
     display_win_screen
 from ui import display_intro, display_menu
@@ -20,7 +17,7 @@ class Game:
         self.db_manager  = DatabaseManager()
         self.airports = [] ##list of the available airports to travel to
         self.initiate_game()
-        self.actions = ["explore","move", "inventory", "status","quit"]
+        self.actions = ["explore","move", "inventory", "status", "use","quit"]
         self.start_time = None
         self.end_time = None
 
@@ -68,7 +65,9 @@ class Game:
             self.handle_inventory()
         elif action == "status" or action == "4":
             display_status(self.player)
-        elif action == "quit" or action == "5":
+        elif action == "use" or action == "5":
+            self.handle_use()
+        elif action == "quit" or action == "6":
             self.handle_game_over()
         else:
             print("Invalid action. Try again.")
@@ -126,3 +125,10 @@ class Game:
             return True
         else:
             return False
+    def handle_use(self):
+        display_inventory(self.player.inventory)
+        item_id = input("Enter item Name:")
+        if len(item_id) == 0:
+            return
+        else:
+            self.player.inventory.use_item(item_id, self.player)
