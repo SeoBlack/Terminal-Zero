@@ -17,7 +17,7 @@ class Event:
         for key, value in self.effect.items():
             #set the player item to the current value plus the added or subtracted value.
 
-            if key == "damage":
+            if key == "damage" or key == "huge_damage":
                 setattr(player, 'health', getattr(player, 'health', 0) + value)
                 display_warning_message(f"{self.description}: {value}")
             elif key in storable_items:
