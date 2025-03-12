@@ -1,16 +1,15 @@
 import random
 from datetime import datetime
 
+from airport import Airport
 from config.settings import SETTINGS
 from database.db_manager import DatabaseManager
 from player import Player
-from airport import Airport
-from src import player
-from src.Helpers import get_random_airport
 from src.events import Event
 from src.ui import display_status, display_error_message, display_warning_message, display_inventory, display_airports, \
     display_win_screen
 from ui import display_intro, display_menu
+
 
 class Game:
     def __init__(self):
@@ -20,7 +19,7 @@ class Game:
         self.db_manager  = DatabaseManager()
         self.airports = [] ##list of the available airports to travel to
         self.initiate_game()
-        self.actions = ["explore","move", "inventory", "status","quit"]
+        self.actions = ["explore","move", "inventory", "status", "use","quit"]
         self.start_time = None
         self.end_time = None
 
@@ -53,7 +52,9 @@ class Game:
         """Initialize the game."""
         self.get_airports()
         self.player.location = random.choice(self.airports) # get a random airport
+        self.generate_random_hint()
         display_intro()
+
 
 
 
@@ -67,7 +68,9 @@ class Game:
             self.handle_inventory()
         elif action == "status" or action == "4":
             display_status(self.player)
-        elif action == "quit" or action == "5":
+        elif action == "use" or action == "5":
+            self.handle_use()
+        elif action == "quit" or action == "6":
             self.handle_game_over()
         else:
             print("Invalid action. Try again.")
@@ -124,3 +127,27 @@ class Game:
             return True
         else:
             return False
+    def handle_use(self):
+        display_inventory(self.player.inventory)
+        item_id = input("Enter item Name:")
+        if len(item_id) == 0:
+            return
+        else:
+            self.player.inventory.use_item(item_id, self.player)
+    def generate_random_hint(self):
+        safe_airport = None
+        for airport in self.airports:
+            if airport.is_safe:
+                safe_airport = airport
+                break
+        if safe_airport:
+            hint_events = [
+
+                 f"I heard something about the safe airport, it's located in {safe_airport.country}.",
+                 f"I overheard someone say that the safe airport is hidden somewhere near {safe_airport.country}.",
+                 f"Rumor has it, the safe airport can be found somewhere around {safe_airport.country}.",
+
+            ]
+            for airport in random.choices(self.airports, k=SETTINGS['max_survivor_encounter'] ):
+                airport.events.append(Event( random.choice(hint_events), {"survivor":0}))
+
