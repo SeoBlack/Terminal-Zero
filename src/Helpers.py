@@ -1,5 +1,6 @@
 import random
-
+from enum import Enum
+from geopy import distance
 
 def get_random_airport(airports):
     random_airport = random.choice(airports)
@@ -8,23 +9,58 @@ def get_random_airport(airports):
 
 
 # resurssit
-inventory_items = [
-    'fuel',
-    'medical',
-    'food',
-    'weapon',
-    'water',
-    'tools',
-    'clothing'
+event_types = [
+    "fuel",
+    "food",
+    "weapon",
+    "water",
+    "clothing",
+    "damage",
+    "huge_damage",
+    "medicine"
 ]
 
+storable_items = [
+    "weapon",
+    "water",
+    "clothing",
+    "food",
+    "fuel",
+    "medicine"
+]
 # Maksimiarvot
 max_values = {
-    'weapon': 5,
-    'medical': 50,
-    'food': 50,
-    'fuel': 50,
-    'water': 50,
-    'tools': 3,
-    'clothing': 10
+    "fuel": 2,
+    "medicine": 20,
+    "food": 10,
+    "weapon": 5,
+    "water": 5,
+    "tools": 1,
+    "clothing": 12,
+    "damage": -10,
+    "huge_damage": -20,
 }
+
+events_with_texts = [
+    {
+        "fuel":"You found a fuel can!"
+    },
+    {
+        "damage":"You were attacked by zombies!"
+    },
+    {
+        "huge_damage": "You were attacked by juggernaut "
+    },
+
+    {
+        "food":"You found food supplies!"
+
+    },
+    {
+        "medicine":"You found Medicines!"
+    },
+    {
+        "weapon":"You found weapons!"
+    },
+
+]

@@ -1,7 +1,17 @@
 ## Game settings (e.g., difficulty, max inventory size)
 SETTINGS = {
-    "difficulty": "normal",
+    "max_danger_level":3,
     "max_inventory_size": 10,
-    "zombie_spawn_rate": 0.2,
-    "fuel_usage_per_flight": 10
+    "fuel_usage_per_km": 10,
+    "max_health":100,
+    'max_fuel':500,
+    'max_distance_km': 700,
+    'fuel_can_capacity': 50,
+    'food_can_health': 5,
+    'water_can_health': 5,
+    'weapon_damage':5,
+    "medicine_health":10,
+    'max_survivor_encounter':30,
+    "animation_delay_s":0,
+
 }
