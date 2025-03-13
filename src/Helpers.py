@@ -14,23 +14,24 @@ event_types = [
     "food",
     "weapon",
     "water",
-    "tools",
     "clothing",
     "damage",
-    "huge_damage"
+    "huge_damage",
+    "medicine"
 ]
 
 storable_items = [
     "weapon",
     "water",
-    "tools",
     "clothing",
     "food",
+    "fuel",
+    "medicine"
 ]
 # Maksimiarvot
 max_values = {
     "fuel": 2,
-    "health": 20,
+    "medicine": 20,
     "food": 10,
     "weapon": 5,
     "water": 5,
@@ -56,9 +57,10 @@ events_with_texts = [
 
     },
     {
-        "health":"You found a repair kit!"
+        "medicine":"You found Medicines!"
     },
     {
         "weapon":"You found weapons!"
     },
+
 ]
