@@ -1,36 +1,33 @@
--- Create the country table
 CREATE TABLE country (
-    iso_country VARCHAR(5) PRIMARY KEY, -- Assuming iso_code uniquely identifies a country
+    iso_country VARCHAR(5) PRIMARY KEY,
     name TEXT NOT NULL,
     continent TEXT
 );
 
--- Create the airports table with a FOREIGN KEY referencing the country table
 CREATE TABLE airports (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, -- Changed indent to id for clarity
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     latitude_deg DECIMAL(8,6),
     longitude_deg DECIMAL(9,6),
-    iso_country VARCHAR(5), -- iso_country field
-    FOREIGN KEY (iso_country) REFERENCES country (iso_country) -- Define the FK relationship
+    iso_country VARCHAR(5),
+    FOREIGN KEY (iso_country) REFERENCES country (iso_country)
 );
 
 CREATE TABLE players (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     health INTEGER DEFAULT 100,
-    fuel INTEGER DEFAULT 50
+    fuel INTEGER DEFAULT 50,
+    location_id INTEGER,
+    FOREIGN KEY (location_id) REFERENCES  airports(id)
 );
--- Inventory Table
-CREATE TABLE inventory (
-    inventory_id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE game (
+    game_id INTEGER PRIMARY KEY  AUTOINCREMENT,
     player_id INT NOT NULL,
-    item_name VARCHAR(255) NOT NULL,
-    quantity INT NOT NULL DEFAULT 1,
+    time_elapsed DATETIME,
+    has_won BOOLEAN,
     FOREIGN KEY (player_id) REFERENCES players(id)
 );
-
--- Insert sample data into the country table
 INSERT INTO country (iso_country, name, continent)
 VALUES ('FI', 'Finland', 'Europe'),
        ('EE', 'Estonia', 'Europe'),
@@ -58,7 +55,6 @@ VALUES ('FI', 'Finland', 'Europe'),
        ('HU', 'Hungary', 'Europe');
 
 
--- Insert sample data into the airports table
 INSERT INTO airports ( name, latitude_deg, longitude_deg, iso_country)
 VALUES ('Helsinki-Vantaa Airport', 60.3172, 24.9633, 'FI'), --Finland
        ('Lennart Meri Tallinn Airport', 59.4133, 24.8328, 'EE'),  -- Estonia
@@ -84,25 +80,3 @@ VALUES ('Helsinki-Vantaa Airport', 60.3172, 24.9633, 'FI'), --Finland
        ('Zurich Airport', 47.4647, 8.5492, 'CH'),  -- Switzerland
        ('Athens International Airport', 37.9364, 23.9475, 'GR'),  -- Greece
        ('Budapest Ferenc Liszt International Airport', 47.4369, 19.2556, 'HU');  -- Hungary
-
--- Insert sample data into the players table
-INSERT INTO players (name, health, fuel)
-VALUES ('Player1', 100, 50),
-       ('Player2', 80, 30),
-       ('Player3', 120, 70),
-       ('Player4', 60, 40);
-
--- Insert sample data into the inventory table
-INSERT INTO inventory (player_id, item_name, quantity)
-VALUES (1, 'sword', 1),
-       (1, 'shield', 1),
-       (1, 'health_potion', 3),
-       (2, 'pistol', 1),
-       (2, 'ammo', 20),
-       (2, 'bandage', 2),
-       (3, 'axe', 1),
-       (3, 'rope', 5),
-       (3, 'map', 1),
-       (4, 'torch', 2),
-       (4, 'water bottle', 3),
-       (4, 'canned food', 4);

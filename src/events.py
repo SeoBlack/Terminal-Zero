@@ -47,10 +47,8 @@ class Event:
                 #trade with survivor for a hint
                 display_warning_message(f"[👲]Hi there! I have something valuable for you in exchange for a valuable item")
                 while True:
-                    choice = input("would you like to give item to the stranger? y/n")
-                    if choice != "y" or len(choice) != "":
-                        break
-                    else:
+                    choice = input("would you like to give item to the stranger? y/n (enter)")
+                    if choice == "y" or choice == "":
                         exist_items = []
                         for item in player.inventory.items.keys():
                             if player.inventory.items[item] > 0:
@@ -66,6 +64,10 @@ class Event:
                             )
                             display_success_message(f"[💡] {self.description}")
                             break
+                    elif choice == "n":
+                        break
+                    else:
+                        print("Invalid choice.")
 
 
 
