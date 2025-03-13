@@ -24,33 +24,33 @@ class Inventory:
     def use_item(self, item, player):
         """Use an item from inventory."""
         if item in self.items.keys() and self.items[item] > 0:
-            if item == "fuel":
+            if item == "polttoaine":
                 if player.fuel + SETTINGS['fuel_can_capacity'] > SETTINGS['max_fuel']:
                     player.fuel = SETTINGS['max_fuel']
                 else:
                     player.fuel += SETTINGS['fuel_can_capacity']
-            elif item == "medicine":
+            elif item == "lääke":
                 if player.health + SETTINGS['medicine_health'] > SETTINGS['max_health']:
                     player.health = SETTINGS['max_health']
                 else:
                     player.health += SETTINGS['medicine_can_health']
-            elif item == "food":
+            elif item == "ruoka":
                 if player.health + SETTINGS['food_can_health'] > SETTINGS['max_health']:
                     player.health = SETTINGS['max_health']
                 else:
                     player.health += SETTINGS['food_can_health']
-            elif item == "water":
+            elif item == "vesi":
                 if player.health + SETTINGS['water_can_health'] > SETTINGS['max_health']:
                     player.health = SETTINGS['max_health']
                 else:
                     player.health += SETTINGS['water_can_health']
-            elif item == "weapon":
-                display_warning_message("Weapon can't be used directly, they will automatically be used to defend  against zombies attacks")
+            elif item == "ase":
+                display_warning_message("Aseita ei voi käyttää suoraan, ne käytetään automaattisesti puolustautumaan zombien hyökkäyksiltä.")
                 return
             self.items[item] -= 1
-            display_success_message(f"Used {item}. Remaining: {self.items[item]}")
+            display_success_message(f"Käytetty {item}. Jäljellä: {self.items[item]}")
         else:
-            display_error_message(f"{item} not available.")
+            display_error_message(f"{item} ei saatavilla.")
     def generate_random_items(self):
         """Generate random items at the start"""
         random_inventory_items = random.sample(storable_items, 3)

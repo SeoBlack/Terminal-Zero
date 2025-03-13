@@ -19,7 +19,7 @@ class Game:
         self.db_manager  = DatabaseManager()
         self.airports = [] ##list of the available airports to travel to
         self.initiate_game()
-        self.actions = ["explore","move", "inventory", "status", "use","quit"]
+        self.actions = ["tutki","siirry", "inventaario", "tila", "käytä","lopeta"]
         self.start_time = None
         self.end_time = None
 
@@ -27,10 +27,10 @@ class Game:
     def run(self):
         """Main game loop."""
         self.start_time = datetime.now()
-        self.player.name = input("Enter your name:")
+        self.player.name = input("Syötä nimesi: ")
         while not self.game_over:
             display_menu(actions=self.actions)
-            action = input("Choose an action: ").strip().lower()
+            action = input("Valitse toiminto: ").strip().lower()
             if len(action) == 0:
                 continue
             else:
@@ -60,20 +60,20 @@ class Game:
 
     def handle_action(self, action):
         """Process user input."""
-        if action == "explore" or action == "1":
+        if action == "tutki" or action == "1":
             self.handle_explore_location()
-        elif action == "move" or action == "2":
+        elif action == "siirry" or action == "2":
             self.handle_move()
-        elif action == "inventory" or action == "3":
+        elif action == "inventaario" or action == "3":
             self.handle_inventory()
-        elif action == "status" or action == "4":
+        elif action == "tila" or action == "4":
             display_status(self.player)
-        elif action == "use" or action == "5":
+        elif action == "käytä" or action == "5":
             self.handle_use()
-        elif action == "quit" or action == "6":
+        elif action == "lopeta" or action == "6":
             self.handle_game_over()
         else:
-            print("Invalid action. Try again.")
+            print("Virheellinen toiminto. Yritä uudelleen.")
 
     def handle_explore_location(self):
         if self.check_win():
@@ -81,7 +81,7 @@ class Game:
         #loop through the events of the airport
         self.player.location.is_explored = True
         if len(self.player.location.events) == 0:
-            display_warning_message("There are no resources available in this location.")
+            display_warning_message("Tässä sijainnissa ei ole resursseja saatavilla.")
             return
         for event in self.player.location.events:
             event.apply_event(self.player)
@@ -94,7 +94,7 @@ class Game:
                 nearby_airports.append(airport)
         if len(nearby_airports) > 0:
             display_airports(nearby_airports, self.player.location)
-            destination_id = input("Enter destination ID:")
+            destination_id = input("Syötä määränpään ID:")
             if len(destination_id) == 0:
                 return
             else:
@@ -106,7 +106,7 @@ class Game:
 
 
         if len(nearby_airports) == 0:
-            display_error_message("There are no airports nearby.")
+            display_error_message("Lähistöllä ei ole lentokenttiä.")
         #TODO: handle player movement and fuel calculations
     def handle_inventory(self):
         display_inventory(self.player.inventory)
@@ -129,7 +129,7 @@ class Game:
             return False
     def handle_use(self):
         display_inventory(self.player.inventory)
-        item_id = input("Enter item Name:")
+        item_id = input("Syötä tavaran nimi: ")
         if len(item_id) == 0:
             return
         else:
@@ -143,11 +143,11 @@ class Game:
         if safe_airport:
             hint_events = [
 
-                 f"I heard something about the safe airport, it's located in {safe_airport.country}.",
-                 f"I overheard someone say that the safe airport is hidden somewhere near {safe_airport.country}.",
-                 f"Rumor has it, the safe airport can be found somewhere around {safe_airport.country}.",
+                 f"Kuulin jotain turvallisesta lentokentästä, se sijaitsee {safe_airport.country}.",
+                 f"Kuulin jonkun sanovan, että turvallinen lentokenttä on piilotettu jonnekkin lähelle {safe_airport.country}.",
+                 f"Väitetään, että turvallinen lentokenttä löytyy jostain täältä lähellä {safe_airport.country}.",
 
             ]
             for airport in random.choices(self.airports, k=SETTINGS['max_survivor_encounter'] ):
-                airport.events.append(Event( random.choice(hint_events), {"survivor":0}))
+                airport.events.append(Event( random.choice(hint_events), {"selviytyjä":0}))
 

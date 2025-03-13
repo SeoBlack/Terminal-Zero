@@ -18,37 +18,37 @@ class Event:
         for key, value in self.effect.items():
             #set the player item to the current value plus the added or subtracted value.
 
-            if key == "damage" or key == "huge_damage":
-                if "weapon" in player.inventory.items.keys() and player.inventory.items["weapon"] > 0:
-                    display_warning_message(f"you are being attacked by zombies total damage {value}, you have {player.inventory.items["weapon"]} weapon to defend against the attack -{SETTINGS['weapon_damage']}/weapon")
+            if key == "vaurio" or key == "suuri_vaurio":
+                if "ase" in player.inventory.items.keys() and player.inventory.items["ase"] > 0:
+                    display_warning_message(f"Zombit hyökkäävät sinua vastaan, kokonaisvaurio {value}, sinulla on {player.inventory.items["ase"]} asetta puolustautumiseen hyökkäystä vastaan -{SETTINGS['weapon_damage']}/ase")
                     while True:
-                        number = input("how many would you like to use? ")
-                        if number.isdigit() and int(number) > 0 and (int(number) <= player.inventory.items["weapon"]):
+                        number = input("Kuinka monta haluaisit käyttää? ")
+                        if number.isdigit() and int(number) > 0 and (int(number) <= player.inventory.items["ase"]):
                             number = int(number)
 
                             damage_after_weapon = 0
                             # damage cant be in plus
                             if value + (number * SETTINGS["weapon_damage"]) < 0:
                                 damage_after_weapon = value + (number * SETTINGS["weapon_damage"])
-                            setattr(player, 'health', getattr(player, 'health', 0) + damage_after_weapon)
+                            setattr(player, 'terveys', getattr(player, 'terveys', 0) + damage_after_weapon)
                             display_warning_message(f"{self.description}: {value}")
-                            display_success_message(f"Weapons used to reduce damage: {number}")
-                            display_warning_message(f"Final Damage caused: {damage_after_weapon}")
-                            player.inventory.items["weapon"] -= number
+                            display_success_message(f"Ase, jota käytetään vahingon vähentämiseen: {number}")
+                            display_warning_message(f"Lopullinen vaurio: {damage_after_weapon}")
+                            player.inventory.items["ase"] -= number
                             break
                         if len(number) == 0:
                             # user doesn't want to use any weapon
-                            setattr(player, 'health', getattr(player, 'health', 0) + value)
+                            setattr(player, 'terveys', getattr(player, 'terveys', 0) + value)
                             display_warning_message(f"{self.description}: {value}")
                             break
                         else:
-                            print("please enter a valid number")
-            elif key == "survivor":
+                            print("Anna kelvollinen numero")
+            elif key == "selviytyjä":
                 #trade with survivor for a hint
-                display_warning_message(f"[👲]Hi there! I have something valuable for you in exchange for a valuable item")
+                display_warning_message(f"[👲]Hei! Minulla on jotain arvokasta sinulle vaihdossa arvokkaaseen esineeseen")
                 while True:
-                    choice = input("would you like to give item to the stranger? y/n")
-                    if choice != "y" or len(choice) != "":
+                    choice = input("Haluatko antaa esineen tuntemattomalle? k/e ")
+                    if choice != "k" or len(choice) != "":
                         break
                     else:
                         exist_items = []
@@ -56,13 +56,13 @@ class Event:
                             if player.inventory.items[item] > 0:
                                 exist_items.append(item)
                         if len(exist_items) == 0:
-                            display_error_message("Your inventory is empty, no trade with stranger possible")
+                            display_error_message("Inventaariosi on tyhjä, kauppaa tuntemattoman kanssa ei voi tehdä")
                             break
                         else:
                             random_item = random.choice(exist_items)
                             player.inventory.items[random_item] -= 1
                             display_success_message(
-                                f"You have traded 1 item with stranger {random_item}: -1"
+                                f"Olet kaupannut 1 esineen tuntemattoman kanssa {random_item}: -1"
                             )
                             display_success_message(f"[💡] {self.description}")
                             break

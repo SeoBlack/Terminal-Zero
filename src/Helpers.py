@@ -10,57 +10,57 @@ def get_random_airport(airports):
 
 # resurssit
 event_types = [
-    "fuel",
-    "food",
-    "weapon",
-    "water",
-    "clothing",
-    "damage",
-    "huge_damage",
-    "medicine"
+    "polttoaine",
+    "ruoka",
+    "ase",
+    "vesi",
+    "vaatetus",
+    "vaurio",
+    "suuri_vaurio",
+    "lääke"
 ]
 
 storable_items = [
-    "weapon",
-    "water",
-    "clothing",
-    "food",
-    "fuel",
-    "medicine"
+    "ase",
+    "vesi",
+    "vaatetus",
+    "ruoka",
+    "polttoaine",
+    "lääke"
 ]
 # Maksimiarvot
 max_values = {
-    "fuel": 2,
-    "medicine": 20,
-    "food": 10,
-    "weapon": 5,
-    "water": 5,
-    "tools": 1,
-    "clothing": 12,
-    "damage": -10,
-    "huge_damage": -20,
+    "polttoaine": 2,
+    "lääke": 20,
+    "ruoka": 10,
+    "ase": 5,
+    "vesi": 5,
+    "työkalut": 1,
+    "vaatetus": 12,
+    "vaurio": -10,
+    "suuri_vaurio": -20,
 }
 
 events_with_texts = [
     {
-        "fuel":"You found a fuel can!"
+        "polttoaine":"Löysit polttoainesäiliön!"
     },
     {
-        "damage":"You were attacked by zombies!"
+        "vaurio":"Zombit hyökkäsivät sinuun!"
     },
     {
-        "huge_damage": "You were attacked by juggernaut "
+        "suuri_vaurio": "Sinuun hyökkäsi juggernaut "
     },
 
     {
-        "food":"You found food supplies!"
+        "ruoka":"Löysit ruokatarvikkeita!"
 
     },
     {
-        "medicine":"You found Medicines!"
+        "lääke":"Löysit lääkkeitä!"
     },
     {
-        "weapon":"You found weapons!"
+        "ase":"Löysit aseita!"
     },
 
 ]

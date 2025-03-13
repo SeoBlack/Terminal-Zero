@@ -5,7 +5,7 @@ from src.ui import animate_travel, display_menu, display_error_message
 
 
 class Player:
-    def __init__(self, name="Survivor"):
+    def __init__(self, name="Selviytyjä"):
         """Initialize player attributes."""
         self.name = name
         self.health = SETTINGS["max_health"]
@@ -17,13 +17,13 @@ class Player:
         """Move the player to a different airport."""
         # laskee matkan pituuden sekä tarvittava poltoaine
         if airport.is_explored:
-            choice = input ("You have already visited this airport, would you like to continue? y/n")
-            if choice.lower() == "n":
+            choice = input ("Olet jo vieraillut tällä lentokentällä, haluatko jatkaa? k/e ")
+            if choice.lower() == "e":
                 return
         matka  = self.location.calculate_distance(airport)
         fuel =  round(matka/SETTINGS["fuel_usage_per_km"])
         if fuel > self.fuel:
-            display_error_message("Not enough fuel")
+            display_error_message("Ei tarpeeksi polttoainetta")
             return
         self.fuel -= fuel
         self.location = airport
@@ -33,4 +33,4 @@ class Player:
 
     def show_inventory(self):
         """Display player's inventory."""
-        print("Inventory:", self.inventory)
+        print("Inventaario:", self.inventory)
