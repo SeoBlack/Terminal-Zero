@@ -45,10 +45,7 @@ class DatabaseManager:
         """Execute a SQL query and return the result."""
         self.cursor.execute(query, params)
         self.conn.commit()
-        # Only fetch results for SELECT queries
-        if query.strip().upper().startswith("SELECT"):
-            return self.cursor.fetchall()
-        return None
+        return self.cursor.fetchall()
 
     def get_all_airports(self):
         query = "SELECT * FROM airports"
@@ -59,6 +56,35 @@ class DatabaseManager:
         if result and len(result) > 0:
             return result[0][0]
         return "Unknown"  # or raise a specific exception
+    def create_new_game_record(self, player_id, time_elapsed, has_won):
+        query = "INSERT INTO game (player_id, time_elapsed, has_won) VALUES (?, ?, ?)"
+        return self.execute_query(query, (player_id, time_elapsed, has_won))
+
+    def add_new_player(self, name, health, fuel, location_id):
+        query = "INSERT INTO players (name, health, fuel, location_id) VALUES (?,?,?,?)"
+        self.execute_query(query, (name,health,fuel, location_id))
+        return self.cursor.lastrowid
+    def update_player(self, player_id, health, fuel, location_id):
+        query = "UPDATE players SET ( health, fuel, location_id) = (?,?,?) WHERE id = ?"
+        return self.execute_query(query, ( health, fuel, location_id,player_id))
+    def get_end_status(self):
+        query = """
+                    SELECT 
+                players.name AS player_name,
+                game.time_elapsed,
+                game.has_won,
+                airports.name AS current_airport
+            FROM 
+                players
+            LEFT JOIN 
+                game ON players.id = game.player_id
+            LEFT JOIN 
+                airports ON players.location_id = airports.id;
+        """
+        return self.execute_query(query)
+
+
+
 
     def close(self):
         """Close the database connection."""

@@ -14,7 +14,6 @@ event_types = [
     "food",
     "weapon",
     "water",
-    "clothing",
     "damage",
     "huge_damage",
     "medicine"
@@ -23,7 +22,6 @@ event_types = [
 storable_items = [
     "weapon",
     "water",
-    "clothing",
     "food",
     "fuel",
     "medicine"
@@ -36,7 +34,6 @@ max_values = {
     "weapon": 5,
     "water": 5,
     "tools": 1,
-    "clothing": 12,
     "damage": -10,
     "huge_damage": -20,
 }
@@ -64,3 +61,18 @@ events_with_texts = [
     },
 
 ]
+def get_hint_events(country):
+    hint_events = [
+
+        f"I heard something about the safe airport, it's located in {country}.",
+        f"I overheard someone say that the safe airport is hidden somewhere near {country}.",
+        f"Rumor has it, the safe airport can be found somewhere around {country}.",
+
+    ]
+    return hint_events
+
+def format_time(seconds):
+    seconds = seconds % (24 * 3600)
+    minutes = seconds // 60
+    seconds %= 60
+    return "%02d:%02d" % (minutes, seconds)

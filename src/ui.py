@@ -16,9 +16,8 @@ def slow_print(text, style="bold red", delay=SETTINGS["animation_delay_s"]):
         time.sleep(delay/20)
     console.print()  # Newline at the end
 
-def display_ascii_art():
-    """Displays an ASCII art of an abandoned airport terminal."""
-    art = """[bold red]
+def get_ascii_art(color):
+    return f"""[bold {color}]
      ████████╗███████╗███████╗ ███╗   ███╗██╗███╗   ██╗╔██████╗ ██╗      
      ╚══██╔══╝██╔════╝██╔═══██╗████╗ ████║██║████╗  ██║██╔═══██╗██║      
         ██║   █████╗  ███████╔╝██╔████╔██║██║██╔██╗ ██║████████║██║      
@@ -32,6 +31,10 @@ def display_ascii_art():
                                       ███████╗███████╗██║   ██║╚██████╔╝
                                       ╚══════╝╚══════╝╚═╝   ╚═╝ ╚═════╝
 [/]"""
+
+def display_ascii_art():
+    """Displays an ASCII art of an abandoned airport terminal."""
+    art = get_ascii_art("red")
     console.print(Panel(art, title="[bold red]TERMINAL ZERO[/]", border_style="red", expand=False))
     # time.sleep(1)
     table = Table( style="cyan")
@@ -48,6 +51,7 @@ def display_intro():
     """Displays the game intro with dramatic effect."""
     display_ascii_art()
 
+    # Intro narrative with color-coded warnings
     slow_print("[⚠️] The world as you knew it... is gone.", "bold red")
     time.sleep(SETTINGS["animation_delay_s"])
 
@@ -69,7 +73,27 @@ def display_intro():
 
     slow_print("[⚠️] Will you make it to the final sanctuary, or will you become one of the infected?", "bold cyan")
 
-    console.print("\n[bold green]Welcome to TERMINAL ZERO.[/]")
+    time.sleep(SETTINGS["animation_delay_s"])
+
+    instructions = Text()
+    instructions.append("[📍] You have been dropped into a random airport.\n", style="bold white")
+    instructions.append("[🎒] You have a limited amount of fuel and resources in your inventory.\n", style="bold cyan")
+    instructions.append("[🛫] Your goal is to navigate the world and reach the final sanctuary.\n", style="bold white")
+
+    instructions.append("[🏠] You can explore airports looking for resources.\n", style="bold yellow")
+    instructions.append("[💀] Each airport has a danger level—higher danger means more resources but greater risk!\n", style="bold red")
+
+    instructions.append("[🧭] Move between airports using the move command.\n", style="bold cyan")
+    instructions.append("[📊] Check your status, view your inventory, and use collected items when needed.\n", style="bold cyan")
+
+    instructions.append("[🧍] You might encounter other survivors—trade with them as they might have useful information!\n", style="bold green")
+    instructions.append("[🧟] If you get attacked by zombies, weapons can help reduce damage—use them wisely!\n", style="bold magenta")
+
+    instructions.append("[💀] If you run out of fuel or health, you will lose the game!\n", style="bold red")
+
+    # Final message
+    console.print(Panel(instructions,title="[bold cyan]Welcome to TERMINAL ZERO.[/]", border_style="cyan", expand=False, padding=(1, 2)))
+
     time.sleep(SETTINGS["animation_delay_s"])
 
 def display_status(player):
@@ -165,7 +189,7 @@ def display_airports(airports, current_location):
     table.add_column("Explored", style="bold yellow", justify="center")
     for airport in airports:
         table.add_row(
-            str(airport.ident),
+            str(airport.id),
             airport.name,
             airport.country,
             f'{airport.calculate_distance(current_location)}km',
@@ -176,24 +200,11 @@ def display_airports(airports, current_location):
     console.print(table)
 
 
-def display_win_screen(completion_time, player):
+def display_win_screen(player):
     """Displays the victory screen with a message and Terminal Zero ASCII in green."""
 
     # Terminal Zero ASCII Art in Green
-    ascii_art = """[bold green]
-     ████████╗███████╗███████╗ ███╗   ███╗██╗███╗   ██╗╔██████╗ ██╗      
-     ╚══██╔══╝██╔════╝██╔═══██╗████╗ ████║██║████╗  ██║██╔═══██╗██║      
-        ██║   █████╗  ███████╔╝██╔████╔██║██║██╔██╗ ██║████████║██║      
-        ██║   ██╔══╝  ██╔═══██╗██║╚██╔╝██║██║██║╚██╗██║██╔═══██║██║      
-        ██║   ███████╗██║   ██║██║ ╚═╝ ██║██║██║ ╚████║██║   ██║███████╗
-        ╚═╝   ╚══════╝╚═╝   ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝╚══════╝
-                                      ███████╗███████╗███████╗  ██████╗
-                                      ╚════██║██╔════╝██╔═══██╗██╔═══██╗
-                                        ███╔═╝█████╗  ███████╔╝██║   ██║
-                                       ██╔═╝  ██╔══╝  ██╔═══██╗██║   ██║
-                                      ███████╗███████╗██║   ██║╚██████╔╝
-                                      ╚══════╝╚══════╝╚═╝   ╚═╝ ╚═════╝
-[/]"""
+    ascii_art = get_ascii_art("green")
     # Clear screen and display win screen
     console.clear()
     console.print(Panel(ascii_art, title="[bold green]TERMINAL ZERO[/]", border_style="green", expand=False))
@@ -222,22 +233,56 @@ def display_win_screen(completion_time, player):
     slow_print("to rescue those still trapped?", style="bold yellow")
     time.sleep(SETTINGS["animation_delay_s"])
 
-    win_status_table = Table(title="📈 Player Records", style="bold cyan")
 
-    win_status_table.add_row(
-        "name",
-        player.name
-    )
-    win_status_table.add_row(
-        "fuel",
-        str(player.fuel)
-    )
-    win_status_table.add_row(
-        "Inventory items",
-        str(sum(player.inventory.items.values()))
-    )
-    win_status_table.add_row(
-        "Time Elapsed",
-        str(completion_time)
-    )
-    console.print(win_status_table)
+def display_lose_screen():
+    """Displays the game over screen with red Terminal Zero ASCII and a dark message."""
+
+    # Terminal Zero ASCII Art in Red
+    ascii_art = get_ascii_art("red")
+
+    # Game Over Message with Colors
+    lose_message = Text()
+    lose_message.append("☠️ GAME OVER ☠️\n\n", style="bold red")
+    lose_message.append("The world is cold, dark, and unforgiving...\n\n", style="bold white")
+
+    lose_message.append("You fought bravely, ", style="bold white")
+    lose_message.append("but the infected ", style="bold red")
+    lose_message.append("were too many.\n", style="bold white")
+
+    lose_message.append("Your journey ends here.\n\n", style="bold magenta")
+
+    lose_message.append("As your vision fades, you hear the distant echoes of ", style="bold white")
+    lose_message.append("screams", style="bold yellow")
+    lose_message.append(" and the ", style="bold white")
+    lose_message.append("guttural growls", style="bold red")
+    lose_message.append(" of the undead closing in...\n\n", style="bold white")
+
+    lose_message.append("You are now one of them. ", style="bold red")
+    lose_message.append("The infection has taken over.\n\n", style="bold white")
+
+    lose_message.append("Would someone else survive where you could not?\n", style="bold cyan")
+
+    # Clear screen and display game over screen
+    console.clear()
+    console.print(Panel(ascii_art, title="[bold red]TERMINAL ZERO[/]", border_style="red", expand=False))
+    time.sleep(SETTINGS["animation_delay_s"])
+    time.sleep(1)
+
+    console.print(Panel(lose_message, border_style="red", title="💀 YOU DID NOT MAKE IT... 💀", padding=(1, 2), expand=False))
+    time.sleep(2)
+    # table to show records
+def display_records(records_list):
+    records = Table(title="Records", style="bold cyan")
+    records.add_column("Name", style="bold white", justify="center")
+    records.add_column("Time", style="bold blue", justify="center")
+    records.add_column("Last Seen in", style="bold yellow", justify="center")
+    records.add_column("Winner", style="bold green", justify="center")
+    for record in records_list:
+        has_won = "Yes" if record[2] == 1  else "No"
+        records.add_row(
+            str(record[0]),
+            str(record[1]),
+            str(record[3]),
+            has_won,
+        )
+    console.print(records)
