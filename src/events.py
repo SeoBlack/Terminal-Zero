@@ -1,10 +1,7 @@
 import random
-
-from parso.python.tree import String
-
 from config.settings import SETTINGS
 from src.Helpers import  storable_items
-from src.ui import display_warning_message, display_success_message, display_inventory, display_error_message
+from src.ui import display_warning_message, display_success_message, display_error_message
 
 
 class Event:
