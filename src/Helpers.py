@@ -1,6 +1,4 @@
 import random
-from enum import Enum
-from geopy import distance
 
 def get_random_airport(airports):
     random_airport = random.choice(airports)

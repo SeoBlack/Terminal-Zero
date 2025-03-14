@@ -1,7 +1,6 @@
 from config.settings import SETTINGS
-from src.Helpers import get_random_airport
 from src.inventory import Inventory
-from src.ui import animate_travel, display_menu, display_error_message
+from src.ui import animate_travel, display_error_message
 
 
 class Player:
