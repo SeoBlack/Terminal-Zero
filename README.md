@@ -40,7 +40,7 @@ if you are using Pycharm, make sure to enable terminal emulator to activate the 
    ```
 5. **Run the game:**
    ```bash
-   python src/main.py
+   python game/app.py
    ```
 
 ## 📂 Project Structure

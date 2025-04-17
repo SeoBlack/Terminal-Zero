@@ -2,12 +2,12 @@ import random
 from datetime import datetime
 
 from airport import Airport
-from config.settings import SETTINGS
-from database.db_manager import DatabaseManager
+from backend.config.settings import SETTINGS
+from backend.database.db_manager import DatabaseManager
 from player import Player
-from src.Helpers import get_hint_events, format_time
-from src.events import Event
-from src.ui import display_status, display_error_message, display_warning_message, display_inventory, display_airports, \
+from backend.game.Helpers import get_hint_events, format_time
+from backend.game.events import Event
+from backend.game.ui import display_status, display_error_message, display_warning_message, display_inventory, display_airports, \
     display_win_screen, display_lose_screen, display_records
 from ui import display_intro, display_menu
 

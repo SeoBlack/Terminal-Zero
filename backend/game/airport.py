@@ -2,9 +2,9 @@ import random
 
 from geopy import distance
 
-from config.settings import SETTINGS
-from src.Helpers import max_values, events_with_texts  # Tuodaan molemmat
-from src.events import Event
+from backend.config.settings import SETTINGS
+from backend.game.Helpers import max_values, events_with_texts  # Tuodaan molemmat
+from backend.game.events import Event
 
 
 class Airport:
