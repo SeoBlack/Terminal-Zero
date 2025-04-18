@@ -13,8 +13,9 @@ class DatabaseManager:
         self.mariadb_port = os.getenv("MARIADB_PORT")
         self.mariadb_database = os.getenv("MARIADB_DATABASE")
         self.conn = None
-        self.connect()
         self.cursor = None
+        self.connect()
+
 
     def connect(self):
         try:
@@ -22,7 +23,7 @@ class DatabaseManager:
                 user=self.mariadb_user,
                 password=self.mariadb_password,
                 host=self.mariadb_host,
-                port=self.mariadb_port,
+                port=int(self.mariadb_port) if self.mariadb_port else 3306,
                 database=self.mariadb_database
 
             )
