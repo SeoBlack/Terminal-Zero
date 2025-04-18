@@ -1,9 +1,11 @@
-from game.game import Game
+from flask import Flask
+from flask import render_template
 
-def main():
-    """Start the game."""
-    game = Game()
-    game.run()
+app = Flask(__name__)
 
-if __name__ == "__main__":
-    main()
+@app.route('/')
+def hello_world():
+    return render_template("index.html")
+
+if __name__ == '__main__':
+    app.run()
