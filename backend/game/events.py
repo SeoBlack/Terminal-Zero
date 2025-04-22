@@ -1,10 +1,7 @@
 import random
-
-from parso.python.tree import String
-
-from config.settings import SETTINGS
-from src.Helpers import  storable_items
-from src.ui import display_warning_message, display_success_message, display_inventory, display_error_message
+from backend.config.settings import SETTINGS
+from backend.game.Helpers import  storable_items
+from backend.game.ui import display_warning_message, display_success_message, display_error_message
 
 
 class Event:
@@ -43,14 +40,15 @@ class Event:
                             break
                         else:
                             print("please enter a valid number")
+                else:
+                    setattr(player, 'health', getattr(player, 'health', 0) + value)
+                    display_warning_message(f"{self.description}: {value}")
             elif key == "survivor":
                 #trade with survivor for a hint
                 display_warning_message(f"[👲]Hi there! I have something valuable for you in exchange for a valuable item")
                 while True:
-                    choice = input("would you like to give item to the stranger? y/n")
-                    if choice != "y" or len(choice) != "":
-                        break
-                    else:
+                    choice = input("would you like to give item to the stranger? Y/n (enter)").strip().lower()
+                    if choice == "y" or choice == "":
                         exist_items = []
                         for item in player.inventory.items.keys():
                             if player.inventory.items[item] > 0:
@@ -66,6 +64,10 @@ class Event:
                             )
                             display_success_message(f"[💡] {self.description}")
                             break
+                    elif choice == "n":
+                        break
+                    else:
+                        print("Invalid choice.")
 
 
 

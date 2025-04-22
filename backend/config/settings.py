@@ -11,7 +11,7 @@ SETTINGS = {
     'water_can_health': 5,
     'weapon_damage':5,
     "medicine_health":10,
-    'max_survivor_encounter':30,
-    "animation_delay_s":0,
+    'max_survivor_encounter':7,
+    "animation_delay_s":0.8,
 
 }

@@ -1,17 +1,18 @@
 import random
 
-from config.settings import SETTINGS
-from src.Helpers import storable_items
-from src.ui import display_inventory, display_success_message, display_error_message, display_warning_message
+from backend.config.settings import SETTINGS
+from backend.game.Helpers import storable_items
+from backend.game.ui import display_inventory, display_success_message, display_error_message, display_warning_message
 
 
 class Inventory:
-    def __init__(self):
+    def __init__(self, db_manager):
         """Initialize an empty inventory."""
         self.items = {}
+        self.db_manager = db_manager
         self.generate_random_items()
 
-    def add_item(self, item, quantity=1):
+    def add_item(self, item ,quantity=1):
         """Add an item to the inventory."""
         if item in self.items:
             self.items[item] += quantity
@@ -49,6 +50,7 @@ class Inventory:
                 return
             self.items[item] -= 1
             display_success_message(f"Used {item}. Remaining: {self.items[item]}")
+            player.update_player() #update the player in db
         else:
             display_error_message(f"{item} not available.")
     def generate_random_items(self):
@@ -56,4 +58,5 @@ class Inventory:
         random_inventory_items = random.sample(storable_items, 3)
         for item in random_inventory_items:
             self.add_item(item, random.randint(1, 3))
+
 

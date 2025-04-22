@@ -2,15 +2,15 @@ import random
 
 from geopy import distance
 
-from config.settings import SETTINGS
-from src.Helpers import max_values, events_with_texts  # Tuodaan molemmat
-from src.events import Event
+from backend.config.settings import SETTINGS
+from backend.game.Helpers import max_values, events_with_texts  # Tuodaan molemmat
+from backend.game.events import Event
 
 
 class Airport:
-    def __init__(self, ident, name, lat, lng, country, events = None):
+    def __init__(self, id, name, lat, lng, country, events = None):
         """Initialize an airport with resources and danger level."""
-        self.ident = ident
+        self.id = id
         self.name = name
         self.events = events or []
         self.danger_level =  random.randint(1, SETTINGS.get("max_danger_level"))
