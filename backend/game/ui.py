@@ -4,7 +4,7 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
 
-from config.settings import SETTINGS
+from backend.config.settings import SETTINGS
 
 # Initialize Rich console
 console = Console()

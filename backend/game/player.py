@@ -1,6 +1,6 @@
-from config.settings import SETTINGS
-from src.inventory import Inventory
-from src.ui import animate_travel, display_error_message
+from backend.config.settings import SETTINGS
+from backend.game.inventory import Inventory
+from backend.game.ui import animate_travel, display_error_message
 
 
 class Player:

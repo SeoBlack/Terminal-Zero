@@ -1,8 +1,8 @@
 import random
 
-from config.settings import SETTINGS
-from src.Helpers import storable_items
-from src.ui import display_inventory, display_success_message, display_error_message, display_warning_message
+from backend.config.settings import SETTINGS
+from backend.game.Helpers import storable_items
+from backend.game.ui import display_inventory, display_success_message, display_error_message, display_warning_message
 
 
 class Inventory:

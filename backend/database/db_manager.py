@@ -1,45 +1,36 @@
 import os
-import sqlite3
+import sys
+import mariadb# importing necessary functions from dotenv library
+from dotenv import load_dotenv, dotenv_values
+# loading variables from .env file
+load_dotenv()
 
 class DatabaseManager:
     def __init__(self, db_file=None, schema_file=None):
-        # Get the directory of this script file
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-        # Set default paths relative to the base directory
-        self.db_file = db_file or os.path.join(base_dir, "database", "database.db")
-        self.schema_file = schema_file or os.path.join(base_dir, "config", "schema.sql")
+        self.mariadb_user = os.getenv("MARIADB_USER")
+        self.mariadb_password = os.getenv("MARIADB_PASSWORD")
+        self.mariadb_host = os.getenv("MARIADB_HOST")
+        self.mariadb_port = os.getenv("MARIADB_PORT")
+        self.mariadb_database = os.getenv("MARIADB_DATABASE")
         self.conn = None
+        self.cursor = None
         self.connect()
 
+
     def connect(self):
-        """Connect to the SQLite database. If it doesn't exist, create and initialize it."""
-        db_exists = os.path.exists(self.db_file)
-
         try:
-            self.conn = sqlite3.connect(self.db_file)
-            self.cursor = self.conn.cursor()
-            if not db_exists:
-                self.initialize_database()
-        except sqlite3.Error as e:
-            print(f"Database connection error: {e}")
-            self.conn = None
+            self.conn = mariadb.connect(
+                user=self.mariadb_user,
+                password=self.mariadb_password,
+                host=self.mariadb_host,
+                port=int(self.mariadb_port) if self.mariadb_port else 3306,
+                database=self.mariadb_database
 
-    def initialize_database(self):
-        """Initialize the database with schema.sql if it's a new database."""
-        if os.path.exists(self.schema_file):
-            try:
-                with open(self.schema_file, "r") as f:
-                    schema = f.read()
-                    self.cursor.executescript(schema)
-                    self.conn.commit()
-                    print("Database initialized with schema.")
-            except sqlite3.Error as e:
-                print(f"Database initialization error: {e}")
-            except IOError as e:
-                print(f"Error reading schema file: {e}")
-        else:
-            print("Schema file not found. Database is empty.")
+            )
+            self.cursor = self.conn.cursor()
+        except mariadb.Error as e:
+            print(f"Error connecting to MariaDB Platform: {e}")
+            sys.exit(1)
 
     def execute_query(self, query, params=()):
         """Execute a SQL query and return the result."""
