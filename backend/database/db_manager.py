@@ -19,6 +19,7 @@ class DatabaseManager:
 
     def connect(self):
         try:
+            print("Connecting to MariaDB...")
             self.conn = mariadb.connect(
                 user=self.mariadb_user,
                 password=self.mariadb_password,
@@ -28,6 +29,7 @@ class DatabaseManager:
 
             )
             self.cursor = self.conn.cursor()
+            print("[+] Connected to MariaDB")
         except mariadb.Error as e:
             print(f"Error connecting to MariaDB Platform: {e}")
             sys.exit(1)
@@ -41,36 +43,32 @@ class DatabaseManager:
     def get_all_airports(self):
         query = "SELECT * FROM airports"
         return self.execute_query(query)
-    def get_country_by_code(self, code):
-        query = "Select name from country where iso_country = ?"
-        result = self.execute_query(query, (code,))
-        if result and len(result) > 0:
-            return result[0][0]
-        return "Unknown"  # or raise a specific exception
-    def create_new_game_record(self, player_id, time_elapsed, has_won):
+    def get_all_countries(self):
+        query = "Select * from country"
+        result = self.execute_query(query)
+        return result
+    def get_all_players(self):
+        query = "SELECT * FROM players"
+        return self.execute_query(query)
+
+    def create_end_result(self, player_id, time_elapsed, has_won):
         query = "INSERT INTO game (player_id, time_elapsed, has_won) VALUES (?, ?, ?)"
         return self.execute_query(query, (player_id, time_elapsed, has_won))
 
-    def add_new_player(self, name, health, fuel, location_id):
-        query = "INSERT INTO players (name, health, fuel, location_id) VALUES (?,?,?,?)"
-        self.execute_query(query, (name,health,fuel, location_id))
+    def add_new_player(self, name):
+        query = "INSERT INTO players (name) VALUES (?)"
+        self.execute_query(query, (name))
         return self.cursor.lastrowid
-    def update_player(self, player_id, health, fuel, location_id):
-        query = "UPDATE players SET ( health, fuel, location_id) = (?,?,?) WHERE id = ?"
-        return self.execute_query(query, ( health, fuel, location_id,player_id))
-    def get_end_status(self):
+    def get_end_results(self):
         query = """
                     SELECT 
-                players.name AS player_name,
+                players.name,
                 game.time_elapsed,
-                game.has_won,
-                airports.name AS current_airport
+                game.has_won
             FROM 
-                players
+                game
             LEFT JOIN 
-                game ON players.id = game.player_id
-            LEFT JOIN 
-                airports ON players.location_id = airports.id;
+                players ON players.name = game.player_name
         """
         return self.execute_query(query)
 
