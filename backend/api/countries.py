@@ -1,11 +1,11 @@
 import json
-from __main__ import  app, db_manager
+from flask import Blueprint, Response, json, current_app
 
-from flask import Response
-
-
-@app.route('/countries', methods=['GET'])
+countries_bp = Blueprint('countries', __name__)
+# receive the db_manager from the app context
+@countries_bp.route('/countries', methods=['GET'])
 def countries():
+    db_manager = current_app.config['DB_MANAGER']
     try:
         rows = db_manager.get_all_countries()
         print(rows)

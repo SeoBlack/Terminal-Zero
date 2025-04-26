@@ -1,11 +1,11 @@
 import json
-from __main__ import  app, db_manager
+from flask import Blueprint, Response, json, current_app
+airports_bp = Blueprint('airports', __name__)
 
-from flask import Response
-
-
-@app.route('/airports', methods=['GET'])
+@airports_bp.route('/airports', methods=['GET'])
 def airports():
+
+    db_manager = current_app.config['DB_MANAGER']
 
     try:
         rows = db_manager.get_all_airports()

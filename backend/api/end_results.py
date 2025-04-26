@@ -1,12 +1,17 @@
 import json
-from __main__ import  app, db_manager
 
-from flask import request, Response
+from flask import request, current_app
+
+from flask import Blueprint, Response, json
+
+end_results_bp = Blueprint('end_results', __name__)
 
 
-@app.route('/end_results', methods=['GET', 'POST'])
+@end_results_bp.route('/end_results', methods=['GET', 'POST'])
 def end_results():
 
+    # receive the db_manager from the app context
+    db_manager = current_app.config['DB_MANAGER']
     if request.method == 'GET':
         # Handle GET request
         try:
