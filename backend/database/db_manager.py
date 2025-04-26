@@ -51,14 +51,15 @@ class DatabaseManager:
         query = "SELECT * FROM players"
         return self.execute_query(query)
 
-    def create_end_result(self, player_id, time_elapsed, has_won):
+    def create_end_result(self, player_name, time_elapsed, has_won):
         query = "INSERT INTO game (player_id, time_elapsed, has_won) VALUES (?, ?, ?)"
-        return self.execute_query(query, (player_id, time_elapsed, has_won))
+        return self.execute_query(query, (player_name, time_elapsed, has_won))
 
     def add_new_player(self, name):
         query = "INSERT INTO players (name) VALUES (?)"
         self.execute_query(query, (name))
-        return self.cursor.lastrowid
+        return name
+
     def get_end_results(self):
         query = """
                     SELECT 
