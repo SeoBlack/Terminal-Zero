@@ -1,5 +1,6 @@
 // a dialog that will take a title and a function onConfirm as parameters
 import {createTransparentButton} from "./buttons.js";
+import {Icons} from "./icons.js";
 
 export function createConfirmationDialog(title, onConfirm) {
     // Create the dialog element
@@ -7,7 +8,7 @@ export function createConfirmationDialog(title, onConfirm) {
     dialog.className = 'confirmation-dialog';
     dialog.innerHTML = `
         <div class="confirmation-dialog-content">
-            <span class="close-button">&times;</span>
+            <span class="close-button">${Icons.CLOSE}</span>
             <p class="heading">${title}</p>
             <div id="buttons">
        </div>
@@ -21,6 +22,10 @@ export function createConfirmationDialog(title, onConfirm) {
     dialog.querySelector('#buttons').appendChild(createTransparentButton('Cancel', 'cancel-button', 'transparent-button', function () {
         dialog.style.display = 'none';
     }));
+    // Set initial focus to the confirm button
+setTimeout(() => {
+    dialog.querySelector('#confirm-button').focus();
+}, 150);
     document.body.appendChild(dialog);
 
     // Add event listener to close button
@@ -31,11 +36,14 @@ export function createConfirmationDialog(title, onConfirm) {
 
 
     // Close the dialog when clicking outside of it
-    window.addEventListener('click', function (event) {
+    const windowClickHandler = function (event) {
         if (event.target === dialog) {
             dialog.style.display = 'none';
+            window.removeEventListener('click', windowClickHandler);
         }
-    });
+
+    }
+    window.addEventListener('click', windowClickHandler);
 
     // Add basic styles for the confirmation dialog
     const style = document.createElement('style');

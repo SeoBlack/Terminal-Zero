@@ -27,6 +27,7 @@
     color: white;
     font-size: 1.2em;
     margin-top: 5px;
+     transition: all 0.3s ease-in-out;
 }
 .flex{
     display: flex;
@@ -40,18 +41,21 @@
     color: white;
     font-size: 1.5em;
     margin-left: 10px;
+     transition: all 0.3s ease-in-out;
 }
 .username-container:hover{
     border-radius: 5px;
     cursor: pointer;
-    .arrow{
-        margin-left: 100px;
-        transition: all 0.3s ease-in-out;
-    }
-    .username-text{
-        color: #efb302;
-        transition: all 0.3s ease-in-out;
-    }
+}
+
+.username-container:hover .arrow{
+    margin-left: 100px;
+    transition: all 0.3s ease-in-out;
+}
+
+.username-container:hover .username-text{
+    color: #efb302;
+    transition: all 0.3s ease-in-out;
 }
 
 #newGame{

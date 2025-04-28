@@ -1,10 +1,10 @@
 'use strict';
 // A button that when clicked, shows a help dialog with information about the game, including controls and tips. The dialog can be closed by clicking a close button or outside the dialog area. content will be replaced later when we finsih the game
+import {Icons} from "./icons.js";
+
 export function createHelpButton() {
     const helpButton = document.createElement('button');
-    helpButton.innerHTML = '<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">\n' +
-        '  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.529 9.988a2.502 2.502 0 1 1 5 .191A2.441 2.441 0 0 1 12 12.582V14m-.01 3.008H12M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>\n' +
-        '</svg>\n';
+    helpButton.innerHTML = Icons.HELP;
     helpButton.className = 'help-button';
     document.body.appendChild(helpButton);
     const helpDialog = document.createElement('div');
@@ -95,9 +95,6 @@ export function createHelpButton() {
     `;
     document.head.appendChild(style);
     // Add event listener to close the dialog when the close button is clicked
-    closeButton.addEventListener('click', function () {
-        helpDialog.style.display = 'none';
-    });
 
       helpButton.style.transform = 'scale(0)';
   setTimeout(() => {
