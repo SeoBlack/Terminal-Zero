@@ -1,0 +1,73 @@
+
+.menu{
+    position: absolute;
+    bottom: 20%;
+    left: 20%;
+    height: 20%;
+
+}
+.transparent_input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    outline: none;
+}
+.transparent_input:focus{
+    border-bottom: 1px solid #efb302;
+}
+#info-text{
+    color: #efb302;
+    font-size: 16px;
+    margin-top: 10px;
+}
+.username-text{
+    color: white;
+    font-size: 1.2em;
+    margin-top: 5px;
+     transition: all 0.3s ease-in-out;
+}
+.flex{
+    display: flex;
+}
+.row{
+    flex-direction: row;
+    align-items: center;
+}
+
+.arrow{
+    color: white;
+    font-size: 1.5em;
+    margin-left: 10px;
+     transition: all 0.3s ease-in-out;
+}
+.username-container:hover{
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.username-container:hover .arrow{
+    margin-left: 100px;
+    transition: all 0.3s ease-in-out;
+}
+
+.username-container:hover .username-text{
+    color: #efb302;
+    transition: all 0.3s ease-in-out;
+}
+
+#newGame{
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 1em;
+    padding: 10px 20px;
+    margin-left: 30px;
+}
+#newGame:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}

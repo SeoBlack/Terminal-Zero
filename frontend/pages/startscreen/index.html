@@ -3,12 +3,26 @@
 <head>
     <meta charset="UTF-8">
         <script src="../../js/components/dynamic_bg/dynamic_bg.js"  defer></script>
-    <script src="../../js/components/audio.js"  defer></script>
+    <script src="../../js/components/quick_buttons.js"  defer type="module"></script>
+    <script src="./start_screen.js"  defer type="module"></script>
+    <link rel="stylesheet" href="./styles.css" >
+    <link rel="stylesheet" href="../global.css">
     <title>Terminal Zero</title>
 
 </head>
 <body>
  <canvas id="fireflies"></canvas>
+ <div class="menu">
+     <div class="flex row">
+         <input class="transparent_input" type="text" name="username" id="username" placeholder="Enter your name">
+            <button id="newGame">New Game</button>
+     </div>
+     <div id="previous-players">
+
+
+     </div>
+
+ </div>
 
 </body>
 </html>
