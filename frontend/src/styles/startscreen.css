@@ -1,4 +1,4 @@
-
+@import "../global.css";
 .menu{
     position: absolute;
     bottom: 20%;
@@ -16,15 +16,15 @@
     outline: none;
 }
 .transparent_input:focus{
-    border-bottom: 1px solid #efb302;
+    border-bottom: 1px solid var(--primary-color);
 }
 #info-text{
-    color: #efb302;
+    color: var(--primary-color);
     font-size: 16px;
     margin-top: 10px;
 }
 .username-text{
-    color: white;
+    color: var(--white-color);
     font-size: 1.2em;
     margin-top: 5px;
      transition: all 0.3s ease-in-out;
@@ -54,14 +54,14 @@
 }
 
 .username-container:hover .username-text{
-    color: #efb302;
+    color: var(--primary-color);
     transition: all 0.3s ease-in-out;
 }
 
 #newGame{
     background-color: rgba(255, 255, 255, 0.1);
     border: none;
-    color: white;
+    color: var(--white-color);
     font-size: 1em;
     padding: 10px 20px;
     margin-left: 30px;

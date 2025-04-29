@@ -8,37 +8,21 @@ player_bp = Blueprint('player', __name__)
 
 @player_bp.route('/players', methods=['GET', 'POST'])
 def players():
-    # receive the db_manager from the app context
     db_manager = current_app.config['DB_MANAGER']
     if request.method == 'GET':
-        # Handle GET request
         try:
             rows = db_manager.get_all_players()
-            players = [{
-                "name": row[0]
-            } for row in rows]
-            return Response(response=json.dumps(players, default=str),
-                            mimetype='application/json',
-                            status=200
-                            )
+            players = [{"name": row[0]} for row in rows]
+            return Response(json.dumps(players, default=str), mimetype='application/json', status=200)
         except Exception as e:
-            print(f"Error: {e}")
-            return Response(response=json.dumps({"error": str(e)}),
-                            mimetype='application/json',
-                            status=500
-                            )
-    elif request.method == 'POST':
-        player_name = request.form['player_name']
+            return Response(json.dumps({"error": str(e)}), mimetype='application/json', status=500)
 
+    if request.method == 'POST':
+        if not request.is_json:
+            return Response(json.dumps({"error": "Request must be JSON"}), mimetype='application/json', status=400)
         try:
-            db_manager.add_new_player(player_name)
-            return Response(response=json.dumps({"message": "Player created successfully"}),
-                            mimetype='application/json',
-                            status=201
-                            )
+            db_manager.add_new_player(request.get_json()['username'])
+            return Response(json.dumps({"message": "Player created successfully"}), mimetype='application/json', status=201)
         except Exception as e:
-            print(f"Error: {e}")
-            return Response(response=json.dumps({"error": str(e)}),
-                            mimetype='application/json',
-                            status=500
-                            )
+            status = 409 if "Duplicate entry" in str(e) else 500
+            return Response(json.dumps({"error": str(e) if status == 500 else "Player already exists"}), mimetype='application/json', status=status)

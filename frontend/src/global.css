@@ -1,6 +1,15 @@
 /* Global styles for the application */
 /* This file contains styles that are applied globally across the application */
 
+/*COLORS PALETTE*/
+:root {
+    --primary-color: #efb302;
+    --secondary-color: #000000;
+    --white-color: #ffffff;
+    --text-color: #333333;
+    --error-color: red;
+    --success-color: green;
+}
 body{
     position: relative;
     height: 100vh;
@@ -9,7 +18,7 @@ body{
 }
 .transparent-button {
             background-color: transparent;
-            color: #efb302;
+            color: var(--primary-color);
             border: 1px solid rgba(255,255,100,0.4);
             padding: 10px 20px;
             margin: 5px;
@@ -19,4 +28,11 @@ body{
         }
 .transparent-button:hover {
     background-color: rgba(255,255,100,0.2);
+}
+
+.error_message{
+    color: var(--error-color);
+    font-size: 16px;
+    margin-top: 10px;
+    display: none;
 }

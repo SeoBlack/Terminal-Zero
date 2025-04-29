@@ -1,4 +1,4 @@
-## Game settings (e.g., difficulty, max inventory size)
+ //Game settings (e.g., difficulty, max inventory size)
 SETTINGS = {
     "max_danger_level":3,
     "max_inventory_size": 10,
