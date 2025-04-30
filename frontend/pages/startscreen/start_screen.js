@@ -1,6 +1,14 @@
-const newGameButton = document.getElementById("newGame");
+// --------------IMPORTS----------------
+
+
+// --------------VARIABLES----------------
+import {addNewUser} from "../../js/utils/backend-queries.js";
+import {showSnackbar, snackbarType} from "../../js/components/snackbar.js";
+
 const previousPlayers = ['Sorin', 'Isla', 'Nikita', 'Abbas'];
 const previousPlayersList = document.getElementById('previous-players');
+const newGameForm = document.getElementById('newGameForm');
+const usernameInput = document.getElementById('usernameInput');
 
 // Populate the previous players list
 previousPlayersList.innerHTML = '<p id="info-text">or continue where you left</p>'; // Clear the list before populating
@@ -18,3 +26,23 @@ previousPlayers.forEach(player => {
     previousPlayersList.appendChild(playerDiv);
 
 })
+
+// --------------------EVENT LISTENERS--------------------
+newGameForm.addEventListener('submit', handleSubmit);
+
+
+// ----------------FUNCTIONS----------------
+async function handleSubmit(event) {
+        event.preventDefault();
+        const username = usernameInput.value.trim();
+
+        if (username) {
+            // Post the username to the server
+            const response = await addNewUser(username);
+            if (response) {
+                return window.location.href = `../gamescreen/game.html?username=${username}`;
+            }
+        } else {
+            showSnackbar(snackbarType.ERROR, 'Please enter a username');
+        }
+    }
