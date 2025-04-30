@@ -1,8 +1,10 @@
-document.addEventListener('DOMContentLoaded', function() {
+export function createDynamicBackground() {
   // Create container for fireflies
   const container = document.createElement('div');
   container.className = 'fireflies-container';
   document.body.appendChild(container);
+
+  console.log("container added");
 
   // Add styles
   const style = document.createElement('style');
@@ -16,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
       z-index: -10;
       overflow: hidden;
       pointer-events: none;
-      background-image: url("../../assets/images/background-airport.png");
+      background-image: url("./assets/images/background-airport.png");
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center center;
@@ -37,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   `;
   document.head.appendChild(style);
+  console.log("style added");
 
   const fireflies = [];
   const maxFireflies = 14;
@@ -92,4 +95,4 @@ document.addEventListener('DOMContentLoaded', function() {
     container.remove();
     style.remove();
   };
-});
+}

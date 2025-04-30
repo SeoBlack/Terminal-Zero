@@ -1,6 +1,10 @@
+import {showSnackbar, snackbarType} from "../js/components/snackbar.js";
+import {addNewUser} from "../js/utils/backend-queries.js";
+import {createDynamicBackground} from "../js/components/dynamic_bg/dynamic_bg.js";
+
 export function StartScreen() {
     // State variables
-    const previousPlayers = ['Sorin', 'Isla', 'Nikita', 'Nikita', 'Abbas'];
+    const previousPlayers = ['Sorin', 'Isla', 'Nikita', 'Abbas'];
     let usernameInput, newGameForm;
 
     // DOM creation
@@ -18,6 +22,7 @@ export function StartScreen() {
                 </form>
                 <div id="previous-players"></div>
             </div>
+                        
         `;
 
         // Cache DOM elements
@@ -61,13 +66,12 @@ export function StartScreen() {
     }
 
     // Setup function
-    function init() {
+    async function init() {
         // Load external scripts
-        loadScript('../../../js/components/dynamic_bg/dynamic_bg.js');
-        loadScript('../../../js/components/quick_buttons.js');
-
+        createDynamicBackground()
         // Add event listeners
         newGameForm.addEventListener('submit', handleSubmit);
+
     }
 
     // Cleanup function
@@ -78,17 +82,20 @@ export function StartScreen() {
     }
 
     // Helper function to load scripts
-    function loadScript(src) {
-        const script = document.createElement('script');
-        script.src = src;
-        script.defer = true;
-        document.head.appendChild(script);
+    function loadScript(src, type = 'text/javascript') {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = reject;
+            script.type = type;
+            document.body.appendChild(script); // Add to body, not head
+        });
     }
 
     return {
         render,
         init,
         cleanup,
-        css: 'styles.css' // Path to your CSS file
     };
 }

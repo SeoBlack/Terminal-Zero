@@ -14,7 +14,7 @@ export function createSoundButton() {
   // Create audio element
   const audio = document.createElement('audio');
   audio.loop = true;
-  audio.innerHTML = '<source src="../../assets/audio/soundtrack.mp3" type="audio/mpeg">Your browser doesn\'t support audio.';
+  audio.innerHTML = '<source src="./assets/audio/soundtrack.mp3" type="audio/mpeg">Your browser doesn\'t support audio.';
   soundContainer.appendChild(audio);
 
   // Create sound button

@@ -26,7 +26,8 @@ export class Router {
 
     handleRouteChange() {
         // Get current path (remove # and trailing slashes)
-        const path = window.location.hash.replace(/^#\/?|\/$/g, '') || 'home';
+        console.log(window.location)
+        const path = window.location.hash.replace(/^#\/?|\/$/g, '');
 
         // Find matching route
         const route = this.routes[path] || this.routes['404'];
@@ -52,10 +53,27 @@ export class Router {
             document.head.appendChild(this.currentCSS);
         }
 
+
+
         // Execute route function and render
         const app = document.getElementById('app');
         app.innerHTML = '';
-        this.currentRoute = route.handler();
-        app.appendChild(this.currentRoute.render());
+        // Check if the route is a function
+        if (typeof route.handler === 'function') {
+            // If the route is a function, create a new instance
+            this.currentRoute = route.handler();
+        }
+
+        const renderedElement = this.currentRoute.render();
+        if (renderedElement) {
+            app.appendChild(renderedElement);
+             if (this.currentRoute.init) {
+                this.currentRoute.init();
+            }
+
+        } else {
+            console.error('Render function did not return a valid element');
+        }
+
     }
 }

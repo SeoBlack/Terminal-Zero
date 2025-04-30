@@ -3,10 +3,11 @@
 import {StartScreen} from "./pages/StartScreen.js";
 import {GameScreen} from "./pages/GameScreen.js";
 import {WinScreen} from "./pages/WinScreen.js";
-import {Router} from "../js/components/router.js";
+import {Router} from './js/components/router.js'
+import {LoseScreen} from "./pages/LoseScreen.js";
 
 const routes = {
-        'start': {
+        '': {
         handler: StartScreen,
         css: './styles/startscreen.css'
     },
@@ -19,8 +20,8 @@ const routes = {
         css: './styles/winscreen.css'
     },
         'lose': {
-        handler: GameScreen,
-        css: './styles/los.css'
+        handler: LoseScreen,
+        css: './styles/lose.css'
     },
 
 };

@@ -39,7 +39,7 @@ export function WinScreen() {
     }
 
     function cleanup() {
-        // Remove event listeners
+        // Remove event listener
         // Clear any intervals/timeouts
         // Clean up any other resources
         console.log('WinScreen cleaned up');
