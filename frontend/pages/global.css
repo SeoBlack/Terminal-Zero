@@ -4,8 +4,12 @@
 :root {
     --primary-color: #efb302;
     --background-color: #0F1721;
+    --black-color: #04070A;
+    --black2-color: #030507;
+    --border-color: #251606;
     --text-color: #FFFFFF;
     --red-color:#BF3233;
+    --grey-color: #75767A;
     --font-family: 'Poppins', sans-serif;
 }
 /*reset css*/
