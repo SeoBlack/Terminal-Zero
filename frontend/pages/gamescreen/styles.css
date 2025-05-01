@@ -1,0 +1,98 @@
+@import '../global.css';
+
+main{
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background-color);
+    display: flex;
+}
+#map-view{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+
+}
+#sidebar{
+    width: 30%;
+    height: 100%;
+    background-color: var(--background-color);
+    padding: 30px;
+    position: relative;
+    z-index: 2;
+}
+body{
+    color: var(--text-color);
+}
+h3{
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.status-item {
+    margin-bottom: 10px;
+    top: 15px;
+}
+
+.progress-container {
+    display: inline-block;
+    width: 100px;
+    height: 12px;
+    background-color: #e0e0e0;
+    border-radius: 6px;
+    vertical-align: middle;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 6px;
+}
+
+.health-bar {
+    width: 80%;
+    background-color: var(--red-color);
+}
+
+.fuel-bar {
+    width: 65%;
+    background-color: var(--primary-color);
+}
+
+.inventory-category {
+    margin-left: 10px;
+}
+
+.category-title {
+    font-weight: bold;
+}
+
+.items-list {
+    list-style-type: none;
+    padding-left: 20px;
+    margin: 5px 0;
+}
+
+.items-list li::before {
+    content: "- ";
+}
+
+.actions-list {
+    list-style-type: none;
+    padding-left: 10px;
+    margin: 10px 0;
+}
+
+.actions-list li::before {
+    content: "- ";
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}

@@ -1,6 +1,20 @@
 /* Global styles for the application */
 /* This file contains styles that are applied globally across the application */
 
+:root {
+    --primary-color: #efb302;
+    --background-color: #0F1721;
+    --text-color: #FFFFFF;
+    --red-color:#BF3233;
+    --font-family: 'Poppins', sans-serif;
+}
+/*reset css*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
     position: relative;
     height: 100vh;
@@ -9,7 +23,7 @@ body{
 }
 .transparent-button {
             background-color: transparent;
-            color: #efb302;
+            color: var(--primary-color);
             border: 1px solid rgba(255,255,100,0.4);
             padding: 10px 20px;
             margin: 5px;

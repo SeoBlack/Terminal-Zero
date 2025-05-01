@@ -1,3 +1,4 @@
+@import '../global.css';
 
 .menu{
     position: absolute;
@@ -16,15 +17,15 @@
     outline: none;
 }
 .transparent_input:focus{
-    border-bottom: 1px solid #efb302;
+    border-bottom: 1px solid var(--primary-color);
 }
 #info-text{
-    color: #efb302;
+    color: var(--primary-color);
     font-size: 16px;
     margin-top: 10px;
 }
 .username-text{
-    color: white;
+    color: var(--text-color);
     font-size: 1.2em;
     margin-top: 5px;
      transition: all 0.3s ease-in-out;
@@ -38,7 +39,7 @@
 }
 
 .arrow{
-    color: white;
+    color: var(--text-color);
     font-size: 1.5em;
     margin-left: 10px;
      transition: all 0.3s ease-in-out;
@@ -54,7 +55,7 @@
 }
 
 .username-container:hover .username-text{
-    color: #efb302;
+    color: var(--primary-color);
     transition: all 0.3s ease-in-out;
 }
 
