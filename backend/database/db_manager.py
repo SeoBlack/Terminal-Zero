@@ -38,7 +38,9 @@ class DatabaseManager:
         """Execute a SQL query and return the result."""
         self.cursor.execute(query, params)
         self.conn.commit()
-        return self.cursor.fetchall()
+        if query.lower().startswith("select"):
+            return self.cursor.fetchall()
+        return None
 
     def get_all_airports(self):
         query = "SELECT * FROM airports"
@@ -57,7 +59,7 @@ class DatabaseManager:
 
     def add_new_player(self, name):
         query = "INSERT INTO players (name) VALUES (?)"
-        self.execute_query(query, (name))
+        self.execute_query(query, (name,))
         return name
 
     def get_end_results(self):
