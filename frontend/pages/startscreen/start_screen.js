@@ -1,10 +1,9 @@
 // --------------IMPORTS----------------
-
-
-// --------------VARIABLES----------------
 import {addNewUser} from "../../js/utils/backend-queries.js";
 import {showSnackbar, snackbarType} from "../../js/components/snackbar.js";
+import { playClickSound } from "../../js/components/audio.js";
 
+// --------------VARIABLES----------------
 const previousPlayers = ['Sorin', 'Isla', 'Nikita', 'Abbas'];
 const previousPlayersList = document.getElementById('previous-players');
 const newGameForm = document.getElementById('newGameForm');
@@ -22,27 +21,34 @@ previousPlayers.forEach(player => {
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M19 12H5m14 0-4 4m4-4-4-4"/>
             </svg>
-    `
+    `;
     previousPlayersList.appendChild(playerDiv);
-
-})
+});
 
 // --------------------EVENT LISTENERS--------------------
 newGameForm.addEventListener('submit', handleSubmit);
 
-
 // ----------------FUNCTIONS----------------
 async function handleSubmit(event) {
-        event.preventDefault();
-        const username = usernameInput.value.trim();
+    event.preventDefault();
+    const username = usernameInput.value.trim();
 
-        if (username) {
-            // Post the username to the server
-            const response = await addNewUser(username);
-            if (response) {
-                return window.location.href = `../gamescreen/game.html?username=${username}`;
-            }
-        } else {
-            showSnackbar(snackbarType.ERROR, 'Please enter a username');
+    if (username) {
+        // Post the username to the server
+        const response = await addNewUser(username);
+        if (response) {
+            return window.location.href = `../gamescreen/game.html?username=${username}`;
         }
+    } else {
+        showSnackbar(snackbarType.ERROR, 'Please enter a username');
     }
+}
+
+// ----------------CLICK SOUND FOR ALL BUTTONS----------------
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', () => {
+            playClickSound();
+        });
+    });
+});
