@@ -1,5 +1,3 @@
-import { playClickSound } from './audio.js';
-
 export function createTransparentButton(text, id, className, onClick) {
     const button = document.createElement('button');
     button.innerHTML = text;
@@ -7,8 +5,7 @@ export function createTransparentButton(text, id, className, onClick) {
     button.classList.add(className);
 
     button.addEventListener('click', (event) => {
-        playClickSound();     // Klik-ääni
-        onClick(event);       // Alkuperäinen toiminto
+        onClick(event);       // Vain alkuperäinen toiminto
     });
 
     return button;
