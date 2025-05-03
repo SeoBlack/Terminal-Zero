@@ -3,6 +3,10 @@ export function createTransparentButton(text, id, className, onClick) {
     button.innerHTML = text;
     button.id = id;
     button.classList.add(className);
-    button.addEventListener('click', onClick);
+
+    button.addEventListener('click', (event) => {
+        onClick(event);       // Vain alkuperäinen toiminto
+    });
+
     return button;
 }
