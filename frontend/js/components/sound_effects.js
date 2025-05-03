@@ -1,8 +1,11 @@
  const audio = new Audio();
 export function playSoundEffect(soundEffect) {
     /** Play a sound effect. */
+
     audio.src = soundEffect
-      audio.play();
+        audio.play().catch(error => {
+        console.warn(`Failed to play sound effect: ${soundEffect}`, error);
+    });
 }
 
 

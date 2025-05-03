@@ -342,9 +342,6 @@ hr {
     font-family: poppins , sans-serif;
 
 }
-.leaflet-popup-content{
-
-}
 .leaflet-popup-content-wrapper h2{
     color: var(--primary-color);
     font-weight: 600;

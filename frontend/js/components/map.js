@@ -5,6 +5,7 @@ class MapHandler {
         this.map = L.map(mapId);
         this.markers = [];
         this.player = null;
+        this.playerMarker = null;
         L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=Q7LqsU4uCRpBRQmdA0wCfMBqoKmlramXUXl59KMEPYUzw4pdB7m4QLUATbSQwO92', {}).addTo(this.map);
     }
 
@@ -21,7 +22,7 @@ class MapHandler {
     createPlayerMarker(player) {
         let playerIcon = L.divIcon({
             className: 'player-marker',
-            html: `<div class="pulse-ring" id="player"></div><div class="player" style="color:${player.color}">${Icons.PLAYER}</div>`,
+            html: `<div class="pulse-ring player-ring"></div><div class="player" style="color:${player.color}">${Icons.PLAYER}</div>`,
             iconSize: [50, 50],
             iconAnchor: [12.5, 12.5],
             popupAnchor: [0, -12.5],
@@ -30,12 +31,12 @@ class MapHandler {
         });
 
         let popup = this.createPlayerPopup(player);
-        const playerMarker = L.marker([player.location.lat, player.location.lng], {
+        this.playerMarker = L.marker([player.location.lat, player.location.lng], {
             icon: playerIcon
         }).addTo(this.map).bindPopup(popup);
 
 
-        this.markers.push(playerMarker);
+        this.markers.push(this.playerMarker);
     }
 
     createMapMarker(airport) {
@@ -71,15 +72,14 @@ class MapHandler {
                 <h2>${airport.name}</h2>
                 <p><strong>Country: </strong> ${airport.country}</p>
                 <p><strong>Danger Level:</strong> ${airport.dangerLevel}</p>
-                <button class="transparent-button" id="travel-button">Travel to destination</button>
+                <button class="transparent-button travel-button">Travel to destination</button>
             `);
         popup.on('add', () => {
-            const travelButton = document.getElementById('travel-button');
+            const travelButton = popup.getElement().querySelector('.travel-button');
             if (travelButton) {
                 travelButton.addEventListener('click', async () => {
                     if(this.player){
-                        const playerMarker = this.markers.find(marker => marker.getLatLng().lat === this.player.location.lat && marker.getLatLng().lng === this.player.location.lng);
-                       await  this.player.move(airport,playerMarker )
+                       await  this.player.move(airport,this.playerMarker )
                         this.updateMap(this.player);
 
                     }

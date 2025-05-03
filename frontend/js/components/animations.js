@@ -5,11 +5,14 @@ export function animateScan(){
 
     // play sound effect
     playSoundEffect(soundEffects.RADAR);
-    document.getElementById('player').style.animation =  'scan 2s linear infinite';
+    document.querySelector('.player-ring').style.animation =  'scan 2s linear infinite';
 
     return new Promise((resolve) => {
         setTimeout(() => {
-            document.getElementById('player').style.animation = 'pulse 2s linear infinite';
+            const playerEl = document.querySelector('.player-ring');
+            if (playerEl) {
+                playerEl.style.animation = 'scan 2s linear infinite';
+            }
             resolve();
         }, 2000);
     });
