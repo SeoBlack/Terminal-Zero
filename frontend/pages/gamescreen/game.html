@@ -2,23 +2,120 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <!-- Scriptit -->
-    <script src="../../js/components/dynamic_bg/dynamic_bg.js"></script>
-    <script src="../../js/components/quick_buttons.js" defer></script>
-    <script src="./gamescreen.js" defer type="module"></script>
-
-    <!-- Tyylit -->
-    <link rel="stylesheet" href="./styles.css">
+    <script src="../../js/components/quick_buttons.js"  defer type="module"></script>
+    <script src="./gamescreen.js"  defer type="module"></script>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-providers@latest/leaflet-providers.js"></script>
+    <script src="../../js/components/map.js" type="module"></script>
+    <link rel="stylesheet" href="./styles.css" >
     <link rel="stylesheet" href="../global.css">
     <title>Terminal Zero</title>
 
 </head>
 <body>
+<main class="gamescreen">
+    <div id="map-view"></div>
+    <div id="sidebar">
+        <h3>Sorin</h3>
+        <div class="status">
 
-    <canvas id="fireflies"></canvas>
+        <div class="status-item">
+            <div class="status-title">
+                <div>
+                    <svg class="heart w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"/>
+                    </svg>
+                    <p>Health</p>
+                </div>
+                <p>100%</p>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar health-bar"></div>
+            </div>
+        </div>
 
-    <!-- Klik-ääni -->
-    <script type="module" src="../../js/components/global_click_sound.js"></script>
+        <div class="status-item">
+            <div class="status-title">
+                <div>
+                    <svg class="fuel w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M2.98755 7.97095c0-.55229.44771-1 1-1H16.9253c.5523 0 1 .44771 1 1v7.95855c0 .5522-.4477 1-1 1H3.98755c-.55229 0-1-.4478-1-1V7.97095ZM20.9129 12.9419v-1.9834c0-.5523-.4478-1-1-1h-.9876c-.5523 0-1 .4477-1 1v1.9834c0 .5523.4477 1 1 1h.9876c.5522 0 1-.4477 1-1Z"/>
+                      <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M5.9751 9.9585h8.9627v3.9834H5.9751V9.9585Z"/>
+                    </svg>
+                    <p>Fuel</p>
+                </div>
+                <p>60%</p>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar fuel-bar"></div>
+            </div>
+        </div>
+
+        <div class="status-item">
+            <div class="status-title">
+                <div>
+
+                    <svg class="pin w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Zm0 0v6M9.5 9A2.5 2.5 0 0 1 12 6.5"/>
+                    </svg>
+                     <p>Location</p>
+                </div>
+
+
+            </div>
+                                        <p>John F. Kennedy International Airport (JFK)</p>
+
+        </div>
+        </div>
+
+        <hr>
+        <h3>Inventory</h3>
+        <div class="inventory">
+
+
+                <div class="inventory-item">
+                    <span>🍗</span>
+                    <p class="inventory-item-title">Food</p>
+                    <p class="inventory-item-quantity">x2</p>
+                </div>
+                            <div class="inventory-item">
+                    <span>🍗</span>
+                    <p class="inventory-item-title">Food</p>
+                    <p class="inventory-item-quantity">x2</p>
+                </div>
+                            <div class="inventory-item">
+                    <span>🍗</span>
+                    <p class="inventory-item-title">Food</p>
+                    <p class="inventory-item-quantity">x2</p>
+                </div>
+                                        <div class="inventory-item">
+                    <span>🍗</span>
+                    <p class="inventory-item-title">Food</p>
+                    <p class="inventory-item-quantity">x2</p>
+                </div>
+                                        <div class="inventory-item">
+                    <span>🍗</span>
+                    <p class="inventory-item-title">Food</p>
+                    <p class="inventory-item-quantity">x2</p>
+                </div>
+
+            </div>
+        <hr>
+        <h2>Actions</h2>
+        <div class="actions">
+
+        <ul class="actions-list">
+            <li> 🌏 Scan nearby airports</li>
+            <li> 🔍 Explore Airport</li>
+            <li> ❌ End game</li>
+        </ul>
+                    </div>
+
+    </div>
+</main>
 </body>
 </html>

@@ -11,11 +11,34 @@ export function createSoundButton() {
   soundContainer.className = 'sound-container';
   document.body.appendChild(soundContainer);
 
-  // Create audio element
+  // Create audio element and manage playlist
   const audio = document.createElement('audio');
-  audio.loop = true;
-  audio.innerHTML = '<source src="../../assets/audio/soundtrack.mp3" type="audio/mpeg">Your browser doesn\'t support audio.';
+  audio.loop = false; // Disable looping for individual tracks
+  let playlist = [];
+  if(window.location.pathname.includes('startscreen')) {
+    playlist.push('../../assets/audio/soundtrack1.mp3');
+  }
+  if(window.location.pathname.includes('game')) {
+    playlist.push('../../assets/audio/soundtrack2.mp3');
+    playlist.push('../../assets/audio/soundtrack3.mp3');
+  }
+  if(window.location.pathname.includes('gameover')) {
+  playlist.push('../../assets/audio/gameover.mp3');
+  }
+  if(window.location.pathname.includes('victory')) {
+  playlist.push('../../assets/audio/victory.mp3');
+  }
+  console.log(window.location)
+  let currentTrackIndex = 0;
+  audio.src = playlist[currentTrackIndex];
+  audio.innerHTML = 'Your browser doesn\'t support audio.';
   soundContainer.appendChild(audio);
+  audio.addEventListener('ended', () => {
+    currentTrackIndex = (currentTrackIndex + 1) % playlist.length; // Move to the next track
+    audio.src = playlist[currentTrackIndex];
+    audio.play();
+});
+
 
   // Create sound button
   const soundButton = document.createElement('button');
