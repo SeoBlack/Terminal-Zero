@@ -1,10 +1,10 @@
 
-function getRandomAirport(airports) {
+export function getRandomAirport(airports) {
     return airports[Math.floor(Math.random() * airports.length)];
 }
 
 // Resources
-const eventTypes = [
+export const eventTypes = [
     "fuel",
     "food",
     "weapon",
@@ -14,7 +14,7 @@ const eventTypes = [
     "medicine"
 ];
 
-const storableItems = [
+export const storableItems = [
     "weapon",
     "water",
     "food",
@@ -23,7 +23,7 @@ const storableItems = [
 ];
 
 // Maximum values
-const maxValues = {
+export const maxValues = {
     fuel: 2,
     medicine: 20,
     food: 10,
@@ -34,7 +34,7 @@ const maxValues = {
     huge_damage: -20
 };
 
-const eventsWithTexts = [
+export const eventsWithTexts = [
     { fuel: "You found a fuel can!" },
     { damage: "You were attacked by zombies!" },
     { huge_damage: "You were attacked by a juggernaut!" },
@@ -43,7 +43,7 @@ const eventsWithTexts = [
     { weapon: "You found weapons!" }
 ];
 
-function getHintEvents(country) {
+export function getHintEvents(country) {
     return [
         `I heard something about the safe airport, it's located in ${country}.`,
         `I overheard someone say that the safe airport is hidden somewhere near ${country}.`,
@@ -51,19 +51,15 @@ function getHintEvents(country) {
     ];
 }
 
-function formatTime(seconds) {
+export function formatTime(seconds) {
     seconds = seconds % (24 * 3600);
     const minutes = Math.floor(seconds / 60);
     seconds %= 60;
     return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
-module.exports = {
-    getRandomAirport,
-    eventTypes,
-    storableItems,
-    maxValues,
-    eventsWithTexts,
-    getHintEvents,
-    formatTime
-};
+
+export function getRandomColor(){
+    const colors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF", "#33FFF5"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}

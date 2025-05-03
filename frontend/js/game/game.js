@@ -1,39 +1,35 @@
-class Game {
-    constructor() {
+import {getAirports} from "../utils/backend-queries.js";
+import Player from "./player.js";
+import Airport from "./airport.js";
+import {getHintEvents} from "./helpers.js";
+import {SETTINGS} from "./settings.js";
+import MapHandler from "../components/map.js";
+import {animateScan} from "../components/animations.js";
+
+export default class Game {
+    constructor(playerName) {
         /** Initialize game settings and player state. */
         this.gameOver = false;
-        this.dbManager = new DatabaseManager();
-        this.player = new Player(this.dbManager);
+        this.player = new Player(playerName, this.updateUI.bind(this));
         this.airports = []; // List of the available airports to travel to
-        this.actions = ["explore", "move", "inventory", "status", "use", "quit"];
-        this.startTime = null;
+        this.startTime = new Date();
         this.endTime = null;
         this.hasWon = false;
+        this.map = new MapHandler('map-view')
 
-        this.initiateGame();
+
     }
 
-    run() {
-        /** Main game loop. */
-        this.startTime = new Date();
-        while (!this.gameOver) {
-            this.checkLose();
-            displayMenu(this.actions);
-            const action = prompt("Choose an action:").trim().toLowerCase();
-            if (action.length === 0) {
-                continue;
-            } else {
-                this.handleAction(action);
-            }
-        }
+    updateMap() {
+        /** Update the map with the player's current location and airports in range. */
+        this.map.updateMap(this.player);
     }
-
-    getAirports() {
+    async getAirports() {
         /** Create object for each airport to give us access to each of them. */
-        const dbAirports = this.dbManager.getAllAirports();
+        const dbAirports = await getAirports();
         dbAirports.forEach(airport => {
-            const country = this.dbManager.getCountryByCode(airport[4]);
-            this.airports.push(new Airport(airport[0], airport[1], airport[2], airport[3], country));
+            //id, name, lat, lng, country,
+            this.airports.push(new Airport(airport.id, airport.name, parseFloat(airport.latitude_deg), parseFloat(airport.longitude_deg), airport.country));
         });
 
         // Make a random airport as the safe one
@@ -41,45 +37,13 @@ class Game {
         randomAirport.isSafe = true;
     }
 
-    initiateGame() {
+    async initiateGame() {
         /** Initialize the game. */
-        this.getAirports();
+        await this.getAirports();
         this.player.location = this.airports[Math.floor(Math.random() * this.airports.length)]; // Get a random airport
-        this.player.updatePlayer();
         this.generateRandomHint();
-        displayIntro();
-    }
-
-    handleAction(action) {
-        /** Process user input. */
-        switch (action) {
-            case "explore":
-            case "1":
-                this.handleExploreLocation();
-                break;
-            case "move":
-            case "2":
-                this.handleMove();
-                break;
-            case "inventory":
-            case "3":
-                this.handleInventory();
-                break;
-            case "status":
-            case "4":
-                displayStatus(this.player);
-                break;
-            case "use":
-            case "5":
-                this.handleUse();
-                break;
-            case "quit":
-            case "6":
-                this.handleGameOver();
-                break;
-            default:
-                console.log("Invalid action. Try again.");
-        }
+        this.updateMap()
+        this.updateUI();
     }
 
     handleExploreLocation() {
@@ -99,28 +63,6 @@ class Game {
             event.applyEvent(this.player);
             this.checkLose();
         });
-    }
-
-    handleMove() {
-        const nearbyAirports = this.airports.filter(airport =>
-            airport.calculateDistance(this.player.location) < SETTINGS.max_distance_km &&
-            airport !== this.player.location
-        );
-
-        if (nearbyAirports.length > 0) {
-            displayAirports(nearbyAirports, this.player.location);
-            const destinationId = prompt("Enter destination ID:");
-            if (destinationId.length === 0) {
-                return;
-            } else {
-                const destinationAirport = nearbyAirports.find(airport => String(airport.id) === String(destinationId));
-                if (destinationAirport) {
-                    this.player.move(destinationAirport);
-                }
-            }
-        } else {
-            displayErrorMessage("There are no airports nearby.");
-        }
     }
 
     handleInventory() {
@@ -155,6 +97,7 @@ class Game {
         }
     }
 
+
     checkWin() {
         if (this.player.location.isSafe) {
             // Win case
@@ -185,4 +128,23 @@ class Game {
         const recordsList = this.dbManager.getEndStatus();
         displayRecords(recordsList);
     }
+    async scanAirports() {
+        //run animation
+        await animateScan()
+        this.player.airportsInRange = this.airports.filter(airport =>
+            airport.calculateDistance(this.player.location) < SETTINGS.max_distance_km &&
+            airport !== this.player.location
+        );
+        this.updateMap()
+    }
+    updateUI() {
+        /** Update the UI with the current game state. */
+        document.querySelector('#player-name').innerText = this.player.name;
+        document.querySelector('#player-health-number').innerText = `${this.player.health}%`;
+        document.querySelector('#player-health-bar').style.width = `${this.player.health}%`;
+        document.querySelector('#player-fuel-number').innerText = `${this.player.fuel}%`;
+        document.querySelector('#player-fuel-bar').style.width = `${this.player.fuel / 5}%`;
+        document.querySelector('#player-location').innerText = this.player.location.name;
+        // document.querySelector('#player-inventory').innerText = player.inventory.getItems().join(', ');
+}
 }

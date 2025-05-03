@@ -9,9 +9,15 @@ def airports():
 
     try:
         rows = db_manager.get_all_airports()
+
         airports = [{
             "id":row[0], "name":row[1], "latitude_deg":row[2], "longitude_deg":row[3], "iso_country":row[4]
         } for row in rows]
+
+        for airport in airports:
+            country = db_manager.get_country_by_iso(airport["iso_country"])
+            airport["country"] = country[0][0] if country else None
+
         return Response(response=json.dumps(airports, default=str),
                         mimetype='application/json',
                         status=200

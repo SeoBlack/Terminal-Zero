@@ -1,19 +1,25 @@
-class Player {
-    constructor(dbManager, name = "Survivor") {
+import { SETTINGS } from "./settings.js";
+import Inventory from "./inventory.js";
+import {animateTravel} from "../components/animations.js";
+import {getRandomColor} from "./helpers.js";
+export default class Player {
+    constructor(name = "Survivor", updateUi ) {
         /** Initialize player attributes. */
         this.id = null;
         this.name = name;
         this.health = SETTINGS.max_health;
         this.fuel = SETTINGS.max_fuel;
         this.location = null;
-        this.dbManager = dbManager;
-        this.inventory = new Inventory(dbManager); // Player inventory from Inventory class
-
-        this.initPlayer();
+        this.inventory = new Inventory(); // Player inventory from Inventory class
+        this.airportsInRange = [];
+        this.color = getRandomColor();
+        this.updateUi = updateUi;
     }
 
-    move(airport) {
+    async move(airport, currentMarker) {
         /** Move the player to a different airport. */
+
+
         if (airport.isExplored) {
             const choice = prompt("You have already visited this airport, would you like to continue? y/n");
             if (choice.toLowerCase() === "n") {
@@ -27,20 +33,13 @@ class Player {
             return;
         }
         this.fuel -= fuelRequired;
+
+
         this.location = airport;
-        animateTravel(airport.name, distance, fuelRequired);
-        this.updatePlayer();
-    }
+        //delete the airport from the airportsInRange
+        this.airportsInRange = this.airportsInRange.filter(a => a !== airport);
+        await animateTravel(airport, currentMarker);
+        this.updateUi();
 
-    initPlayer() {
-        this.name = prompt("Enter your name:");
-        // This function will return the player id
-        const playerId = this.dbManager.addNewPlayer(this.name, this.health, this.fuel, this.location);
-        this.id = playerId;
-    }
-
-    updatePlayer() {
-        // We call this function whenever changes happen to the values in Player class.
-        this.dbManager.updatePlayer(this.id, this.health, this.fuel, this.location.id);
     }
 }

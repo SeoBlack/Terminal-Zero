@@ -13,6 +13,7 @@ export function createSoundButton() {
 
   // Create audio element and manage playlist
   const audio = document.createElement('audio');
+  audio.volume = 0.5;
   audio.loop = false; // Disable looping for individual tracks
   let playlist = [];
   if(window.location.pathname.includes('startscreen')) {
@@ -35,8 +36,13 @@ export function createSoundButton() {
   soundContainer.appendChild(audio);
   audio.addEventListener('ended', () => {
     currentTrackIndex = (currentTrackIndex + 1) % playlist.length; // Move to the next track
-    audio.src = playlist[currentTrackIndex];
-    audio.play();
+    //wait for 2 seconds before playing the next track
+    setTimeout(() => {
+        audio.src = playlist[currentTrackIndex];
+        audio.play();
+    }
+    , 5000);
+
 });
 
 
@@ -132,3 +138,4 @@ export function createSoundButton() {
 
   return soundButton;
 }
+

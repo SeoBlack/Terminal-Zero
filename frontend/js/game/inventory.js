@@ -1,8 +1,9 @@
-class Inventory {
-    constructor(dbManager) {
+import {storableItems} from "./helpers.js";
+
+export default class Inventory {
+    constructor() {
         /** Initialize an empty inventory. */
         this.items = {};
-        this.dbManager = dbManager;
         this.generateRandomItems();
     }
 

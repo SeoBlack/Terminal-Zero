@@ -45,10 +45,9 @@ class DatabaseManager:
     def get_all_airports(self):
         query = "SELECT * FROM airports"
         return self.execute_query(query)
-    def get_all_countries(self):
-        query = "Select * from country"
-        result = self.execute_query(query)
-        return result
+    def get_country_by_iso(self, iso_country):
+        query = "SELECT name FROM country WHERE iso_country = ?"
+        return self.execute_query(query, (iso_country,))
     def get_all_players(self):
         query = "SELECT * FROM players"
         return self.execute_query(query)
