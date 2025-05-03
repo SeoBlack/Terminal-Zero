@@ -13,7 +13,7 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
-
+/*LEAFS EFFECT */
 /* Leaves container */
 #leaves {
   position: relative;
@@ -186,3 +186,5 @@ body {
     opacity: 0;
   }
 }
+/*NOW STARTS CSS NOT LEAFS EFFECT */
+
