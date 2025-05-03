@@ -9,91 +9,21 @@
   --grey-color: #75767A;
 }
 
-/* Taustakuva + yleisasetukset */
+/* Yleinen tyyli */
 body {
-  height: 100%;
   margin: 0;
-  overflow: hidden;
+  padding: 0;
+  font-family: "Tagesschrift", system-ui;
   background-image: url("../../assets/images/end_screen.png");
-  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  background-size: cover;
-  font-family: 'Arial', sans-serif;
-}
-
-/* GAME OVER -ruudun keskitys */
-.lose-screen {
-  position: relative;
-  z-index: 3;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Laatikko tyyli (läpinäkyvä ja siisti) */
-.overlay {
-  background-color: rgba(15, 23, 33, 0.75); /* --background-color läpinäkyvänä */
-  border: 1px solid var(--primary-color);
-  border-radius: 12px;
-  padding: 40px;
-  text-align: center;
   color: var(--text-color);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeIn 1.2s ease-out forwards;
 }
 
-/* Fade-animaatio */
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* GAME OVER -otsikko */
-.overlay h1 {
-  font-size: 64px;
-  margin-bottom: 20px;
-  color: var(--red-color);
-  text-shadow: 2px 2px 5px black;
-  font-family: "Tagesschrift", system-ui;
-}
-
-/* Piste- ja infotekstit */
-.overlay p {
-  font-size: 20px;
-  margin: 5px 0;
-}
-
-/* Napit */
-.buttons button {
-  margin: 10px;
-  padding: 15px 30px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: var(--red-color);
-  border: none;
-  color: var(--text-color);
-  border-radius: 8px;
-  transition: 0.3s ease;
-}
-
-/* Hover-efekti: pääväri ja hehku */
-.buttons button:hover {
-  background-color: var(--primary-color);
-  box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--red-color);
-  transform: scale(1.05);
-}
-
-/* RAIN EFFECT */
-
+/* Sadetaso */
 .rain {
   position: absolute;
-  left: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -102,49 +32,124 @@ body {
 .rain.back-row {
   bottom: 60px;
   opacity: 0.5;
-  display: block;
 }
 
-.drop {
-  position: absolute;
-  bottom: 100%;
-  width: 15px;
-  height: 120px;
-  pointer-events: none;
-  animation: drop 0.5s linear infinite;
+/* Keskitys */
+.end-container {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes drop {
-  0% {
-    transform: translateY(0vh);
-  }
-  75% {
-    transform: translateY(90vh);
-  }
-  100% {
-    transform: translateY(90vh);
-  }
+/* Otsikko animaatiolla */
+.title {
+  color: var(--primary-color);
+  font-size: 48px;
+  margin-bottom: 30px;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideFadeDown 1s ease-out forwards;
 }
 
-.stem {
-  width: 1px;
-  height: 60%;
-  margin-left: 7px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.25));
-  animation: stem 0.5s linear infinite;
-}
-
-@keyframes stem {
-  0% {
+@keyframes slideFadeDown {
+  to {
     opacity: 1;
+    transform: translateY(0);
   }
-  65% {
+}
+
+/* Blur-boksi + animaatio */
+.status-box {
+  background-color: rgba(15, 23, 33, 0.4);
+  border: 1px solid var(--primary-color);
+  border-radius: 12px;
+  padding: 30px 40px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: scale(0.95);
+  animation: fadeZoomIn 1.1s ease-out 0.3s forwards;
+}
+
+@keyframes fadeZoomIn {
+  to {
     opacity: 1;
+    transform: scale(1);
   }
-  75% {
-    opacity: 0;
+}
+
+/* Status otsikko */
+.status-box h2 {
+  color: var(--primary-color);
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Taulukko */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 10px 15px;
+  text-align: center;
+}
+
+th {
+  color: var(--grey-color);
+  font-weight: normal;
+}
+
+td {
+  color: var(--text-color);
+}
+
+/* Voittajan korostus */
+.winner-row td {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Rivit animoituvat sisään */
+table tr {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: rowIn 0.6s ease-out forwards;
+}
+
+table tbody tr:nth-child(1) { animation-delay: 0.5s; }
+table tbody tr:nth-child(2) { animation-delay: 0.7s; }
+table tbody tr:nth-child(3) { animation-delay: 0.9s; }
+table tbody tr:nth-child(4) { animation-delay: 1.1s; }
+
+@keyframes rowIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  100% {
-    opacity: 0;
-  }
+}
+
+/* Nappi */
+.status-box button {
+  padding: 12px 24px;
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.status-box button:hover {
+  background-color: var(--primary-color);
+  color: var(--black-color);
 }
