@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Over - Terminal Zero</title>
+
+  <!-- Fontti: Tagesschrift -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tagesschrift&display=swap" rel="stylesheet">
+
+  <!-- Tyylit -->
+  <link rel="stylesheet" href="end_style.css" />
+
+  <!-- Sade-efekti -->
+  <script src="../../js/components/dynamic_bg/dynamic_bg3_rain.js" defer></script>
+</head>
+<body>
+  <div class="rain back-row"></div>
+
+  <div class="lose-screen">
+    <div class="overlay">
+      <h1>GAME OVER</h1>
+      <p>You survived: 12 minutes</p>
+      <p>Zombies killed: 8</p>
+      <div class="buttons">
+        <button onclick="location.reload()">Try Again</button>
+        <button onclick="window.location.href='../startscreen/index.html'">Main Menu</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

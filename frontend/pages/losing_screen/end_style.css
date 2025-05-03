@@ -1,0 +1,150 @@
+:root {
+  --primary-color: #efb302;
+  --background-color: #0F1721;
+  --black-color: #04070A;
+  --black2-color: #030507;
+  --border-color: #251606;
+  --text-color: #FFFFFF;
+  --red-color: #BF3233;
+  --grey-color: #75767A;
+}
+
+/* Taustakuva + yleisasetukset */
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background-image: url("../../assets/images/end_screen.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: 'Arial', sans-serif;
+}
+
+/* GAME OVER -ruudun keskitys */
+.lose-screen {
+  position: relative;
+  z-index: 3;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Laatikko tyyli (läpinäkyvä ja siisti) */
+.overlay {
+  background-color: rgba(15, 23, 33, 0.75); /* --background-color läpinäkyvänä */
+  border: 1px solid var(--primary-color);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  color: var(--text-color);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+/* Fade-animaatio */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* GAME OVER -otsikko */
+.overlay h1 {
+  font-size: 64px;
+  margin-bottom: 20px;
+  color: var(--red-color);
+  text-shadow: 2px 2px 5px black;
+  font-family: "Tagesschrift", system-ui;
+}
+
+/* Piste- ja infotekstit */
+.overlay p {
+  font-size: 20px;
+  margin: 5px 0;
+}
+
+/* Napit */
+.buttons button {
+  margin: 10px;
+  padding: 15px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: var(--red-color);
+  border: none;
+  color: var(--text-color);
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+/* Hover-efekti: pääväri ja hehku */
+.buttons button:hover {
+  background-color: var(--primary-color);
+  box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--red-color);
+  transform: scale(1.05);
+}
+
+/* RAIN EFFECT */
+
+.rain {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.rain.back-row {
+  bottom: 60px;
+  opacity: 0.5;
+  display: block;
+}
+
+.drop {
+  position: absolute;
+  bottom: 100%;
+  width: 15px;
+  height: 120px;
+  pointer-events: none;
+  animation: drop 0.5s linear infinite;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(0vh);
+  }
+  75% {
+    transform: translateY(90vh);
+  }
+  100% {
+    transform: translateY(90vh);
+  }
+}
+
+.stem {
+  width: 1px;
+  height: 60%;
+  margin-left: 7px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.25));
+  animation: stem 0.5s linear infinite;
+}
+
+@keyframes stem {
+  0% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
