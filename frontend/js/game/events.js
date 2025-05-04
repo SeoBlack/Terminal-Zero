@@ -24,6 +24,9 @@ export default  class Event {
                 animateAttack()
                 showSnackbar(snackbarType.ERROR,`${this.description}: ${value}`);
                 if (player.inventory.items.weapon && player.inventory.items.weapon > 0) {
+                         playSoundEffect(soundEffects.ATTACK)
+                        playSoundEffect(soundEffects.ZOMBIE)
+
                     const numWeapons = parseInt(player.inventory.items.weapon);
                     let damageAfterWeapon = 0;
 
@@ -42,6 +45,7 @@ export default  class Event {
                     break;
                 } else {
                     player.health = (player.health || 0) + value;
+                    playSoundEffect(soundEffects.ZOMBIE)
                     updateUI(player)
                 }
 

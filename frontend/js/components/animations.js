@@ -91,8 +91,7 @@ function getBearing(lat1, lon1, lat2, lon2) {
 
 export function animateAttack() {
     // play sound effect
-     playSoundEffect(soundEffects.ATTACK)
-    playSoundEffect(soundEffects.ZOMBIE)
+
 
     const icon = document.getElementById('player-icon');
     icon.style.animation = 'attack 0.5s ease-in-out';

@@ -26,6 +26,9 @@ export function updateInventoryUI(player){
             // </button>
                 const inventoryItem = document.createElement('button');
                 inventoryItem.className = "inventory-item";
+                if(item === "weapon"){
+                    inventoryItem.disabled= true;
+                }
                 inventoryItem.innerHTML = `
                     <span>${Icons[`${item}`]}</span>
                     <p class="inventory-item-title">${item}</p>
