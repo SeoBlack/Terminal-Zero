@@ -1,9 +1,13 @@
 import { Icons } from "./icons.js";
+import {playSoundEffect, soundEffects} from "./sound_effects.js";
+import {showConfirmationDialog} from "./confirmation_dialog.js";
 
 class MapHandler {
     constructor(mapId) {
         this.map = L.map(mapId);
         this.markers = [];
+        const trailMarkers = [];
+        const maxTrailLength = 20;
         this.player = null;
         this.playerMarker = null;
         L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=Q7LqsU4uCRpBRQmdA0wCfMBqoKmlramXUXl59KMEPYUzw4pdB7m4QLUATbSQwO92', {}).addTo(this.map);
@@ -40,10 +44,11 @@ class MapHandler {
     }
 
     createMapMarker(airport) {
-        const iconSize = 25 * airport.dangerLevel;
+        const iconSize = airport.isExplored ? 40 : 25 * airport.dangerLevel;
+        const imageUrl = airport.isExplored ? `../../assets/images/explored-airport.png` : `../../assets/images/airport-marker.png`;
         const airportIcon = L.divIcon({
             className: 'airport-marker',
-            html: `<div class="airport-icon"></div>`,
+            html: `<div class="airport-icon" style="background-image: url('${imageUrl}')"></div>`,
             iconSize: [iconSize, iconSize],
             iconAnchor: [12.5, 12.5],
             popupAnchor: [0, -12.5],
@@ -78,9 +83,20 @@ class MapHandler {
             const travelButton = popup.getElement().querySelector('.travel-button');
             if (travelButton) {
                 travelButton.addEventListener('click', async () => {
+                    playSoundEffect(soundEffects.CLICK)
                     if(this.player){
+                        if(airport.isExplored){
+                            showConfirmationDialog("You have already visited this airport, would you like to continue?",async () => {
+                                await this.player.move(airport,this.playerMarker )
+                                this.updateMap(this.player);
+                            })
+                        }
+                        else{
+
+
                        await  this.player.move(airport,this.playerMarker )
                         this.updateMap(this.player);
+                       }
 
                     }
 

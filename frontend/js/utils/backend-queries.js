@@ -1,7 +1,7 @@
 
 'use strict';
 
-import {showSnackbar, snackbarType, snackbarType as snackbarMessages} from "../components/snackbar.js";
+import {showSnackbar, snackbarType,} from "../components/snackbar.js";
 
 
 

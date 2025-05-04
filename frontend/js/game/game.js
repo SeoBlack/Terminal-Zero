@@ -4,7 +4,11 @@ import Airport from "./airport.js";
 import {getHintEvents} from "./helpers.js";
 import {SETTINGS} from "./settings.js";
 import MapHandler from "../components/map.js";
-import {animateScan} from "../components/animations.js";
+import {animateScan, animateSearch} from "../components/animations.js";
+import {showSnackbar, snackbarType} from "../components/snackbar.js";
+import Event from "./events.js";
+import {updateInventoryUI, updateStatusUI, updateUI} from "../components/ui_handler.js";
+import {playSoundEffect, soundEffects} from "../components/sound_effects.js";
 
 export default class Game {
     constructor(playerName) {
@@ -47,6 +51,7 @@ export default class Game {
     }
 
     handleExploreLocation() {
+        animateSearch();
         if (this.checkWin()) {
             return;
         }
@@ -54,15 +59,21 @@ export default class Game {
         // Loop through the events of the airport
         this.player.location.isExplored = true;
         if (this.player.location.events.length === 0) {
-            displayWarningMessage("There are no resources available in this location.");
+            playSoundEffect(soundEffects.ERROR)
+            showSnackbar(snackbarType.ERROR, "Nothing to explore here");
             this.checkLose();
             return;
         }
-
-        this.player.location.events.forEach(event => {
-            event.applyEvent(this.player);
-            this.checkLose();
-        });
+        console.log(this.player.location.events);
+       for (let i = 0; i < this.player.location.events.length; i++) {
+            const event = this.player.location.events[i];
+            setTimeout(() => {
+                event.applyEvent(this.player);
+                this.updateUI();
+            }, 1500* i); // Incremental delay
+        }
+        this.player.location.events = []; // Clear the events after exploring
+        this.updateUI();
     }
 
     handleInventory() {
@@ -85,6 +96,7 @@ export default class Game {
 
     generateRandomHint() {
         const safeAirport = this.airports.find(airport => airport.isSafe);
+        console.log(safeAirport);
         if (safeAirport) {
             const hintEvents = getHintEvents(safeAirport.country);
             const randomAirports = Array.from({ length: SETTINGS.max_survivor_encounter }, () =>
@@ -101,7 +113,7 @@ export default class Game {
     checkWin() {
         if (this.player.location.isSafe) {
             // Win case
-            displayWinScreen(this.player);
+            // displayWinScreen(this.player);
             this.endGame(true);
             return true;
         } else {
@@ -114,7 +126,7 @@ export default class Game {
             (this.player.fuel <= 0 && !this.hasWon && this.player.inventory.items.fuel === 0 && this.player.location.isExplored) ||
             (this.player.health <= 0 && !this.hasWon)
         ) {
-            displayLoseScreen();
+            // displayLoseScreen();
             this.endGame(false);
         }
     }
@@ -138,13 +150,6 @@ export default class Game {
         this.updateMap()
     }
     updateUI() {
-        /** Update the UI with the current game state. */
-        document.querySelector('#player-name').innerText = this.player.name;
-        document.querySelector('#player-health-number').innerText = `${this.player.health}%`;
-        document.querySelector('#player-health-bar').style.width = `${this.player.health}%`;
-        document.querySelector('#player-fuel-number').innerText = `${this.player.fuel}%`;
-        document.querySelector('#player-fuel-bar').style.width = `${this.player.fuel / 5}%`;
-        document.querySelector('#player-location').innerText = this.player.location.name;
-        // document.querySelector('#player-inventory').innerText = player.inventory.getItems().join(', ');
-}
+        updateUI(this.player);
+    }
 }

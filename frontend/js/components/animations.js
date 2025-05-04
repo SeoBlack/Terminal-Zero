@@ -43,7 +43,6 @@ export function animateTravel(endAirport, playerMarker) {
     icon.style.transformOrigin = 'center center';
 
 
-    // Animate movement
     const duration = 1000; // 3 seconds
     const startTime = performance.now();
 
@@ -87,4 +86,74 @@ function getBearing(lat1, lon1, lat2, lon2) {
 
     // Convert to degrees and normalize (0-360)
     return (θ * 180/Math.PI + 360) % 360;
+}
+
+
+export function animateAttack() {
+    // play sound effect
+     playSoundEffect(soundEffects.ATTACK)
+    playSoundEffect(soundEffects.ZOMBIE)
+
+    const icon = document.getElementById('player-icon');
+    icon.style.animation = 'attack 0.5s ease-in-out';
+    icon.style.transformOrigin = 'center center';
+    icon.style.transition = 'transform 0.5s ease-in-out';
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            icon.style.animation = '';
+            resolve();
+        }, 500);
+    });
+}
+
+export function animateSearch(){
+    // play sound effect
+    playSoundEffect(soundEffects.SEARCH);
+    const icon = document.getElementById('player-icon');
+    icon.style.animation = 'search 0.5s ease-in-out';
+    icon.style.transformOrigin = 'center center';
+    icon.style.transition = 'transform 0.5s ease-in-out';
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            icon.style.animation = '';
+            resolve();
+        }, 500);
+    });
+}
+
+
+export function animateFoundItem(){
+    // play sound effect
+    playSoundEffect(soundEffects.FOUND);
+    const icon = document.getElementById('player-icon');
+    icon.style.animation = 'found 0.5s ease-in-out';
+    icon.style.transformOrigin = 'center center';
+    icon.style.transition = 'transform 0.5s ease-in-out';
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            icon.style.animation = '';
+            resolve();
+        }, 500);
+    });
+}
+
+export function animateSpawn(){
+    // play sound effect
+    playSoundEffect(soundEffects.SPAWN);
+    const icon = document.querySelector(".player")
+    // apply the animation class teleport-spawn
+    icon.classList.add("teleport-spawn");
+    // wait for the animation to finish
+
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            //remove the animation class
+            icon.classList.remove("teleport-spawn");
+            resolve();
+        }, 1000);
+    });
 }

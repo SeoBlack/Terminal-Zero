@@ -13,8 +13,11 @@
     <script src="https://unpkg.com/leaflet-providers@latest/leaflet-providers.js"></script>
     <script src="../../js/components/map.js" type="module"></script>
     <script src="https://unpkg.com/leaflet.smoothmarkerbouncing@1.1.3/dist/leaflet.smoothmarkerbouncing.js" defer></script>
+    <script src="../../js/components/global_click_sound.js" defer type="module"></script>
     <link rel="stylesheet" href="./styles.css" >
     <link rel="stylesheet" href="../global.css">
+<!--    favicon-->
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.ico"/>
     <title>Terminal Zero</title>
 
 </head>
@@ -82,45 +85,18 @@
 
         <hr>
         <h3>Inventory</h3>
-        <div class="inventory">
-
-
-                <div class="inventory-item">
-                    <span>🍗</span>
-                    <p class="inventory-item-title">Food</p>
-                    <p class="inventory-item-quantity">x2</p>
-                </div>
-                            <div class="inventory-item">
-                    <span>🍗</span>
-                    <p class="inventory-item-title">Food</p>
-                    <p class="inventory-item-quantity">x2</p>
-                </div>
-                            <div class="inventory-item">
-                    <span>🍗</span>
-                    <p class="inventory-item-title">Food</p>
-                    <p class="inventory-item-quantity">x2</p>
-                </div>
-                                        <div class="inventory-item">
-                    <span>🍗</span>
-                    <p class="inventory-item-title">Food</p>
-                    <p class="inventory-item-quantity">x2</p>
-                </div>
-                                        <div class="inventory-item">
-                    <span>🍗</span>
-                    <p class="inventory-item-title">Food</p>
-                    <p class="inventory-item-quantity">x2</p>
-                </div>
+        <div class="inventory" id="inventory">
 
             </div>
         <hr>
         <h2>Actions</h2>
-        <div class="actions">
+        <div class="actions actions-list">
 
-        <ul class="actions-list">
-            <li id="scan-button"> 🌏 Scan nearby airports</li >
-            <li> 🔍 Explore Airport</li>
-            <li> ❌ End game</li>
-        </ul>
+
+            <button id="scan-button" class="action-button"> 🌏 Scan nearby airports</button >
+            <button class="action-button" id="explore-button"> 🔍 Explore Airport</button>
+            <button class="action-button"> ❌ End game</button>
+
                     </div>
 
     </div>
