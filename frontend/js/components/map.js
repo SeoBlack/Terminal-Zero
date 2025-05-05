@@ -85,22 +85,11 @@ class MapHandler {
                 travelButton.addEventListener('click', async () => {
                     playSoundEffect(soundEffects.CLICK)
                     if(this.player){
-                        if(airport.isExplored){
-                            showConfirmationDialog("You have already visited this airport, would you like to continue?",async () => {
-                                await this.player.move(airport,this.playerMarker )
-                                this.updateMap(this.player);
-                            })
-                        }
-                        else{
-
-
                        await  this.player.move(airport,this.playerMarker )
                         this.updateMap(this.player);
-                       }
+
 
                     }
-
-                    // Add your travel logic here
                 });
             }
         });
