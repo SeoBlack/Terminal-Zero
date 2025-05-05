@@ -1,17 +1,47 @@
-import Game from "../../js/game/game.js";
+import Game, {gamifyJson} from "../../js/game/game.js";
 import {animateSpawn} from "../../js/components/animations.js";
-import {showSnackbar} from "../../js/components/snackbar.js";
+import {showSnackbar, snackbarType} from "../../js/components/snackbar.js";
+import {getAllGames, getCurrentUser} from "../../js/components/localstorage.js";
+import Player from "../../js/game/player.js";
+import {hideLoadingDialog, showLoadingDialog} from "../../js/components/loading.js";
+// import Inventory from "../../js/game/inventory";
+// import Airport from "../../js/game/airport";
 
 async function startGame(){
     /** Initialize the game. */
 
     try{
+        const loader = showLoadingDialog();
+    const currentUser = getCurrentUser();
+    console.log();
 
+    if (!currentUser) {
+        showSnackbar(snackbarType.ERROR, "No user found. Please log in.");
+        window.location.href = `../startscreen/start_screen.html`;
+        return;
+    }
 
-    const game = new Game("sorin");
-    await game.initiateGame()
-
+    let userGame = getAllGames().find(game => game.player.name === currentUser);
+    let game = null;
+    if (userGame) {
+        console.log("user game", userGame);
+        game = await gamifyJson(userGame);
+        console.log(game);
+    }
+    else{
+        const player = new Player(null, currentUser);
+        game = new Game(false, player);
+        await game.initiateGame();
+    }
+    hideLoadingDialog(loader);
     animateSpawn()
+    // automatic save every 3 seconds
+    const saving = setInterval(function() {
+      game.handleSave();
+ }, 3000);
+
+
+
     document.getElementById('player-profile').style.color = game.player.color
     document.querySelector('#scan-button').addEventListener('click', function() {
         handleScanButtonClick(game)
@@ -19,6 +49,12 @@ async function startGame(){
     document.querySelector('#explore-button').addEventListener('click', function() {
         game.handleExploreLocation()
     })
+        document.querySelector('#save-button').addEventListener('click', function() {
+              game.handleSave();
+              showSnackbar(snackbarType, "Game saved");
+    })
+
+
     }
     catch (error) {
         console.error("Error starting the game:", error);
@@ -41,4 +77,6 @@ async function handleScanButtonClick(game) {
     await game.scanAirports()
     console.log(game.player.airportsInRange)
 }
+
+
 

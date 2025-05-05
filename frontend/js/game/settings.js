@@ -5,7 +5,7 @@ export const SETTINGS = {
     "fuel_usage_per_km": 10,
     "max_health":100,
     'max_fuel':500,
-    'max_distance_km': 700,
+    'max_distance_km': 1100,
     'fuel_can_capacity': 50,
     'food_can_health': 5,
     'water_can_health': 5,

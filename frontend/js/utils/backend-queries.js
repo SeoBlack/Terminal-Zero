@@ -30,19 +30,43 @@ export async function addNewUser(username) {
         });
 
         if (response.status === 409) {
-            showSnackbar(snackbarType.ERROR, 'Username already exists');
+            return await response.json();
         } else if (!response.ok) {
             showSnackbar(snackbarType.ERROR, 'An error occurred while adding the user');
         } else {
             return await response.json();
         }
     } catch (error) {
+
         console.log("error", error);
         showSnackbar(snackbarType.ERROR, 'An error occurred while adding the user');
     }
     finally {
         isLoading = false;
     }
+}
+export async function getUser(username){
+    try{
+        isLoading = true;
+        const response = await fetch(`${flaskUrl}${apiEndPoints.PLAYERS}/${username}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (response.status === 404) {
+            showSnackbar(snackbarType.ERROR, 'User not found');
+            return null;
+        }
+        return await response.json();
+
+    }catch(error){
+        showSnackbar(snackbarType.ERROR,'An error occurred while fetching the user');
+    }
+    finally {
+        isLoading = false;
+    }
+
 }
 
 export async function getAirports(){

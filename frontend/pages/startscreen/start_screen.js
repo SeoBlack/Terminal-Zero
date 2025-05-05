@@ -1,12 +1,16 @@
 // --------------IMPORTS----------------
 import { addNewUser } from "../../js/utils/backend-queries.js";
 import { showSnackbar, snackbarType } from "../../js/components/snackbar.js";
-import { playClickSound } from "../../js/components/global_click_sound.js"; // HUOM: tämä voi myös tulla globalista nyt
+import {getAllGames, setCurrentUser} from "../../js/components/localstorage.js";
+import {playSoundEffect, soundEffects} from "../../js/components/sound_effects.js";
+import {hideLoadingDialog, showLoadingDialog} from "../../js/components/loading.js";
+import {showConfirmationDialog} from "../../js/components/confirmation_dialog.js";
 
-// ----------------INIT----------------
-document.addEventListener('DOMContentLoaded', () => {
+
+function startScreen(){
     // --------------VARIABLES----------------
-    const previousPlayers = ['Sorin', 'Isla', 'Nikita', 'Abbas'];
+
+    const previousPlayers = getAllGames().map(game => game.player.name);
     const previousPlayersList = document.getElementById('previous-players');
     const newGameForm = document.getElementById('newGameForm');
     const usernameInput = document.getElementById('usernameInput');
@@ -24,18 +28,34 @@ document.addEventListener('DOMContentLoaded', () => {
                       d="M19 12H5m14 0-4 4m4-4-4-4"/>
             </svg>
         `;
+        playerDiv.addEventListener('click', handleUsernameClick)
         previousPlayersList.appendChild(playerDiv);
     });
 
     // --------------------EVENT LISTENERS--------------------
     newGameForm.addEventListener('submit', handleSubmit);
 
-    // ----------------CLICK SOUND FOR ALL BUTTONS----------------
-    document.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', () => {
-            playClickSound();
-        });
-    });
+    async function handleUsernameClick(event) {
+         const username = event.currentTarget.querySelector('.username-text').innerText;
+            // check if the user exists in the database
+            try{
+                const response = await addNewUser(username); // check if the user exists or add it
+                setCurrentUser(username);
+                playSoundEffect(soundEffects.CINEMATIC)
+                playSoundEffect(soundEffects.ZOMBIE_START)
+                const loader = showLoadingDialog()
+                setTimeout(() => {
+
+                hideLoadingDialog(loader)
+                window.location.href = `../gamescreen/game.html`;
+                }, 3000)
+            }
+            catch (error) {
+                console.error("Error:", error);
+                showSnackbar(snackbarType.ERROR, "Failed to start the game. Please try again.");
+            }
+
+    }
 
     // ----------------FUNCTIONS----------------
     async function handleSubmit(event) {
@@ -45,10 +65,38 @@ document.addEventListener('DOMContentLoaded', () => {
         if (username) {
             const response = await addNewUser(username);
             if (response) {
-                return window.location.href = `../gamescreen/game.html?username=${username}`;
+                await setCurrentUser(username);
+                //check if user have a game
+                const userGame = getAllGames().find(game => game.player.name === username);
+                if (userGame) {
+                    showConfirmationDialog('You have a saved game. Do you want to continue where you left?', async () => {
+                        const loader = showLoadingDialog()
+                        playSoundEffect(soundEffects.CINEMATIC)
+                        playSoundEffect(soundEffects.ZOMBIE_START)
+                        setTimeout(() => {
+                            hideLoadingDialog(loader)
+                            return window.location.href = `../gamescreen/game.html`;
+                        }, 3000)
+                    })
+                } else {
+                    showSnackbar(snackbarType.INFO, "Welcome! Starting a new game...");
+                    playSoundEffect(soundEffects.CINEMATIC)
+                    playSoundEffect(soundEffects.ZOMBIE_START)
+                    const loading = showLoadingDialog()
+                    setTimeout(()=>{
+                        hideLoadingDialog(loading)
+                        return window.location.href = `../gamescreen/game.html`;
+                    }, 3000)
+                }
+
+
             }
         } else {
             showSnackbar(snackbarType.ERROR, 'Please enter a username');
         }
     }
-});
+}
+
+
+// ----------------INIT----------------
+document.addEventListener('DOMContentLoaded', startScreen );

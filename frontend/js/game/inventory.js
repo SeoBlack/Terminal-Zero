@@ -5,10 +5,12 @@ import {playSoundEffect, soundEffects} from "../components/sound_effects.js";
 import {updateInventoryUI, updateUI} from "../components/ui_handler.js";
 
 export default class Inventory {
-    constructor() {
+    constructor(items = {}) {
         /** Initialize an empty inventory. */
-        this.items = {};
-        this.generateRandomItems();
+        this.items = items;
+        if(Object.keys(this.items).length === 0) {
+            this.generateRandomItems();
+        }
     }
 
     addItem(item, quantity = 1) {
@@ -20,6 +22,10 @@ export default class Inventory {
         }
     }
 
+    loadInventory(loadedInventory) {
+        /** Load a saved inventory. */
+        this.items = loadedInventory.items;
+    }
     useItem(item, player) {
         /** Use an item from inventory. */
         if (this.items[item] && this.items[item] > 0) {
@@ -104,4 +110,10 @@ function getRandomSubset(array, size) {
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function jsonifyInventory(inventory) {
+    /** Convert inventory to a string for display. */
+    return inventory
+
 }

@@ -104,3 +104,13 @@ export default  class Event {
         }
     }
 }
+
+
+export function jsonifyEvent(event) {
+    /** Convert an event to a string. */
+    return {
+        description: event.description,
+        effect: event.effect
+    };
+
+}

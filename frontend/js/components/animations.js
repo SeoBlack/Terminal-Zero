@@ -145,6 +145,7 @@ export function animateSpawn(){
     playSoundEffect(soundEffects.SPAWN);
     const icon = document.querySelector(".player")
     // apply the animation class teleport-spawn
+    if (!icon) return;
     icon.classList.add("teleport-spawn");
     // wait for the animation to finish
 

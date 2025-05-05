@@ -29,6 +29,8 @@ export const soundEffects = {
     "fuel": "../../assets/audio/fuel.mp3",
     "medicine": "../../assets/audio/medicine.mp3",
     "ERROR": "../../assets/audio/error.mp3",
+    "ZOMBIE_START": "../../assets/audio/zombie-start.mp3",
+    'CINEMATIC': "../../assets/audio/cinematic-hit.mp3",
 
 
 }
