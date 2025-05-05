@@ -1,0 +1,40 @@
+/* Global styles for the application */
+/* This file contains styles that are applied globally across the application */
+
+:root {
+    --primary-color: #efb302;
+    --background-color: #0F1721;
+    --black-color: #04070A;
+    --black2-color: #030507;
+    --border-color: #251606;
+    --text-color: #FFFFFF;
+    --red-color:#BF3233;
+    --grey-color: #75767A;
+    --font-family: 'Poppins', sans-serif;
+}
+/*reset css*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    font-family: poppins , sans-serif;
+}
+.transparent-button {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid rgba(255,255,100,0.4);
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 3px rgba(255,255,100,0.4);
+        }
+.transparent-button:hover {
+    background-color: rgba(255,255,100,0.2);
+}
