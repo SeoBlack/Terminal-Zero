@@ -43,7 +43,10 @@ class DatabaseManager:
         return None
 
     def get_all_airports(self):
-        query = "SELECT * FROM airports"
+        query = """SELECT a.id, a.name, a.latitude_deg, a.longitude_deg, a.iso_country, c.name as country_name
+            FROM airports a
+            LEFT JOIN country c ON a.iso_country = c.iso_country
+        """
         return self.execute_query(query)
     def get_country_by_iso(self, iso_country):
         query = "SELECT name FROM country WHERE iso_country = ?"

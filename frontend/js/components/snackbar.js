@@ -11,7 +11,8 @@ export const showSnackbar = (type, message) => {
     // if (!snackbar) {
     // Create the snackbar element
     const snackbar = document.createElement('div');
-    snackbar.id = 'snackbar';
+    snackbar.classList.add('snackbar');          // use a class for styling
+    snackbar.dataset.snackbarId = crypto.randomUUID(); // optional: diagnostic attr
     snackbar.style.cssText = `
     position: fixed;
     top: -50px;

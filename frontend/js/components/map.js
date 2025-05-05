@@ -26,7 +26,7 @@ class MapHandler {
     createPlayerMarker(player) {
         let playerIcon = L.divIcon({
             className: 'player-marker',
-            html: `<div class="pulse-ring player-ring"></div><div class="player" style="color:${player.color}">${Icons.PLAYER}</div>`,
+            html: `<div class="pulse-ring player-ring"></div><div class="player player-icon" style="color:${player.color}">${Icons.PLAYER}</div>`,
             iconSize: [50, 50],
             iconAnchor: [12.5, 12.5],
             popupAnchor: [0, -12.5],

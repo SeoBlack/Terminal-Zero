@@ -39,10 +39,9 @@ export default  class Event {
 
                     player.inventory.items.weapon -= numWeapons;
                     if (player.inventory.items.weapon <= 0) {
-                        delete player.inventory.items.weapon;
+                        player.inventory.items.weapon = 0;
                     }
                     updateUI(player)
-                    break;
                 } else {
                     player.health = (player.health || 0) + value;
                     playSoundEffect(soundEffects.ZOMBIE)

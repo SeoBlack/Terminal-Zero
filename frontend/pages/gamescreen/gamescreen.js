@@ -1,8 +1,13 @@
 import Game from "../../js/game/game.js";
 import {animateSpawn} from "../../js/components/animations.js";
+import {showSnackbar} from "../../js/components/snackbar.js";
 
 async function startGame(){
     /** Initialize the game. */
+
+    try{
+
+
     const game = new Game("sorin");
     await game.initiateGame()
 
@@ -14,6 +19,12 @@ async function startGame(){
     document.querySelector('#explore-button').addEventListener('click', function() {
         game.handleExploreLocation()
     })
+    }
+    catch (error) {
+        console.error("Error starting the game:", error);
+        showSnackbar(snackbarType.ERROR, "Failed to start the game. Please try again.");
+    }
+
 
 
 

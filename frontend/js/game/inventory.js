@@ -75,12 +75,10 @@ export default class Inventory {
                     return;
             }
             this.items[item] -= 1;
-            if (this.items[item] === 0) {
-                delete this.items[item];
-            }
             showSnackbar(snackbarType.INFO,`Used ${item}. Remaining: ${this.items[item] ?? 0}`);
             updateUI(player)
         } else {
+            playSoundEffect(soundEffects.ERROR);
             showSnackbar(snackbarType.ERROR, `${item} not available.`);
         }
     }

@@ -5,7 +5,8 @@ export function animateScan(){
 
     // play sound effect
     playSoundEffect(soundEffects.RADAR);
-    document.querySelector('.player-ring').style.animation =  'scan 2s linear infinite';
+        const ring = document.querySelector('.player-ring');
+    if (ring) ring.style.animation = 'scan 2s linear infinite';
 
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -37,7 +38,7 @@ export function animateTravel(endAirport, playerMarker) {
     console.log(bearing);
 
     // Rotate the icon
-    const icon = document.getElementById('player-icon');
+    const icon = document.querySelector('.player-icon');
     icon.style.transform = `rotate(${bearing}deg)`;
     icon.style.transition = 'transform 0.5s ease-in-out';
     icon.style.transformOrigin = 'center center';

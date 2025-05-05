@@ -18,12 +18,10 @@ export function updateInventoryUI(player){
     inventoryContainer.innerHTML = ''; // Clear previous items
           Object.keys(player.inventory?.items || {}).forEach(item => {
         const quantity = player.inventory.items[item];
-        console.log(item);
-                    // <button className="inventory-item">
-            //     <span>🍗</span>
-            //     <p className="inventory-item-title">Food</p>
-            //     <p className="inventory-item-quantity">x2</p>
-            // </button>
+              if (quantity <= 0) {
+                    return; // Skip if quantity is 0 or less
+
+              }
                 const inventoryItem = document.createElement('button');
                 inventoryItem.className = "inventory-item";
                 if(item === "weapon"){
