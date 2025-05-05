@@ -1,5 +1,5 @@
  //Game settings (e.g., difficulty, max inventory size)
-SETTINGS = {
+export const SETTINGS = {
     "max_danger_level":3,
     "max_inventory_size": 10,
     "fuel_usage_per_km": 10,

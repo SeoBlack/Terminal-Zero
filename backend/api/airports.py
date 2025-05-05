@@ -9,9 +9,12 @@ def airports():
 
     try:
         rows = db_manager.get_all_airports()
+        print(rows)
+
         airports = [{
-            "id":row[0], "name":row[1], "latitude_deg":row[2], "longitude_deg":row[3], "iso_country":row[4]
+            "id":row[0], "name":row[1], "latitude_deg":row[2], "longitude_deg":row[3], "iso_country":row[4], "country":row[5]
         } for row in rows]
+
         return Response(response=json.dumps(airports, default=str),
                         mimetype='application/json',
                         status=200

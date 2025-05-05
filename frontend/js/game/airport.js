@@ -1,4 +1,8 @@
-class Airport {
+import {SETTINGS} from "./settings.js";
+import {eventsWithTexts, maxValues} from "./helpers.js";
+import Event from "./events.js";
+
+export default class Airport {
     constructor(id, name, lat, lng, country, events = []) {
         /** Initialize an airport with resources and danger level. */
         this.id = id;
