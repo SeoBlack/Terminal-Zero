@@ -1,45 +1,111 @@
-var map = L.map('map-view').setView([62.505, 23], 13);
+import { Icons } from "./icons.js";
+import {playSoundEffect, soundEffects} from "./sound_effects.js";
+import {showConfirmationDialog} from "./confirmation_dialog.js";
+
+class MapHandler {
+    constructor(mapId) {
+        this.map = L.map(mapId);
+        this.markers = [];
+        const trailMarkers = [];
+        const maxTrailLength = 20;
+        this.player = null;
+        this.playerMarker = null;
+        L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=Q7LqsU4uCRpBRQmdA0wCfMBqoKmlramXUXl59KMEPYUzw4pdB7m4QLUATbSQwO92', {}).addTo(this.map);
+    }
+
+    updateMap(player) {
+        this.player = player;
+        this.clearMap();
+        this.map.setView([player.location.lat, player.location.lng], 5);
+        player.airportsInRange.forEach(airport => {
+            this.createMapMarker(airport);
+        });
+        this.createPlayerMarker(player);
+    }
+
+    createPlayerMarker(player) {
+        let playerIcon = L.divIcon({
+            className: 'player-marker',
+            html: `<div class="pulse-ring player-ring"></div><div class="player player-icon" style="color:${player.color}">${Icons.PLAYER}</div>`,
+            iconSize: [50, 50],
+            iconAnchor: [12.5, 12.5],
+            popupAnchor: [0, -12.5],
+            rotationOrigin: 'center',
+
+        });
+
+        let popup = this.createPlayerPopup(player);
+        this.playerMarker = L.marker([player.location.lat, player.location.lng], {
+            icon: playerIcon
+        }).addTo(this.map).bindPopup(popup);
 
 
- L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=Q7LqsU4uCRpBRQmdA0wCfMBqoKmlramXUXl59KMEPYUzw4pdB7m4QLUATbSQwO92', {}).addTo(map);
+        this.markers.push(this.playerMarker);
+    }
+
+    createMapMarker(airport) {
+        const iconSize = airport.isExplored ? 40 : 25 * airport.dangerLevel;
+        const imageUrl = airport.isExplored ? `../../assets/images/explored-airport.png` : `../../assets/images/airport-marker.png`;
+        const airportIcon = L.divIcon({
+            className: 'airport-marker',
+            html: `<div class="airport-icon" style="background-image: url('${imageUrl}')"></div>`,
+            iconSize: [iconSize, iconSize],
+            iconAnchor: [12.5, 12.5],
+            popupAnchor: [0, -12.5],
+            rotationOrigin: 'center'
+        });
+
+        let popup = this.createAirportPopup(airport);
+
+        const marker = L.marker([airport.lat, airport.lng], {
+            icon: airportIcon
+        }).addTo(this.map).bindPopup(popup);
+        this.markers.push(marker);
+    }
+
+    clearMap() {
+        this.markers.forEach(marker => {
+            this.map.removeLayer(marker);
+        });
+        this.markers = [];
+    }
+
+    createAirportPopup(airport) {
+        let popup = L.popup()
+            .setLatLng([airport.lat, airport.lng])
+            .setContent(`
+                <h2>${airport.name}</h2>
+                <p><strong>Country: </strong> ${airport.country}</p>
+                <p><strong>Danger Level:</strong> ${airport.dangerLevel}</p>
+                <button class="transparent-button travel-button">Travel to destination</button>
+            `);
+        popup.on('add', () => {
+            const travelButton = popup.getElement().querySelector('.travel-button');
+            if (travelButton) {
+                travelButton.addEventListener('click', async () => {
+                    playSoundEffect(soundEffects.CLICK)
+                    if(this.player){
+                       await  this.player.move(airport,this.playerMarker )
+                        this.updateMap(this.player);
 
 
- let  myIcon = L.divIcon({
-     className: 'map-marker',
-     html: ' <div class="marker-text">JFK</div><div class=" pulse-ring ">  </div>',
-     iconSize: [50, 50],
-     iconAnchor: [15, 15]
- });
-  let  myIcon2 = L.divIcon({
-     className: 'map-marker',
-     html: ' <div class="marker-text">JFK</div><div class=" pulse-ring ">  </div>',
-     iconSize: [50, 50],
-     iconAnchor: [15, 15]
- });
-   let  myIcon3 = L.divIcon({
-     className: 'map-marker',
-     html: ' <div class="marker-text">JFK</div><div class=" pulse-ring ">  </div>',
-     iconSize: [50, 50],
-     iconAnchor: [15, 15]
- });
-    let  myIcon4 = L.divIcon({
-     className: 'map-marker',
-     html: ' <div class="marker-text">JFK</div><div class=" pulse-ring ">  </div>',
-     iconSize: [50, 50],
-     iconAnchor: [15, 15]
- });
+                    }
+                });
+            }
+        });
+        return popup;
+    }
 
+    createPlayerPopup(player) {
+        let popup = L.popup()
+            .setLatLng([player.location.lat, player.location.lng])
+            .setContent(`
+                <h2>${player.name}</h2>
+                <p><strong>Location: </strong> ${player.location.name}</p>
+                <p><strong>Danger Level:</strong> ${player.location.dangerLevel}</p>
+            `);
+        return popup;
+    }
+}
 
-
- L.marker([62.505, 23], {
-     icon: myIcon
- }).addTo(map).bindPopup('You are here!').openPopup();
-    L.marker([59.436338803867166, 24.74853127076138], {
-        icon: myIcon2
-    }).addTo(map).bindPopup('You are here!').openPopup();
-    L.marker([59.38502493119541, 18.06898918047692], {
-        icon: myIcon3
-    }).addTo(map).bindPopup('You are here!').openPopup();
-    L.marker([59.96192708356162, 10.686176727785066], {
-        icon: myIcon4
-    }).addTo(map).bindPopup('You are here!').openPopup();
+export default MapHandler;

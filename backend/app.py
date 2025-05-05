@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 
 # Import and register blueprints
 from api.airports import airports_bp
-from api.countries import countries_bp
 from api.end_results import end_results_bp
 from api.player import player_bp
 from flask_cors import CORS
@@ -28,7 +27,6 @@ def create_app():
     # include the routes from the blueprints(it's just a way to organize the code)
 
     app.register_blueprint(airports_bp)
-    app.register_blueprint(countries_bp)
     app.register_blueprint(end_results_bp)
     app.register_blueprint(player_bp)
     return app

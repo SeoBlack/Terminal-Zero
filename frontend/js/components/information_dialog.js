@@ -36,10 +36,11 @@ export function createInformationDialog(title, content) {
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.5);
-            z-index: 200;
+            z-index: 999;
         }
         .information-dialog-content {
             max-width: 600px;
+            text-wrap: break-word;
             color: white;
             border: 1px solid rgba(255,255,100,0.4);
             backdrop-filter: blur(10px);
@@ -85,5 +86,18 @@ export function createInformationDialog(title, content) {
         dialog.style.transform = 'scale(1)';
     }, 1000);
     // Return the dialog element for further manipulation if needed
+    return dialog;
+}
+
+
+export function showInformationDialog(title, content) {
+    const dialog = createInformationDialog(title, content);
+    // Show the dialog
+    dialog.style.display = 'block';
+    // Animate dialog on load
+    dialog.style.transform = 'scale(0)';
+    setTimeout(() => {
+        dialog.style.transform = 'scale(1)';
+    }, 1000);
     return dialog;
 }

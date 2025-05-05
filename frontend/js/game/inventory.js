@@ -1,8 +1,13 @@
-class Inventory {
-    constructor(dbManager) {
+import {storableItems} from "./helpers.js";
+import {SETTINGS} from "./settings.js";
+import {showSnackbar, snackbarType} from "../components/snackbar.js";
+import {playSoundEffect, soundEffects} from "../components/sound_effects.js";
+import {updateInventoryUI, updateUI} from "../components/ui_handler.js";
+
+export default class Inventory {
+    constructor() {
         /** Initialize an empty inventory. */
         this.items = {};
-        this.dbManager = dbManager;
         this.generateRandomItems();
     }
 
@@ -15,39 +20,66 @@ class Inventory {
         }
     }
 
-    showInventory() {
-        /** Display inventory contents. */
-        displayInventory(this.items);
-    }
-
     useItem(item, player) {
         /** Use an item from inventory. */
         if (this.items[item] && this.items[item] > 0) {
             switch (item) {
                 case "fuel":
-                    player.fuel = Math.min(player.fuel + SETTINGS.fuel_can_capacity, SETTINGS.max_fuel);
+                    if (player.fuel < SETTINGS.max_fuel) {
+                        playSoundEffect(soundEffects.fuel)
+                        player.fuel = Math.min(player.fuel + SETTINGS.fuel_can_capacity, SETTINGS.max_fuel);
+                    }else {
+                        playSoundEffect(soundEffects.ERROR)
+                        showSnackbar(snackbarType.ERROR, "Fuel is already full");
+                        return;
+                    }
                     break;
                 case "medicine":
-                    player.health = Math.min(player.health + SETTINGS.medicine_health, SETTINGS.max_health);
+                    if (player.health < SETTINGS.max_health) {
+                        playSoundEffect(soundEffects.medicine)
+                        player.health = Math.min(player.health + SETTINGS.medicine_health, SETTINGS.max_health);
+                    }else {
+                        playSoundEffect(soundEffects.ERROR)
+                        showSnackbar(snackbarType.ERROR, "Health is already full");
+                        return;
+                    }
                     break;
                 case "food":
-                    player.health = Math.min(player.health + SETTINGS.food_can_health, SETTINGS.max_health);
+                    if (player.health < SETTINGS.max_health) {
+                        playSoundEffect(soundEffects.food)
+                        player.health = Math.min(player.health + SETTINGS.food_can_health, SETTINGS.max_health);
+                    }else {
+                        playSoundEffect(soundEffects.ERROR)
+                        showSnackbar(snackbarType.ERROR, "Health is already full");
+                        return;
+                    }
                     break;
                 case "water":
-                    player.health = Math.min(player.health + SETTINGS.water_can_health, SETTINGS.max_health);
+                    if (player.health < SETTINGS.max_health) {
+                        playSoundEffect(soundEffects.water)
+                        player.health = Math.min(player.health + SETTINGS.water_can_health, SETTINGS.max_health);
+                    }
+                    else {
+                        playSoundEffect(soundEffects.ERROR)
+                        showSnackbar(snackbarType.ERROR, "Health is already full");
+                        return;
+                    }
                     break;
                 case "weapon":
-                    displayWarningMessage("Weapon can't be used directly, they will automatically be used to defend against zombie attacks");
+                    playSoundEffect(soundEffects.ERROR)
+                    showSnackbar(snackbarType.ERROR, "Weapon can't be used directly, they will automatically be used to defend against zombie attacks");
                     return;
                 default:
-                    displayErrorMessage(`${item} cannot be used.`);
+                    playSoundEffect(soundEffects.ERROR)
+                    showSnackbar(snackbarType.ERROR, "Unknown item");
                     return;
             }
             this.items[item] -= 1;
-            displaySuccessMessage(`Used ${item}. Remaining: ${this.items[item]}`);
-            player.updatePlayer(); // Update the player in the database
+            showSnackbar(snackbarType.INFO,`Used ${item}. Remaining: ${this.items[item] ?? 0}`);
+            updateUI(player)
         } else {
-            displayErrorMessage(`${item} not available.`);
+            playSoundEffect(soundEffects.ERROR);
+            showSnackbar(snackbarType.ERROR, `${item} not available.`);
         }
     }
 

@@ -2,25 +2,28 @@
 import {createTransparentButton} from "./buttons.js";
 import {Icons} from "./icons.js";
 
-export function createConfirmationDialog(title, onConfirm) {
+export function createConfirmationDialog(title, onConfirm, onCancel = () => {}) {
     // Create the dialog element
     const dialog = document.createElement('div');
     dialog.className = 'confirmation-dialog';
     dialog.innerHTML = `
         <div class="confirmation-dialog-content">
             <span class="close-button">${Icons.CLOSE}</span>
-            <p class="heading">${title}</p>
+            ${title}
             <div id="buttons">
        </div>
 
         </div>
     `;
     dialog.querySelector('#buttons').appendChild(createTransparentButton('Confirm', 'confirm-button', 'transparent-button', () => {
-        onConfirm();
+
         dialog.style.display = 'none';
+        onConfirm();
     }));
     dialog.querySelector('#buttons').appendChild(createTransparentButton('Cancel', 'cancel-button', 'transparent-button', function () {
+
         dialog.style.display = 'none';
+        onCancel()
     }));
     // Set initial focus to the confirm button
 setTimeout(() => {
@@ -56,7 +59,7 @@ setTimeout(() => {
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.5);
-            z-index: 200;
+            z-index: 999;
         }
         .confirmation-dialog-content {
             position: relative;
@@ -104,4 +107,15 @@ setTimeout(() => {
     }, 100);
     return dialog;
 
+}
+
+export function showConfirmationDialog(htmlContent, onConfirm, onCancel = () => {}) {
+    const dialog = createConfirmationDialog(htmlContent, onConfirm, onCancel);
+    // Show the dialog
+    dialog.style.display = 'block';
+    // Animate dialog on load
+    dialog.style.transform = 'scale(0)';
+    setTimeout(() => {
+        dialog.style.transform = 'scale(1)';
+    }, 100);
 }
