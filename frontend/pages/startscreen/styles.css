@@ -48,6 +48,11 @@
     border-radius: 5px;
     cursor: pointer;
 }
+#previous-players{
+    overflow: auto;
+    height: 300px;
+
+}
 
 .username-container:hover .arrow{
     margin-left: 100px;

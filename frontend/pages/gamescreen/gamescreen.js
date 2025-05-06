@@ -1,7 +1,7 @@
 import Game, {gamifyJson} from "../../js/game/game.js";
 import {animateSpawn} from "../../js/components/animations.js";
 import {showSnackbar, snackbarType} from "../../js/components/snackbar.js";
-import {getAllGames, getCurrentUser} from "../../js/components/localstorage.js";
+import {getAllGames, getCurrentUser, loadGame} from "../../js/components/localstorage.js";
 import Player from "../../js/game/player.js";
 import {hideLoadingDialog, showLoadingDialog} from "../../js/components/loading.js";
 // import Inventory from "../../js/game/inventory";
@@ -21,7 +21,7 @@ async function startGame(){
         return;
     }
 
-    let userGame = getAllGames().find(game => game.player.name === currentUser);
+    let userGame = loadGame(currentUser);
     let game = null;
     if (userGame) {
         console.log("user game", userGame);
@@ -35,10 +35,10 @@ async function startGame(){
     }
     hideLoadingDialog(loader);
     animateSpawn()
-    // automatic save every 3 seconds
+    // automatic save every 1 seconds
     const saving = setInterval(function() {
       game.handleSave();
- }, 3000);
+ }, 1000);
 
 
 
@@ -49,9 +49,14 @@ async function startGame(){
     document.querySelector('#explore-button').addEventListener('click', function() {
         game.handleExploreLocation()
     })
-        document.querySelector('#save-button').addEventListener('click', function() {
-              game.handleSave();
-              showSnackbar(snackbarType, "Game saved");
+        document.querySelector('#quit-button').addEventListener('click', function() {
+            const loader = showLoadingDialog();
+            showSnackbar(snackbarType, "Game saved");
+              setTimeout(() => {
+
+                  window.location.href = `../startscreen/index.html`;
+              }, 2000)
+
     })
 
 
