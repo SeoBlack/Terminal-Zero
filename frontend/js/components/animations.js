@@ -158,3 +158,39 @@ export function animateSpawn(){
         }, 1000);
     });
 }
+export function animateZombieAttackEffect() {
+    // Luo punainen välähdysruutu
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
+    overlay.style.zIndex = 9999;
+    overlay.style.pointerEvents = 'none';
+    overlay.style.animation = 'zombieAttackFlash 0.3s ease-out';
+
+    document.body.appendChild(overlay);
+
+    // Poista nopeasti
+    setTimeout(() => {
+        overlay.remove();
+    }, 300);
+
+    // Ruudun tärinä
+    document.body.classList.add('shake');
+    setTimeout(() => {
+        document.body.classList.remove('shake');
+    }, 300);
+}
+
+export function animateShootEffect() {
+    const container = document.createElement('div');
+    container.classList.add('shoot-effect');
+    document.body.appendChild(container);
+
+    setTimeout(() => {
+        container.remove();
+    }, 400);
+}
