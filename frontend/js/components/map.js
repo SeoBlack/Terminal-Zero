@@ -3,14 +3,13 @@ import {playSoundEffect, soundEffects} from "./sound_effects.js";
 import {showConfirmationDialog} from "./confirmation_dialog.js";
 
 class MapHandler {
-    constructor(mapId) {
-        this.map = L.map(mapId);
+    constructor(player = null ) {
+        this.map = L.map("map-view");
         this.markers = [];
-        const trailMarkers = [];
-        const maxTrailLength = 20;
-        this.player = null;
+        this.player = player
         this.playerMarker = null;
         L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=Q7LqsU4uCRpBRQmdA0wCfMBqoKmlramXUXl59KMEPYUzw4pdB7m4QLUATbSQwO92', {}).addTo(this.map);
+        console.log("Map initialized");
     }
 
     updateMap(player) {
@@ -26,7 +25,7 @@ class MapHandler {
     createPlayerMarker(player) {
         let playerIcon = L.divIcon({
             className: 'player-marker',
-            html: `<div class="pulse-ring player-ring"></div><div class="player player-icon" style="color:${player.color}">${Icons.PLAYER}</div>`,
+            html: `<div class="pulse-ring player-ring"></div><div class="player player-icon" style="color:${player.color}">${Icons.PLAYER[player.iconIndex]}</div>`,
             iconSize: [50, 50],
             iconAnchor: [12.5, 12.5],
             popupAnchor: [0, -12.5],
@@ -35,6 +34,7 @@ class MapHandler {
         });
 
         let popup = this.createPlayerPopup(player);
+        console.log("PLAYER MAP MARKER", player);
         this.playerMarker = L.marker([player.location.lat, player.location.lng], {
             icon: playerIcon
         }).addTo(this.map).bindPopup(popup);

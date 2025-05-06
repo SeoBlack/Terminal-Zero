@@ -26,3 +26,20 @@ def players():
         except Exception as e:
             status = 409 if "Duplicate entry" in str(e) else 500
             return Response(json.dumps({"error": str(e) if status == 500 else "Player already exists"}), mimetype='application/json', status=status)
+
+
+# get user by username
+@player_bp.route('/players/<username>', methods=['GET'])
+def get_player(username):
+    db_manager = current_app.config['DB_MANAGER']
+    try:
+        rows = db_manager.get_player_by_name(username)
+        if not rows:
+            return Response(json.dumps({"error": "Player not found"}), mimetype='application/json', status=404)
+        player = {"name": rows[0][0]}
+        if player:
+            return Response(json.dumps(player, default=str), mimetype='application/json', status=200)
+        else:
+            return Response(json.dumps({"error": "Player not found"}), mimetype='application/json', status=404)
+    except Exception as e:
+        return Response(json.dumps({"error": str(e)}), mimetype='application/json', status=500)

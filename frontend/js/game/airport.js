@@ -1,23 +1,29 @@
 import {SETTINGS} from "./settings.js";
 import {eventsWithTexts, maxValues} from "./helpers.js";
-import Event from "./events.js";
+import Event, {jsonifyEvent} from "./events.js";
 
 export default class Airport {
-    constructor(id, name, lat, lng, country, events = []) {
+    constructor(id, name, events, dangerLevel = 0, lat = 0, lng = 0, country = "", isExplored = false, isSafe = false) {
         /** Initialize an airport with resources and danger level. */
         this.id = id;
         this.name = name;
         this.events = events;
-        this.dangerLevel = Math.floor(Math.random() * SETTINGS.max_danger_level) + 1;
+        this.dangerLevel = dangerLevel;
         this.lat = lat;
         this.lng = lng;
         this.country = country;
-        this.isExplored = false;
-        this.isSafe = false;
-        this.generateEvents();
+        this.isExplored = isExplored;
+        this.isSafe = isSafe;
+        if (!this.events) {
+            this.generateEvents();
+        }
+
+
     }
 
+
     generateEvents() {
+        this.events = [];
         /** Generate a random list of events for the airport. */
         const randomEvents = Array.from({ length: Math.floor(Math.random() * 4) }, () => {
             return eventsWithTexts[Math.floor(Math.random() * eventsWithTexts.length)];
@@ -50,4 +56,21 @@ export default class Airport {
 
         return Math.round(earthRadiusKm * c * 100) / 100; // Round to 2 decimal places
     }
+}
+
+
+export function jsonifyAirport(airport) {
+    /** Convert airport object to string. */
+    return {
+        id: airport.id,
+        name: airport.name,
+        events: airport.events.map(event => jsonifyEvent(event)),
+        dangerLevel: airport.dangerLevel,
+        lat: airport.lat,
+        lng: airport.lng,
+        country: airport.country,
+        isExplored: airport.isExplored,
+        isSafe: airport.isSafe,
+
+    };
 }

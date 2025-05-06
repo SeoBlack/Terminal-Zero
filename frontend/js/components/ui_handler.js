@@ -2,6 +2,7 @@ import {Icons} from "./icons.js";
 
 export function updateStatusUI(player){
             /** Update the UI with the current game state. */
+            console.log("PLAYER NOW",player);
         document.querySelector('#player-name').innerText = player.name;
         document.querySelector('#player-health-number').innerText = `${player.health}%`;
         document.querySelector('#player-health-bar').style.width = `${player.health}%`;
@@ -17,6 +18,7 @@ export function updateInventoryUI(player){
     const inventoryContainer = document.getElementById('inventory');
     inventoryContainer.innerHTML = ''; // Clear previous items
           Object.keys(player.inventory?.items || {}).forEach(item => {
+              console.log("ITEM",item);
         const quantity = player.inventory.items[item];
               if (quantity <= 0) {
                     return; // Skip if quantity is 0 or less
@@ -43,6 +45,7 @@ export function updateInventoryUI(player){
 
 export function updateUI(player){
     /** Update the UI with the current game state. */
+    console.log("PLAYER PASSED",player);
     updateStatusUI(player);
     updateInventoryUI(player);
 }
