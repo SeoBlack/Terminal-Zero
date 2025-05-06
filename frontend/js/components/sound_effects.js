@@ -31,6 +31,8 @@ export const soundEffects = {
     "ERROR": "../../assets/audio/error.mp3",
     "ZOMBIE_START": "../../assets/audio/zombie-start.mp3",
     'CINEMATIC': "../../assets/audio/cinematic-hit.mp3",
+    "WIN": "../../assets/audio/congratulations.mp3",
+    "FIREWORK": "../../assets/audio/firework.mp3",
 
 
 }

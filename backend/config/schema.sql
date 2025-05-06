@@ -23,7 +23,7 @@ CREATE TABLE players (
 CREATE TABLE game (
     game_id INT AUTO_INCREMENT PRIMARY KEY,
     player_name VARCHAR(255) NOT NULL,
-    time_elapsed DATETIME,
+    time_elapsed VARCHAR(255) NOT NULL,
     has_won BOOLEAN,
     FOREIGN KEY (player_name) REFERENCES players(name)
 );

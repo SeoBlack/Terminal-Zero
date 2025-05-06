@@ -4,7 +4,10 @@ import {showConfirmationDialog} from "./confirmation_dialog.js";
 
 class MapHandler {
     constructor(player = null ) {
-        this.map = L.map("map-view");
+        this.map = L.map("map-view", {
+            minZoom: 5,
+            maxZoom: 7,
+        });
         this.markers = [];
         this.player = player
         this.playerMarker = null;

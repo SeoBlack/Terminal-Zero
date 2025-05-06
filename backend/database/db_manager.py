@@ -59,7 +59,7 @@ class DatabaseManager:
         return self.execute_query(query, (name,))
 
     def create_end_result(self, player_name, time_elapsed, has_won):
-        query = "INSERT INTO game (player_id, time_elapsed, has_won) VALUES (?, ?, ?)"
+        query = "INSERT INTO game (player_name, time_elapsed, has_won) VALUES (?, ?, ?)"
         return self.execute_query(query, (player_name, time_elapsed, has_won))
 
     def add_new_player(self, name):

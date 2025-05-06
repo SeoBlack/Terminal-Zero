@@ -1,5 +1,5 @@
 import Game, {gamifyJson} from "../../js/game/game.js";
-import {animateSpawn} from "../../js/components/animations.js";
+import {animateSpawn, animateWin} from "../../js/components/animations.js";
 import {showSnackbar, snackbarType} from "../../js/components/snackbar.js";
 import {getAllGames, getCurrentUser, loadGame} from "../../js/components/localstorage.js";
 import Player from "../../js/game/player.js";
@@ -17,7 +17,7 @@ async function startGame(){
 
     if (!currentUser) {
         showSnackbar(snackbarType.ERROR, "No user found. Please log in.");
-        window.location.href = `../startscreen/start_screen.html`;
+        window.location.href = `../startscreen/index.html`;
         return;
     }
 
@@ -48,7 +48,9 @@ async function startGame(){
 })
     document.querySelector('#explore-button').addEventListener('click', function() {
         game.handleExploreLocation()
+
     })
+
         document.querySelector('#quit-button').addEventListener('click', function() {
             const loader = showLoadingDialog();
             showSnackbar(snackbarType.INFO, "Game saved");
