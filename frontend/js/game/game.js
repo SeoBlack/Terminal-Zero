@@ -160,6 +160,8 @@ export default class Game {
             await animateLose();
             showInformationDialog("Game Over", "You have lost the game! Better luck next time!");
             window.location.href = `../losing_screen/lose_screen.html`;
+
+
         }
 
     }

@@ -23,7 +23,7 @@ async function startGame(){
 
     let userGame = loadGame(currentUser);
     let game = null;
-    if (userGame) {
+    if (userGame && userGame.gameOver === false) {
         console.log("user game", userGame);
         game = await gamifyJson(userGame);
         console.log(game);
