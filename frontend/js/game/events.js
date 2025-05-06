@@ -107,3 +107,10 @@ export default class Event {
         }
     }
 }
+export function jsonifyEvent(event) {
+    /** Convert an event to a JSON object. */
+    return {
+        description: event.description,
+        effect: event.effect
+    };
+}
