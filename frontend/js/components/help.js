@@ -18,7 +18,7 @@ export function createHelpButton() {
 
     const helpContent = isStartScreen
         ? `
-        <div class="help-dialog-content">
+        <div class="help-dialog-content" style="line-height: 1.6">
             <span class="close-button">&times;</span>
             <h2 class="heading">🎮 Welcome to Terminal Zero</h2>
             <p>To begin your journey:</p>
@@ -26,6 +26,7 @@ export function createHelpButton() {
                 <li>Type your name and click <strong>New Game</strong> to start fresh</li>
                 <li>Or choose an existing character to continue where you left off</li>
             </ul>
+            <br />
             <p>💡 Tip: You can click the <strong>?</strong> icon anytime for help.<br>The content will change once you enter the game!</p>
         </div>
         `
@@ -37,14 +38,15 @@ export function createHelpButton() {
 
             <h3 class="heading">🎮 Controls</h3>
             <ul>
-                <li><strong>Arrow Keys</strong> – Move your character</li>
-                <li><strong>Spacebar</strong> – Jump / interact</li>
-                <li><strong>Enter</strong> – Use objects / confirm choices</li>
+                <li><strong>Moving between airports</strong> – Press "Scan nearby airports" and click on one of the airports</li>
+                <li><strong>Using inventory</strong> – Click on the item you wish to use</li>
+                <li><strong>Exploring</strong> – You can explore airports by pressing "Explore Airport"</li>
             </ul>
 
             <h3 class="heading">💡 Tips</h3>
             <ul>
                 <li>Explore carefully — resources are limited.</li>
+                <li>Pay attention to the danger level</li>
                 <li>Talk to characters. They might help... or not.</li>
                 <li>Use your inventory wisely. Some items are one-time use.</li>
                 <li>Save whenever possible. Survival is not guaranteed.</li>
@@ -129,6 +131,9 @@ export function createHelpButton() {
     setTimeout(() => {
         helpButton.style.transform = 'scale(1)';
     }, 1000);
+
+    helpDialog.style.display = 'block';
+
 
     return helpButton;
 }
