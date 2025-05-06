@@ -21,20 +21,20 @@ export function createHelpButton() {
         <div class="help-dialog-content" style="line-height: 1.6">
             <span class="close-button">&times;</span>
             <h2 class="heading">🎮 Welcome to Terminal Zero</h2>
-            <p>To begin your journey:</p>
+            <p style="padding-left: 30px;">To begin your journey:</p>
             <ul>
                 <li>Type your name and click <strong>New Game</strong> to start fresh</li>
                 <li>Or choose an existing character to continue where you left off</li>
             </ul>
             <br />
-            <p>💡 Tip: You can click the <strong>?</strong> icon anytime for help.<br>The content will change once you enter the game!</p>
+            <p>💡 Tip: You can click the <strong>?</strong> icon anytime for help.
         </div>
         `
         : `
         <div class="help-dialog-content">
             <span class="close-button">&times;</span>
             <h2 class="heading">🕹️ Game Help</h2>
-            <p>You're now inside the terminal. Here's how to survive:</p>
+            <p style="padding-left: 30px;">You're now inside the terminal. Here's how to survive:</p>
 
             <h3 class="heading">🎮 Controls</h3>
             <ul>
@@ -111,6 +111,10 @@ export function createHelpButton() {
             padding: 20px;
             border-radius: 5px;
             width: 80%;
+        }
+        ul{
+            list-style-type: none;
+            padding-left: 30px;
         }
         .close-button {
             float: right;
