@@ -16,17 +16,23 @@ export function getAllGames() {
 
 export function  saveCurrentGame(game) {
         const allGames = getAllGames();
-        const stringifiedGame = jsonifyGame(game);
+        const jsonifiedGame = jsonifyGame(game);
         //look for the game with the same username
         const existingGameIndex = allGames.findIndex(g => g.player.name === game.player.name);
         if (existingGameIndex !== -1) {
             // If the game already exists, update it
-            allGames[existingGameIndex] = stringifiedGame;
+            allGames[existingGameIndex] = jsonifiedGame;
         } else {
             // If the game doesn't exist, add it
-            allGames.push(stringifiedGame);
+            allGames.push(jsonifiedGame);
         }
-        localStorage.setItem(entryName, JSON.stringify(allGames));
+        try{
+            localStorage.setItem(entryName, JSON.stringify(allGames));
+
+        }
+        catch (error) {
+            console.error("Error saving game to local storage:", error);
+        }
 
     }
 export function loadGame(username){

@@ -54,6 +54,9 @@ class DatabaseManager:
     def get_all_players(self):
         query = "SELECT * FROM players"
         return self.execute_query(query)
+    def get_player_by_name(self, name):
+        query = "SELECT * FROM players WHERE name = ?"
+        return self.execute_query(query, (name,))
 
     def create_end_result(self, player_name, time_elapsed, has_won):
         query = "INSERT INTO game (player_id, time_elapsed, has_won) VALUES (?, ?, ?)"

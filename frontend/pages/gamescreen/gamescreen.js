@@ -51,7 +51,7 @@ async function startGame(){
     })
         document.querySelector('#quit-button').addEventListener('click', function() {
             const loader = showLoadingDialog();
-            showSnackbar(snackbarType, "Game saved");
+            showSnackbar(snackbarType.INFO, "Game saved");
               setTimeout(() => {
 
                   window.location.href = `../startscreen/index.html`;

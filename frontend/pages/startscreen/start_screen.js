@@ -40,7 +40,11 @@ function startScreen(){
          const username = event.currentTarget.querySelector('.username-text').innerText;
             // check if the user exists in the database
             try{
-                const response = await addNewUser(username); // check if the user exists or add it
+                const response = await addNewUser(username);
+                if (!response) {
+                    showSnackbar(snackbarType.ERROR, "Failed to start the game. Please try again.");
+                    return;
+                }
                 setCurrentUser(username);
                 playSoundEffect(soundEffects.CINEMATIC)
                 playSoundEffect(soundEffects.ZOMBIE_START)

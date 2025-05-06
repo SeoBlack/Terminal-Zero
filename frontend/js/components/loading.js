@@ -89,18 +89,12 @@ export function createLoadingDialog() {
 
 export function showLoadingDialog() {
     const dialog = createLoadingDialog();
-    // Show the dialog
-    dialog.style.display = 'block';
-    // Animate dialog on load
-    dialog.style.transform = 'scale(0)';
-    setTimeout(() => {
-        dialog.style.transform = 'scale(1)';
-    }, 1000);
     return dialog;
 }
 
 export function hideLoadingDialog(dialog) {
     // Hide the dialog
+    if (!dialog) return;
     dialog.style.transform = 'scale(0)';
     setTimeout(() => {
         dialog.style.display = 'none';

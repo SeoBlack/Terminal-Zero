@@ -33,9 +33,10 @@ def players():
 def get_player(username):
     db_manager = current_app.config['DB_MANAGER']
     try:
-        rows = db_manager.get_all_players()
-        players = [{"name": row[0]} for row in rows]
-        player = next((player for player in players if player["name"] == username), None)
+        rows = db_manager.get_player_by_name(username)
+        if not rows:
+            return Response(json.dumps({"error": "Player not found"}), mimetype='application/json', status=404)
+        player = {"name": rows[0][0]}
         if player:
             return Response(json.dumps(player, default=str), mimetype='application/json', status=200)
         else:
