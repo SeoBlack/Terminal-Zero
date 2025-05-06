@@ -1,5 +1,6 @@
 //scan animation
 import {playSoundEffect, soundEffects} from "./sound_effects.js";
+import {showInformationDialog} from "./information_dialog.js";
 
 export function animateScan(){
 
@@ -138,6 +139,93 @@ export function animateFoundItem(){
             resolve();
         }, 500);
     });
+}
+export function animateWin(){
+    // play sound effect
+    playSoundEffect(soundEffects.WIN);
+    showInformationDialog("Victory", "You have found the safe airport! You win!");
+
+    const firstFireworks = setInterval(() =>{
+        const dice = Math.floor((Math.random() * 9) + 1);
+        if (dice > 5 ) {
+            launchFirework();
+        }
+    }, 500);
+        const secondFireworks = setInterval(() =>{
+        const dice = Math.floor((Math.random() * 9) + 1);
+        if (dice > 5 ) {
+            launchFirework();
+        }
+    }, 500);
+
+    const body = document.querySelector('body');
+
+    setTimeout(() => {
+
+         body.classList.add('dim-overlay');
+        clearInterval(firstFireworks);
+        clearInterval(secondFireworks);
+    }, 3000);
+    setTimeout(() => {
+        body.classList.remove('dim-overlay');
+    }, 5000);
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 5000);
+
+    }
+    );
+
+}
+
+export function animateLose(){
+    // TODO: replace with real animation
+}
+
+
+function launchFirework(){
+        const colors = ['#ff0000', '#ff7300', '#fffb00', '#48ff00', '#00ffd5', '#002bff', '#7a00ff', '#ff00c8'];
+            const particles = 50;
+            // const launchX = (Math.random() * window.innerWidth) / 2 ;
+            // const launchY = (Math.random() * window.innerHeight - 500) /2 ;
+            //get random place in the center of the screen
+
+            const launchX = window.innerWidth / 2 - Math.random() * 600;
+            const launchY = (window.innerHeight / 2) * Math.random();
+            const fireworkSound = playSoundEffect(soundEffects.FIREWORK);
+            for (let i = 0; i < particles; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+
+                // Random position near center
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 50 + Math.random() * 100;
+
+                // Set random color
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                firework.style.backgroundColor = color;
+                firework.style.boxShadow = `0 0 10px 2px ${color}`;
+
+                // Set animation end position
+                firework.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+                firework.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
+
+                // Random delay for more natural effect
+                firework.style.animationDelay = `${Math.random() * 0.2}s`;
+
+                // Position the firework
+                firework.style.left = `${launchX}px`;
+                firework.style.top = `${launchY}px`;
+
+                document.body.appendChild(firework);
+
+                // Remove element after animation completes
+                firework.addEventListener('animationend', () => {
+                    firework.remove();
+                });
+            }
 }
 
 export function animateSpawn(){

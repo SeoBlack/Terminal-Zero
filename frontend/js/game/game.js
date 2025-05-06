@@ -1,16 +1,17 @@
-import {getAirports} from "../utils/backend-queries.js";
+import {createEndResult, getAirports} from "../utils/backend-queries.js";
 import Player, {jsonifyPlayer} from "./player.js";
 import Airport, {jsonifyAirport} from "./airport.js";
-import {getHintEvents} from "./helpers.js";
+import {formatTime, getHintEvents} from "./helpers.js";
 import {SETTINGS} from "./settings.js";
 import MapHandler from "../components/map.js";
-import {animateScan, animateSearch} from "../components/animations.js";
+import {animateLose, animateScan, animateSearch, animateWin} from "../components/animations.js";
 import {showSnackbar, snackbarType} from "../components/snackbar.js";
 import Event, {jsonifyEvent} from "./events.js";
 import {updateInventoryUI, updateStatusUI, updateUI} from "../components/ui_handler.js";
 import {playSoundEffect, soundEffects} from "../components/sound_effects.js";
 import {saveCurrentGame} from "../components/localstorage.js";
 import Inventory from "./inventory.js";
+import {showInformationDialog} from "../components/information_dialog.js";
 
 export default class Game {
     constructor(gameOver = false, player = null, airports = [], startTime = null, endTime = null, hasWon = false, map = null) {
@@ -18,7 +19,7 @@ export default class Game {
         this.gameOver = gameOver;
         this.player = player || new Player();
         this.airports = airports;
-        this.startTime = startTime || new Date();
+        this.startTime = startTime || Date.now();
         this.endTime = endTime;
         this.hasWon = hasWon;
         this.map = map || new MapHandler(this.player);
@@ -60,9 +61,9 @@ export default class Game {
 
     }
 
-    handleExploreLocation() {
+    async handleExploreLocation() {
         animateSearch();
-        if (this.checkWin()) {
+        if (await this.checkWin()) {
             return;
         }
 
@@ -71,7 +72,7 @@ export default class Game {
         if (this.player.location.events.length === 0) {
             playSoundEffect(soundEffects.ERROR)
             showSnackbar(snackbarType.ERROR, "Nothing to explore here");
-            this.checkLose();
+            await this.checkLose();
             return;
         }
         console.log(this.player.location.events);
@@ -84,11 +85,6 @@ export default class Game {
         }
         this.player.location.events = []; // Clear the events after exploring
         this.updateUI();
-    }
-
-
-    handleGameOver() {
-        this.gameOver = true;
     }
 
     generateRandomHint() {
@@ -107,35 +103,67 @@ export default class Game {
     }
 
 
-    checkWin() {
+    async checkWin() {
         if (this.player.location.isSafe) {
             // Win case
-            // displayWinScreen(this.player);
-            this.endGame(true);
+            await this.endGame(true);
             return true;
         } else {
             return false;
         }
     }
 
-    checkLose() {
-        if (
-            (this.player.fuel <= 0 && !this.hasWon && this.player.inventory.items.fuel === 0 && this.player.location.isExplored) ||
-            (this.player.health <= 0 && !this.hasWon)
-        ) {
-            // displayLoseScreen();
-            this.endGame(false);
+    async checkLose() {
+
+        //get nearest airport
+        const nearestAirport = this.airports.reduce((closest, airport) => {
+            const closestDist = this.player.location.calculateDistance(closest);
+            const currDist = this.player.location.calculateDistance(airport);
+            return (closestDist < currDist) ? closest : airport;
+
+        }
+        );
+        //check if player's fuel is enough to reach the nearest airport
+        const distanceToNearestAirport = this.player.location.calculateDistance(nearestAirport);
+        console.log(distanceToNearestAirport);
+        const fuelNeeded = distanceToNearestAirport / SETTINGS.fuel_usage_per_km
+        console.log(fuelNeeded)
+        //check if player has enough fuel to reach the nearest airport
+        if((this.player.fuel <= 0 || this.player.fuel < fuelNeeded) && this.player.inventory.items.fuel === 0 && this.player.location.isExplored) {
+            await this.endGame(false);
+        }
+        else if(this.player.health <= 0 && !this.hasWon){
+            await this.endGame(false);
         }
     }
 
-    endGame(hasWon = false) {
+    async endGame(hasWon = false) {
         this.hasWon = hasWon;
-        this.handleGameOver();
-        this.endTime = new Date();
-        const completionTime = (this.endTime - this.startTime) / 1000; // Time in seconds
-        this.dbManager.createNewGameRecord(this.player.id, formatTime(completionTime), this.hasWon);
-        const recordsList = this.dbManager.getEndStatus();
-        displayRecords(recordsList);
+        this.gameOver = true;
+        this.endTime = Date.now();
+        const completionTime = this.endTime - this.startTime;
+        console.log(completionTime);
+        try{
+            const response = await createEndResult(this.player.name, formatTime(completionTime), this.hasWon );
+            this.handleSave()
+        }
+        catch(error){
+            console.log("error", error);
+            showSnackbar(snackbarType.ERROR, 'An error occurred while saving the game');
+        }
+        if (this.hasWon) {
+            await animateWin();
+
+            window.location.href = `../winning_screen/win_screen.html`;
+        }else{
+            console.log("losing");
+            await animateLose();
+            showInformationDialog("Game Over", "You have lost the game! Better luck next time!");
+            window.location.href = `../losing_screen/lose_screen.html`;
+
+
+        }
+
     }
     async scanAirports() {
         //run animation
@@ -170,7 +198,7 @@ export function jsonifyGame(game) {
 
 export function gamifyJson(json) {
     const airports = json.airports.map(airport => new Airport(airport.id, airport.name, airport.events.map(event => new Event(event.description, event.effect)), airport.dangerLevel, airport.lat, airport.lng, airport.country, airport.isExplored, airport.isSafe));
-
+    console.log("iconIndex", json.player.iconIndex)
     const player = new Player(json.player.id, json.player.name, json.player.health, json.player.fuel, airports.find(airport => airport.id === json.player.location), new Inventory(json.player.inventory.items), airports.filter(airport => json.player.airportsInRange.includes(airport.id)), json.player.color, null, json.player.iconIndex);
 
     const map = new MapHandler(player);

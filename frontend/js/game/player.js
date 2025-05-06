@@ -19,7 +19,9 @@ export default class Player {
         this.color = color || getRandomColor();
         this.updateUi = updateUi;
          //randomly select an icon from the list of 2 icons
-        this.iconIndex = iconIndex || Math.random() < 0.5 ? 0 : 1;
+
+        this.iconIndex = iconIndex == null ? (Math.random() < 0.5 ? 0 : 1) : iconIndex;
+
 
 
 

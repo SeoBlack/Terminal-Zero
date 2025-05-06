@@ -31,12 +31,20 @@ def end_results():
                             status=500
                             )
     elif request.method == 'POST':
-        player_name = request.form['player_name']
-        time_elapsed = request.form['time_elapsed']
-        has_won = request.form['has_won']
+        if not request.is_json:
+            print("Request is not JSON")
+            return Response(json.dumps({"error": "Request must be JSON"}), mimetype='application/json', status=400)
+
+        data = request.get_json()
+        try:
+            username = data['username']
+            time_elapsed = data['time_elapsed']
+            has_won = data['has_won']
+        except KeyError as e:
+                 return Response(json.dumps({"error": f"Missing required field: {str(e)}"}), mimetype='application/json', status = 400)
 
         try:
-            db_manager.create_end_result(player_name, time_elapsed, has_won)
+            db_manager.create_end_result(username, time_elapsed, has_won)
             return Response(response=json.dumps({"message": "End result created successfully"}),
                             mimetype='application/json',
                             status=201

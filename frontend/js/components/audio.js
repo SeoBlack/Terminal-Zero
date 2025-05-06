@@ -23,12 +23,13 @@ export function createSoundButton() {
     playlist.push('../../assets/audio/soundtrack2.mp3');
     playlist.push('../../assets/audio/soundtrack3.mp3');
   }
-  if(window.location.pathname.includes('gameover')) {
-  playlist.push('../../assets/audio/gameover.mp3');
+  if(window.location.pathname.includes('lose_screen')) {
+  playlist.push('../../assets/audio/losing.mp3');
   }
-  if(window.location.pathname.includes('victory')) {
-  playlist.push('../../assets/audio/victory.mp3');
+  if(window.location.pathname.includes('win_screen')) {
+  playlist.push('../../assets/audio/winning.mp3');
   }
+
   console.log(window.location)
   let currentTrackIndex = 0;
   audio.src = playlist[currentTrackIndex];

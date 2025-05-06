@@ -136,7 +136,7 @@ export function createHelpButton() {
         helpButton.style.transform = 'scale(1)';
     }, 1000);
 
-    helpDialog.style.display = 'block';
+    // helpDialog.style.display = 'block';
 
 
     return helpButton;
