@@ -35,10 +35,13 @@ def end_results():
             print("Request is not JSON")
             return Response(json.dumps({"error": "Request must be JSON"}), mimetype='application/json', status=400)
 
-        username = request.get_json()['username']
-        time_elapsed = request.get_json()['time_elapsed']
-        has_won = request.get_json()['has_won']
-        print(username, time_elapsed, has_won)
+        data = request.get_json()
+        try:
+            username = data['username']
+            time_elapsed = data['time_elapsed']
+            has_won = data['has_won']
+        except KeyError as e:
+                 return Response(json.dumps({"error": f"Missing required field: {str(e)}"}), mimetype='application/json', status = 400)
 
         try:
             db_manager.create_end_result(username, time_elapsed, has_won)

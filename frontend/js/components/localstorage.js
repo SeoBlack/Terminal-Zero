@@ -61,15 +61,6 @@ export function setCurrentUser(user){
 
     sessionStorage.setItem(entryName, JSON.stringify(authData));
 }
-export function removeGame(username){
-    /** Remove a game from local storage. */
-    const allGames = getAllGames();
-    const gameIndex = allGames.findIndex(game => game.player.name === username);
-    if (gameIndex !== -1) {
-        allGames.splice(gameIndex, 1);
-        localStorage.setItem(entryName, JSON.stringify(allGames));
-    }
-}
 
 export function getCurrentUser(){
     const authData = sessionStorage.getItem(entryName);

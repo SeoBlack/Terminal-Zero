@@ -1,5 +1,6 @@
 //scan animation
 import {playSoundEffect, soundEffects} from "./sound_effects.js";
+import {showInformationDialog} from "./information_dialog.js";
 
 export function animateScan(){
 
@@ -142,6 +143,7 @@ export function animateFoundItem(){
 export function animateWin(){
     // play sound effect
     playSoundEffect(soundEffects.WIN);
+    showInformationDialog("Victory", "You have found the safe airport! You win!");
 
     const firstFireworks = setInterval(() =>{
         const dice = Math.floor((Math.random() * 9) + 1);
@@ -166,7 +168,7 @@ export function animateWin(){
     }, 3000);
     setTimeout(() => {
         body.classList.remove('dim-overlay');
-    }, 2000);
+    }, 5000);
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve();
@@ -178,7 +180,7 @@ export function animateWin(){
 }
 
 export function animateLose(){
-
+    // TODO: replace with real animation
 }
 
 

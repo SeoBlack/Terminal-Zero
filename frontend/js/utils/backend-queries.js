@@ -125,11 +125,17 @@ export async function createEndResult(username, time, hasWon){
             })
         });
         console.log(response);
+        if (!response.ok) {
+            showSnackbar(snackbarType.ERROR, `Failed to save game result: ${response.status}`);
+            return null;
+        }
 
         return await response.json();
 
     }catch(error){
+        console.error('Error creating end result:', error);
         showSnackbar(snackbarType.ERROR,'An error occurred while creating the end result');
+        return null
     }
     finally {
         isLoading = false;

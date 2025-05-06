@@ -19,7 +19,7 @@ export default class Game {
         this.gameOver = gameOver;
         this.player = player || new Player();
         this.airports = airports;
-        this.startTime = startTime || new Date().getMilliseconds();
+        this.startTime = startTime || Date.now();
         this.endTime = endTime;
         this.hasWon = hasWon;
         this.map = map || new MapHandler(this.player);
@@ -116,10 +116,10 @@ export default class Game {
     async checkLose() {
 
         //get nearest airport
-        const nearestAirport = this.airports.reduce((prev, curr) => {
-            const prevDistance = this.player.location.calculateDistance(prev);
-            const currDistance = curr.calculateDistance(prevDistance);
-            return (prevDistance < currDistance) ? prev : curr;
+        const nearestAirport = this.airports.reduce((closest, airport) => {
+            const closestDist = this.player.location.calculateDistance(closest);
+            const currDist = this.player.location.calculateDistance(airport);
+            return (closestDist < currDist) ? closest : airport;
 
         }
         );
@@ -140,8 +140,8 @@ export default class Game {
     async endGame(hasWon = false) {
         this.hasWon = hasWon;
         this.gameOver = true;
-        this.endTime = new Date().getMilliseconds();
-        const completionTime = parseInt(this.endTime) - parseInt(this.startTime);
+        this.endTime = Date.now();
+        const completionTime = this.endTime - this.startTime;
         console.log(completionTime);
         try{
             const response = await createEndResult(this.player.name, formatTime(completionTime), this.hasWon );
@@ -153,7 +153,7 @@ export default class Game {
         }
         if (this.hasWon) {
             await animateWin();
-            showInformationDialog("Victory", "You have found the safe airport! You win!");
+
             window.location.href = `../winning_screen/win_screen.html`;
         }else{
             console.log("losing");

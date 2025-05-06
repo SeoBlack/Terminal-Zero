@@ -27,6 +27,14 @@ async function startGame(){
         console.log("user game", userGame);
         game = await gamifyJson(userGame);
         console.log(game);
+        //check if the game is over every second
+        const gameChecker = setInterval(() => {
+           const win =  game.checkWin();
+           const lose =  game.checkLose();
+              if (win || lose) {
+                clearInterval(gameChecker);
+              }
+        }, 1000);
     }
     else{
         const player = new Player(null, currentUser);
