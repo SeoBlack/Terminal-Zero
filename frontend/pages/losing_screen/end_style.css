@@ -154,8 +154,7 @@ th, td {
 
 th {
   color: var(--grey-color);
-  font-weight: normal;
-}
+font-weight: bold;}
 
 td {
   color: var(--text-color);

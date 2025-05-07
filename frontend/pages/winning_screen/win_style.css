@@ -262,7 +262,7 @@ th, td {
 
 th {
   color: var(--primary-color);
-  font-weight: normal;
+  font-weight: bold;
 }
 
 td {
