@@ -70,6 +70,16 @@ class DatabaseManager:
     def get_end_results(self):
         query = "SELECT * FROM game"
         return self.execute_query(query)
+    def get_end_result_by_username(self, username):
+        query = "SELECT * FROM game WHERE player_name = ?"
+        return self.execute_query(query, (username,))
+    def update_end_result(self, player_name, time_elapsed, has_won):
+        query = """
+            UPDATE game 
+            SET time_elapsed = ?, has_won = ? 
+            WHERE player_name = ?
+        """
+        return self.execute_query(query, (time_elapsed, has_won, player_name))
 
 
 

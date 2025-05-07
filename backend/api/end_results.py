@@ -44,11 +44,21 @@ def end_results():
                  return Response(json.dumps({"error": f"Missing required field: {str(e)}"}), mimetype='application/json', status = 400)
 
         try:
-            db_manager.create_end_result(username, time_elapsed, has_won)
-            return Response(response=json.dumps({"message": "End result created successfully"}),
-                            mimetype='application/json',
-                            status=201
-                            )
+            # update end results if already exists
+            existing_result = db_manager.get_end_result_by_username(username)
+            if existing_result:
+                db_manager.update_end_result(username, time_elapsed, has_won)
+                return Response(response=json.dumps({"message": "End result updated successfully"}),
+                                mimetype='application/json',
+                                status=200
+                                )
+            # create new end result
+            else:
+                db_manager.create_end_result(username, time_elapsed, has_won)
+                return Response(response=json.dumps({"message": "End result created successfully"}),
+                                mimetype='application/json',
+                                status=201
+                                )
         except Exception as e:
             print(f"Error: {e}")
             return Response(response=json.dumps({"error": str(e)}),
