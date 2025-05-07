@@ -25,6 +25,8 @@ export default class Game {
         this.hasWon = hasWon;
         this.map = map || new MapHandler(this.player);
         this.checker = setInterval(async () => {
+            if (!this.player.location || !this.player.location.calculateDistance || typeof this.player.location.calculateDistance !== 'function')
+                return;
             await this.checkLose();
             await this.checkWin();
         }, 1000);
@@ -45,7 +47,6 @@ export default class Game {
         for (let i = 0; i < dbAirports.length; i++) {
             const airport = dbAirports[i];
              const weatherData = await getWeatherData(parseFloat(airport.latitude_deg), parseFloat(airport.longitude_deg));
-             console.log(weatherData);
             this.airports.push(new Airport(airport.id, airport.name,null, Math.floor(Math.random() * SETTINGS.max_danger_level) + 1 ,  parseFloat(airport.latitude_deg), parseFloat(airport.longitude_deg), airport.country, false, false, weatherData));
 
         }
@@ -120,7 +121,6 @@ export default class Game {
 
 
     async checkWin() {
-        console.log("checking win");
         if (this.player.location.isSafe && this.player.location.isExplored) {
             // Win case
             await this.endGame(true);
@@ -131,20 +131,20 @@ export default class Game {
     }
 
     async checkLose() {
-        console.log("checking lose");
         //get nearest airport
+
         const nearestAirport = this.airports.reduce((closest, airport) => {
             // skip the current airport if it's the same as the player's location
             if (airport === this.player.location) {
                 return closest;
             }
+
             const closestDist = this.player.location.calculateDistance(closest);
             const currDist = this.player.location.calculateDistance(airport);
             return (closestDist < currDist) ? closest : airport;
 
         }
         );
-        console.log(nearestAirport);
         //check if player's fuel is enough to reach the nearest airport
         const distanceToNearestAirport = this.player.location.calculateDistance(nearestAirport);
         const fuelNeeded = distanceToNearestAirport / SETTINGS.fuel_usage_per_km
