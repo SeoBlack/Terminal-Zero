@@ -97,3 +97,7 @@
     margin: 5px;
 }
 
+/* Popup-vahvistusikkuna poistamiseen */
+.confirmation-dialog p {
+    margin-bottom: 25px;
+}
