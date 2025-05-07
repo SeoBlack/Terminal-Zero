@@ -68,16 +68,7 @@ class DatabaseManager:
         return name
 
     def get_end_results(self):
-        query = """
-                    SELECT 
-                players.name,
-                game.time_elapsed,
-                game.has_won
-            FROM 
-                game
-            LEFT JOIN 
-                players ON players.name = game.player_name
-        """
+        query = "SELECT * FROM game"
         return self.execute_query(query)
 
 
