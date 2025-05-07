@@ -12,7 +12,6 @@ class MapHandler {
         this.player = player
         this.playerMarker = null;
         L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=Q7LqsU4uCRpBRQmdA0wCfMBqoKmlramXUXl59KMEPYUzw4pdB7m4QLUATbSQwO92', {}).addTo(this.map);
-        console.log("Map initialized");
     }
 
     updateMap(player) {
@@ -37,7 +36,6 @@ class MapHandler {
         });
 
         let popup = this.createPlayerPopup(player);
-        console.log("PLAYER MAP MARKER", player);
         this.playerMarker = L.marker([player.location.lat, player.location.lng], {
             icon: playerIcon
         }).addTo(this.map).bindPopup(popup);

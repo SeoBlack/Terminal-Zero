@@ -19,7 +19,6 @@ async function lose_screen(){
         const response = await getEndResults();
 
         if (response) {
-            console.log("end results", response);
             //add the end results to the table
             createEndResultTable(response)
         }

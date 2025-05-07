@@ -24,7 +24,6 @@ export default class Event {
         /** Apply the event effect to the player. */
         for (const [key, value] of Object.entries(this.effect)) {
             if (key === "damage" || key === "huge_damage") {
-                console.log("damage", value);
 
                 // ➕ Uudet visuaaliset efektit:
                 animateZombieAttackEffect();

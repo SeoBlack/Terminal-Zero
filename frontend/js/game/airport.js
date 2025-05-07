@@ -1,9 +1,10 @@
 import {SETTINGS} from "./settings.js";
 import {eventsWithTexts, maxValues} from "./helpers.js";
 import Event, {jsonifyEvent} from "./events.js";
+import {getWeatherData} from "../components/openWeatherMap.js";
 
 export default class Airport {
-    constructor(id, name, events, dangerLevel = 0, lat = 0, lng = 0, country = "", isExplored = false, isSafe = false) {
+    constructor(id, name, events, dangerLevel = 0, lat = 0, lng = 0, country = "", isExplored = false, isSafe = false, weather = null) {
         /** Initialize an airport with resources and danger level. */
         this.id = id;
         this.name = name;
@@ -14,14 +15,13 @@ export default class Airport {
         this.country = country;
         this.isExplored = isExplored;
         this.isSafe = isSafe;
+        this.weather = weather;
         if (!this.events) {
             this.generateEvents();
         }
 
 
     }
-
-
     generateEvents() {
         this.events = [];
         /** Generate a random list of events for the airport. */
@@ -71,6 +71,7 @@ export function jsonifyAirport(airport) {
         country: airport.country,
         isExplored: airport.isExplored,
         isSafe: airport.isSafe,
+        weather: airport.weather
 
     };
 }
