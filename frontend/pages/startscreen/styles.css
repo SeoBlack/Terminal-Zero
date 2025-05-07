@@ -77,3 +77,23 @@
     transition: all 0.3s ease;
     cursor: pointer;
 }
+
+/*Authors styling*/
+.topleft {
+    color: var(--text-color);
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 18px;
+    font-family: poppins , sans-serif;
+    background-color: var(--background-color);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/*Also authors styling*/
+.author {
+    color: var(--primary-color);
+    margin: 5px;
+}
+
