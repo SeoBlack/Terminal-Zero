@@ -205,6 +205,9 @@ export function animateLose(reason){
     }, 4000);
     return new Promise((resolve) => {
         setTimeout(() => {
+            // Clean up DOM elements and classes
+           body.classList.remove('dim-overlay');
+           overlay.remove();
             resolve();
         }, 7000);
 
