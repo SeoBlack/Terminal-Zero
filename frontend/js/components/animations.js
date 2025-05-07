@@ -177,10 +177,10 @@ export function animateWin(){
 
 }
 
-export function animateLose(){
+export function animateLose(reason){
         // play sound effect
     playSoundEffect(soundEffects.PIANO_SMASH);
-    showInformationDialog("You Lost", "You have been killed by zombies!");
+    showInformationDialog("You Lost", reason );
      const body = document.body;
     const overlay = document.createElement('div');
     overlay.classList.add('lose-over-overlay');
@@ -202,12 +202,11 @@ export function animateLose(){
     // Optional: Reset after 3 seconds
     setTimeout(() => {
         overlay.classList.remove('fade-in');
-        // body.classList.remove('dim-overlay');
     }, 4000);
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 4000);
+        }, 7000);
 
     }
     );

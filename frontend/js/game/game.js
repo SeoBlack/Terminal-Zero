@@ -145,11 +145,12 @@ export default class Game {
 
         }
         );
+
         //check if player's fuel is enough to reach the nearest airport
         const distanceToNearestAirport = this.player.location.calculateDistance(nearestAirport);
         const fuelNeeded = distanceToNearestAirport / SETTINGS.fuel_usage_per_km
         //check if player has enough fuel to reach the nearest airport
-        if((this.player.fuel <= 0 || this.player.fuel < fuelNeeded) && this.player.inventory.items.fuel === 0 && this.player.location.isExplored) {
+        if((this.player.fuel <= 0 || this.player.fuel < fuelNeeded) && (this.player.inventory.items.fuel === 0 || !Object.keys(this.player.inventory.items).includes('fuel')) && this.player.location.isExplored) {
             await this.endGame(false);
         }
         else if(this.player.health <= 0 && !this.hasWon){
@@ -176,7 +177,8 @@ export default class Game {
 
             window.location.href = `../winning_screen/win_screen.html`;
         }else{
-            await animateLose();
+            const deathReason = this.player.health <= 0 ? "You were eaten by zombies" : "You have run out of fuel";
+            await animateLose(deathReason);
             showInformationDialog("Game Over", "You have lost the game! Better luck next time!");
             window.location.href = `../losing_screen/lose_screen.html`;
 
