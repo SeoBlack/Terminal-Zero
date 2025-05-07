@@ -30,7 +30,6 @@ export function createSoundButton() {
   playlist.push('../../assets/audio/winning.mp3');
   }
 
-  console.log(window.location)
   let currentTrackIndex = 0;
   audio.src = playlist[currentTrackIndex];
   audio.innerHTML = 'Your browser doesn\'t support audio.';
@@ -91,7 +90,6 @@ export function createSoundButton() {
 
   soundButton.addEventListener('click', function() {
     isPlaying = !isPlaying;
-    console.log(isPlaying);
 
     if (isPlaying) {
       audio.play();

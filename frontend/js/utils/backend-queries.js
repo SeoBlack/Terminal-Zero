@@ -38,7 +38,7 @@ export async function addNewUser(username) {
         }
     } catch (error) {
 
-        console.log("error", error);
+        console.error("error", error);
         showSnackbar(snackbarType.ERROR, 'An error occurred while adding the user');
     }
     finally {
@@ -110,7 +110,6 @@ export async function getEndResults(){
 
 export async function createEndResult(username, time, hasWon){
     try{
-        console.log(time)
         isLoading = true;
         const response = await fetch(`${flaskUrl}${apiEndPoints.END_RESULTS}`, {
             method: 'POST',
@@ -124,7 +123,6 @@ export async function createEndResult(username, time, hasWon){
                 has_won: hasWon
             })
         });
-        console.log(response);
         if (!response.ok) {
             showSnackbar(snackbarType.ERROR, `Failed to save game result: ${response.status}`);
             return null;

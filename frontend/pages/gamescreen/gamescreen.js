@@ -13,7 +13,6 @@ async function startGame(){
     try{
         const loader = showLoadingDialog();
     const currentUser = getCurrentUser();
-    console.log();
 
     if (!currentUser) {
         showSnackbar(snackbarType.ERROR, "No user found. Please log in.");
@@ -24,9 +23,7 @@ async function startGame(){
     let userGame = loadGame(currentUser);
     let game = null;
     if (userGame && userGame.gameOver === false) {
-        console.log("user game", userGame);
         game = await gamifyJson(userGame);
-        console.log(game);
         //check if the game is over every second
         const gameChecker = setInterval(() => {
            const win =  game.checkWin();
@@ -90,7 +87,6 @@ document.addEventListener("DOMContentLoaded", startGame);
 
 async function handleScanButtonClick(game) {
     await game.scanAirports()
-    console.log(game.player.airportsInRange)
 }
 
 

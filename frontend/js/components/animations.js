@@ -27,8 +27,7 @@ export function animateTravel(endAirport, playerMarker) {
     // play sound effect
     playSoundEffect(soundEffects.FLY);
     const startLatLng = playerMarker.getLatLng();
-    console.log(startLatLng);
-    console.log(endAirport);
+
 
 
     // Calculate bearing (direction)
@@ -36,7 +35,6 @@ export function animateTravel(endAirport, playerMarker) {
         startLatLng.lat, startLatLng.lng,
         endAirport.lat, endAirport.lng
     );
-    console.log(bearing);
 
     // Rotate the icon
     const icon = document.querySelector('.player-icon');

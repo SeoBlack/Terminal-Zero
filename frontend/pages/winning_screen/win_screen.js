@@ -13,7 +13,6 @@ async function win_screen(){
         //fetch end results
         const response = await getEndResults();
         if (response) {
-            console.log("end results", response);
             //add the end results to the table
         }
     }
