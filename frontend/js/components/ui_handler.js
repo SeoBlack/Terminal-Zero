@@ -49,3 +49,13 @@ export function updateUI(player){
     updateStatusUI(player);
     updateInventoryUI(player);
 }
+
+export function createEndResultTable(endResults) {
+    const table = document.getElementById("players-table-body");
+    table.innerHTML = endResults.map(result => `
+        <tr>
+            <td>${result.player_name}</td>
+            <td>${result.time_elapsed}</td>
+            <td>${result.has_won ? 'winner' : 'loser'}</td>
+        </tr>`).join('');
+}

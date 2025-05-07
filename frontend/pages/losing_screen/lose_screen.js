@@ -1,5 +1,7 @@
 import {getEndResults} from "../../js/utils/backend-queries.js";
 import {deleteGame, getCurrentUser, setCurrentUser} from "../../js/components/localstorage.js";
+import {createEndResultTable} from "../../js/components/ui_handler.js";
+
 
 async function lose_screen(){
 
@@ -19,6 +21,7 @@ async function lose_screen(){
         if (response) {
             console.log("end results", response);
             //add the end results to the table
+            createEndResultTable(response)
         }
 
 
