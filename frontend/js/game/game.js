@@ -23,6 +23,10 @@ export default class Game {
         this.endTime = endTime;
         this.hasWon = hasWon;
         this.map = map || new MapHandler(this.player);
+        this.checker = setInterval(async () => {
+            await this.checkLose();
+            await this.checkWin();
+        }, 1000);
         // this.updateMap();
         console.log(this.airports)
         this.player.updateUi = () => {
@@ -57,7 +61,9 @@ export default class Game {
         this.generateRandomHint();
         this.updateUI();
         this.updateMap();
-        this.handleSave()
+        this.handleSave();
+        //check if the game is over every second
+
 
     }
 
@@ -104,7 +110,8 @@ export default class Game {
 
 
     async checkWin() {
-        if (this.player.location.isSafe) {
+        console.log("checking win");
+        if (this.player.location.isSafe && this.player.location.isExplored) {
             // Win case
             await this.endGame(true);
             return true;
@@ -114,15 +121,20 @@ export default class Game {
     }
 
     async checkLose() {
-
+        console.log("checking lose");
         //get nearest airport
         const nearestAirport = this.airports.reduce((closest, airport) => {
+            // skip the current airport if it's the same as the player's location
+            if (airport === this.player.location) {
+                return closest;
+            }
             const closestDist = this.player.location.calculateDistance(closest);
             const currDist = this.player.location.calculateDistance(airport);
             return (closestDist < currDist) ? closest : airport;
 
         }
         );
+        console.log(nearestAirport);
         //check if player's fuel is enough to reach the nearest airport
         const distanceToNearestAirport = this.player.location.calculateDistance(nearestAirport);
         console.log(distanceToNearestAirport);
@@ -141,6 +153,7 @@ export default class Game {
         this.hasWon = hasWon;
         this.gameOver = true;
         this.endTime = Date.now();
+        clearInterval(this.checker);
         const completionTime = this.endTime - this.startTime;
         console.log(completionTime);
         try{

@@ -4,7 +4,7 @@ export function updateStatusUI(player){
             /** Update the UI with the current game state. */
             console.log("PLAYER NOW",player);
         document.querySelector('#player-name').innerText = player.name;
-        document.querySelector('#player-health-number').innerText = `${player.health}%`;
+        document.querySelector('#player-health-number').innerText = `${player.health >= 0 ? player.health : 0}%`;
         document.querySelector('#player-health-bar').style.width = `${player.health}%`;
         document.querySelector('#player-fuel-number').innerText = `${player.fuel}%`;
         document.querySelector('#player-fuel-bar').style.width = `${player.fuel / 5}%`;
