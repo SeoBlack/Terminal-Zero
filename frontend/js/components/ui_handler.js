@@ -22,24 +22,23 @@ export function updateStatusUI(player){
 function getZombieActivity(player){
     /** Get the zombie activity level based on the player's location. */
     const dangerLevel = player.location.dangerLevel;
-    let activity = '';
-    if (dangerLevel <= 2) {
-        activity = {
-            color:"#75767A",
-            text: '💀 Low Zombie Activity'
-        };
-    } else if (dangerLevel <= 4) {
-        activity = {
-            color:"#efb302",
-            text: '💀 Medium Zombie Activity'
-        }
-    } else {
-        activity = {
+    switch (dangerLevel) {
+        case 1:
+            return {
+                color: "#75767A",
+                text: '💀 Low Zombie Activity'
+            };
+        case 2:
+            return {
+                color: "#efb302",
+                text: '💀 Medium Zombie Activity'
+            }
+        case 3:
+            return {
             color:"#CE5F60",
             text: '💀 High Zombie Activity'
         }
     }
-    return activity;
 }
 
 

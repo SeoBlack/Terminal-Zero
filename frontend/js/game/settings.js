@@ -3,7 +3,7 @@ export const SETTINGS = {
     "max_danger_level":3,
     "max_inventory_size": 10,
     "fuel_usage_per_km": 10,
-    "max_health":100,
+    "max_health":1,
     'max_fuel':500,
     'max_distance_km': 1100,
     'fuel_can_capacity': 50,

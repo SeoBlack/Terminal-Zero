@@ -33,6 +33,7 @@ export const soundEffects = {
     'CINEMATIC': "../../assets/audio/cinematic-hit.mp3",
     "WIN": "../../assets/audio/congratulations.mp3",
     "FIREWORK": "../../assets/audio/firework.mp3",
+    "PIANO_SMASH": "../../assets/audio/piano-smash.mp3",
 
 
 }

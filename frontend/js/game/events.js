@@ -69,7 +69,7 @@ export default class Event {
                     </div>
                 `;
                 const travelers = soundEffects.TRAVELER;
-                playSoundEffect(travelers[Math.floor(Math.random() * travelers.length)]);
+                const sound  = playSoundEffect(travelers[Math.floor(Math.random() * travelers.length)]);
                 showConfirmationDialog(htmlContent, () => {
                     const existingItems = Object.keys(player.inventory.items).filter(item => player.inventory.items[item] > 0);
                     if (existingItems.length === 0) {
@@ -93,6 +93,8 @@ export default class Event {
                         `;
                         showInformationDialog("", hintContentHTML);
                     }
+                }, () => {
+                    sound.pause()
                 });
 
             } else if (storableItems.includes(key)) {

@@ -84,11 +84,21 @@ export default class Game {
             return;
         }
        for (let i = 0; i < this.player.location.events.length; i++) {
-            const event = this.player.location.events[i];
-            setTimeout(() => {
-                event.applyEvent(this.player);
-                this.updateUI();
-            }, 1500* i); // Incremental delay
+            await this.checkWin()
+            await this.checkLose();
+            if(!this.gameOver) {
+                const event = this.player.location.events[i];
+                setTimeout(() => {
+                    event.applyEvent(this.player);
+                    this.updateUI();
+                }, 1500* i); // Incremental delay
+                // Check if the game is over after each event
+
+            }
+            else{
+                break;
+
+            }
         }
         this.player.location.events = []; // Clear the events after exploring
         this.updateUI();
@@ -205,7 +215,7 @@ export function jsonifyGame(game) {
 }
 
 export function gamifyJson(json) {
-    const airports = json.airports.map(airport => new Airport(airport.id, airport.name, airport.events.map(event => new Event(event.description, event.effect)), airport.dangerLevel, airport.lat, airport.lng, airport.country, airport.isExplored, airport.isSafe));
+    const airports = json.airports.map(airport => new Airport(airport.id, airport.name, airport.events.map(event => new Event(event.description, event.effect)), airport.dangerLevel, airport.lat, airport.lng, airport.country, airport.isExplored, airport.isSafe, airport.weather));
     const player = new Player(json.player.id, json.player.name, json.player.health, json.player.fuel, airports.find(airport => airport.id === json.player.location), new Inventory(json.player.inventory.items), airports.filter(airport => json.player.airportsInRange.includes(airport.id)), json.player.color, null, json.player.iconIndex, json.player.weather);
 
     const map = new MapHandler(player);
