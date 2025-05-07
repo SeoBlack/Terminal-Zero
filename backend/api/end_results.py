@@ -18,7 +18,7 @@ def end_results():
             rows = db_manager.get_end_results()
             print(rows)
             end_results = [{
-                "player_name": row[0], "time_elapsed": row[1], "has_won": row[2],
+                "player_name": row[1], "time_elapsed": row[2], "has_won": row[3],
             } for row in rows]
             return Response(response=json.dumps(end_results, default=str),
                             mimetype='application/json',
