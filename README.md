@@ -1,23 +1,29 @@
 # Terminal Zero - A Survival Game
 
 ## 📌 Overview
-Terminal Zero is a **text-based survival game** where players navigate through airports in a world overrun by a zombie virus. The goal is to **find resources, manage supplies, avoid zombies, and reach the final safe zone** before it's too late!
+Terminal Zero is a **point-and-click, browser-based survival game** set in airports plagued by a zombie outbreak. The goal is to **find resources, manage supplies, avoid zombies, and reach the final safe zone** before it's too late!
 
 ## 🎮 Gameplay Features
 - **Turn-based system:** Players take actions each turn, including searching for supplies, or traveling.
 - **Random events:** Airports may contain valuable resources, hostile survivors, or hordes of zombies.
-- **Flight system:** Manage fuel and aircraft condition to travel between locations.
+- **Flight system:** Manage fuel to travel between locations.
 - **Inventory management:** Limited carrying capacity forces strategic decisions.
 - **Survivor encounters:** NPCs may offer help, trade.
+
+## ✨ Preview
+- ![start.png](readme_img/start.png)
+- ![game.png](readme_img/game.png)
+- ![win.png](readme_img/win.png)
+- ![lose.png](readme_img/lose.png)
 
 ## 🔧 Installation & Setup
 ### Prerequisites
 - Python 3.x
-- SQLite3 (for database management)
-### [!] NOTE
-if you are using Pycharm, make sure to enable terminal emulator to activate the colored output:
-- 1. ![img.png](img.png)
-- 2. ![img_1.png](img_1.png)
+- MariaDB (for database management)
+- Flask
+- Python-dotenv
+- Colorama
+- Rich
 
 ### Installation Steps
 1. **Clone the repository:**
@@ -34,31 +40,53 @@ if you are using Pycharm, make sure to enable terminal emulator to activate the 
    ```bash
    pip install -r requirements.txt
    ```
-4. **Initialize the database:**
+4. **Add a .env file:**
+   ```bash
+   Include the next into .env file:
+      MARIADB_USER = 'username'
+      MARIADB_PASSWORD = 'password'
+      MARIADB_HOST = 127.0.0.1
+      MARIADB_PORT = 3306
+      MARIADB_DATABASE = database_name
+      FLASK_RUN_HOST="127.0.0.1"
+      FLASK_RUN_PORT="5000"
+   ```
+5. **Initialize the database:**
    ```bash
    python database/db_manager.py
    ```
-5. **Run the game:**
+6. **Run the game:**
    ```bash
-   python python backend/app.py
+   python python backend/templates/app.py
+   ```
+7. **Open the game:**
+   ```bash
+   start frontend/pages/startscreen/index.html
    ```
 
 ## 📂 Project Structure
 ```
-TerminalZero/
-│── database/                # Database schema & manager
-│── src/                     # Game logic
-│   ├── main.py              # Entry point
-│   ├── game.py              # Core game loop
-│   ├── player.py            # Player attributes & actions
-│   ├── airport.py           # Airport interactions
-│   ├── events.py            # Random encounters
-│   ├── Helpers.py           # General usage functions and variables 
-│   ├── inventory.py         # Inventory system
-│   ├── ui.py                # User interface (text-based)
-│── config/                  # Game settings
+Terminal-Zero/
+│── backend/
+|   |── Api                  # Flask API
+|   |── Config               # Schema & settings
+|   |── Database             # Database manager
+|   |── Templates            # Templates
+|   |── app.py               # Server launcher
+│── frontend/                # Game logic
+|   |── assets/              # Audio & images
+|   |── js/                  # Javascript files
+|      |── Components        # User Interface components
+|      |── Game
+|         ├── game.js              # Core game loop
+|         ├── player.js            # Player attributes & actions
+|         ├── airport.js           # Airport interactions
+|         ├── events.js            # Random encounters
+|         ├── Helpers.js           # General usage functions and variables 
+|         ├── inventory.js         # Inventory system
+|      |── Utils             # Backend queries
+|   |── Pages                # Web-pages and styling
+|── .env                     # database settings
 │── README.md                # Documentation
 │── requirements.txt         # Dependencies
 ```
-
-
