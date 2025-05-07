@@ -1,4 +1,5 @@
 import {Icons} from "./icons.js";
+import {getCurrentUser} from "./localstorage.js";
 
 export function updateStatusUI(player){
             /** Update the UI with the current game state. */
@@ -84,10 +85,12 @@ export function updateUI(player){
 
 export function createEndResultTable(endResults) {
     const table = document.getElementById("players-table-body");
+    const playerName  = getCurrentUser()
+
     table.innerHTML = endResults.map(result => `
-        <tr>
-            <td>${result.player_name}</td>
-            <td>${result.time_elapsed}</td>
-            <td>${result.has_won ? 'winner' : 'loser'}</td>
+        <tr >
+            <td style="color:${result.player_name === playerName ? "#efb302" : "#FFFFFF"};">${result.player_name}</td>
+            <td style="color:${result.player_name === playerName ? "#efb302" : "#FFFFFF"};">${result.time_elapsed}</td>
+            <td style="color:${result.player_name === playerName ? "#efb302" : "#FFFFFF"};">${result.has_won ? 'winner' : 'loser'}</td>
         </tr>`).join('');
 }
