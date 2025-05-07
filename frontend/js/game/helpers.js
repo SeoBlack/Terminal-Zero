@@ -48,6 +48,10 @@ export function getHintEvents(country) {
         `I heard something about the safe airport, it's located in ${country}.`,
         `I overheard someone say that the safe airport is hidden somewhere near ${country}.`,
         `Rumor has it, the safe airport can be found somewhere around ${country}.`
+        `Mmmm, I think I saw a plane heading towards north.`,
+        `I don't know if it's true, but I heard the safe airport is somewhere on earth.`,
+        `I don't really know where it is, but I heard the safe airport is somewhere in the world.`,
+        `I heard a rumor that the safe airport is located in a place with a lot of trees.`,
     ];
 }
 
