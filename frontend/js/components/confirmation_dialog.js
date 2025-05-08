@@ -34,6 +34,7 @@ setTimeout(() => {
     // Add event listener to close button
     const closeButton = dialog.querySelector('.close-button');
     closeButton.addEventListener('click', function () {
+        onCancel()
         dialog.style.display = 'none';
     });
 
@@ -41,6 +42,7 @@ setTimeout(() => {
     // Close the dialog when clicking outside of it
     const windowClickHandler = function (event) {
         if (event.target === dialog) {
+            onCancel()
             dialog.style.display = 'none';
             window.removeEventListener('click', windowClickHandler);
         }

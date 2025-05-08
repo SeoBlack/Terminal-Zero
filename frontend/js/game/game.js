@@ -25,6 +25,8 @@ export default class Game {
         this.hasWon = hasWon;
         this.map = map || new MapHandler(this.player);
         this.checker = setInterval(async () => {
+            if (!this.player.location || !this.player.location.calculateDistance || typeof this.player.location.calculateDistance !== 'function')
+                return;
             await this.checkLose();
             await this.checkWin();
         }, 1000);
@@ -45,7 +47,6 @@ export default class Game {
         for (let i = 0; i < dbAirports.length; i++) {
             const airport = dbAirports[i];
              const weatherData = await getWeatherData(parseFloat(airport.latitude_deg), parseFloat(airport.longitude_deg));
-             console.log(weatherData);
             this.airports.push(new Airport(airport.id, airport.name,null, Math.floor(Math.random() * SETTINGS.max_danger_level) + 1 ,  parseFloat(airport.latitude_deg), parseFloat(airport.longitude_deg), airport.country, false, false, weatherData));
 
         }
@@ -84,11 +85,21 @@ export default class Game {
             return;
         }
        for (let i = 0; i < this.player.location.events.length; i++) {
-            const event = this.player.location.events[i];
-            setTimeout(() => {
-                event.applyEvent(this.player);
-                this.updateUI();
-            }, 1500* i); // Incremental delay
+            await this.checkWin()
+            await this.checkLose();
+            if(!this.gameOver) {
+                const event = this.player.location.events[i];
+                setTimeout(() => {
+                    event.applyEvent(this.player);
+                    this.updateUI();
+                }, 1500* i); // Incremental delay
+                // Check if the game is over after each event
+
+            }
+            else{
+                break;
+
+            }
         }
         this.player.location.events = []; // Clear the events after exploring
         this.updateUI();
@@ -110,7 +121,6 @@ export default class Game {
 
 
     async checkWin() {
-        console.log("checking win");
         if (this.player.location.isSafe && this.player.location.isExplored) {
             // Win case
             await this.endGame(true);
@@ -121,25 +131,26 @@ export default class Game {
     }
 
     async checkLose() {
-        console.log("checking lose");
         //get nearest airport
+
         const nearestAirport = this.airports.reduce((closest, airport) => {
             // skip the current airport if it's the same as the player's location
             if (airport === this.player.location) {
                 return closest;
             }
+
             const closestDist = this.player.location.calculateDistance(closest);
             const currDist = this.player.location.calculateDistance(airport);
             return (closestDist < currDist) ? closest : airport;
 
         }
         );
-        console.log(nearestAirport);
+
         //check if player's fuel is enough to reach the nearest airport
         const distanceToNearestAirport = this.player.location.calculateDistance(nearestAirport);
         const fuelNeeded = distanceToNearestAirport / SETTINGS.fuel_usage_per_km
         //check if player has enough fuel to reach the nearest airport
-        if((this.player.fuel <= 0 || this.player.fuel < fuelNeeded) && this.player.inventory.items.fuel === 0 && this.player.location.isExplored) {
+        if((this.player.fuel <= 0 || this.player.fuel < fuelNeeded) && (this.player.inventory.items.fuel === 0 || !Object.keys(this.player.inventory.items).includes('fuel')) && this.player.location.isExplored) {
             await this.endGame(false);
         }
         else if(this.player.health <= 0 && !this.hasWon){
@@ -166,7 +177,8 @@ export default class Game {
 
             window.location.href = `../winning_screen/win_screen.html`;
         }else{
-            await animateLose();
+            const deathReason = this.player.health <= 0 ? "You were eaten by zombies" : "You have run out of fuel";
+            await animateLose(deathReason);
             showInformationDialog("Game Over", "You have lost the game! Better luck next time!");
             window.location.href = `../losing_screen/lose_screen.html`;
 
@@ -205,7 +217,7 @@ export function jsonifyGame(game) {
 }
 
 export function gamifyJson(json) {
-    const airports = json.airports.map(airport => new Airport(airport.id, airport.name, airport.events.map(event => new Event(event.description, event.effect)), airport.dangerLevel, airport.lat, airport.lng, airport.country, airport.isExplored, airport.isSafe));
+    const airports = json.airports.map(airport => new Airport(airport.id, airport.name, airport.events.map(event => new Event(event.description, event.effect)), airport.dangerLevel, airport.lat, airport.lng, airport.country, airport.isExplored, airport.isSafe, airport.weather));
     const player = new Player(json.player.id, json.player.name, json.player.health, json.player.fuel, airports.find(airport => airport.id === json.player.location), new Inventory(json.player.inventory.items), airports.filter(airport => json.player.airportsInRange.includes(airport.id)), json.player.color, null, json.player.iconIndex, json.player.weather);
 
     const map = new MapHandler(player);

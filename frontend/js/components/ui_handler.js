@@ -1,4 +1,5 @@
 import {Icons} from "./icons.js";
+import {getCurrentUser} from "./localstorage.js";
 
 export function updateStatusUI(player){
             /** Update the UI with the current game state. */
@@ -22,24 +23,23 @@ export function updateStatusUI(player){
 function getZombieActivity(player){
     /** Get the zombie activity level based on the player's location. */
     const dangerLevel = player.location.dangerLevel;
-    let activity = '';
-    if (dangerLevel <= 2) {
-        activity = {
-            color:"#75767A",
-            text: '💀 Low Zombie Activity'
-        };
-    } else if (dangerLevel <= 4) {
-        activity = {
-            color:"#efb302",
-            text: '💀 Medium Zombie Activity'
-        }
-    } else {
-        activity = {
+    switch (dangerLevel) {
+        case 1:
+            return {
+                color: "#75767A",
+                text: '💀 Low Zombie Activity'
+            };
+        case 2:
+            return {
+                color: "#efb302",
+                text: '💀 Medium Zombie Activity'
+            }
+        case 3:
+            return {
             color:"#CE5F60",
             text: '💀 High Zombie Activity'
         }
     }
-    return activity;
 }
 
 
@@ -85,10 +85,12 @@ export function updateUI(player){
 
 export function createEndResultTable(endResults) {
     const table = document.getElementById("players-table-body");
+    const playerName  = getCurrentUser()
+
     table.innerHTML = endResults.map(result => `
-        <tr>
-            <td>${result.player_name}</td>
-            <td>${result.time_elapsed}</td>
-            <td>${result.has_won ? 'winner' : 'loser'}</td>
+        <tr >
+            <td style="color:${result.player_name === playerName ? "#efb302" : "#FFFFFF"};">${result.player_name}</td>
+            <td style="color:${result.player_name === playerName ? "#efb302" : "#FFFFFF"};">${result.time_elapsed}</td>
+            <td style="color:${result.player_name === playerName ? "#efb302" : "#FFFFFF"};">${result.has_won ? 'winner' : 'loser'}</td>
         </tr>`).join('');
 }

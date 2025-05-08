@@ -27,7 +27,6 @@
 .username-text{
     color: var(--text-color);
     font-size: 1.2em;
-    margin-top: 5px;
      transition: all 0.3s ease-in-out;
 }
 .flex{
@@ -52,6 +51,9 @@
     overflow: auto;
     height: 300px;
 
+}
+.username-container{
+    align-items: center;
 }
 
 .username-container:hover .arrow{
@@ -100,4 +102,15 @@
 /* Popup-vahvistusikkuna poistamiseen */
 .confirmation-dialog p {
     margin-bottom: 25px;
+}
+
+.trash{
+    color: var(--text-color);
+    font-size: 1.5em;
+
+    transition: all 0.3s ease-in-out;
+}
+.trash:hover{
+    color: #CE5F60;
+    transition: all 0.3s ease-in-out;
 }

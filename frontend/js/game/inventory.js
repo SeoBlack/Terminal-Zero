@@ -21,11 +21,6 @@ export default class Inventory {
             this.items[item] = quantity;
         }
     }
-
-    loadInventory(loadedInventory) {
-        /** Load a saved inventory. */
-        this.items = loadedInventory.items;
-    }
     useItem(item, player) {
         /** Use an item from inventory. */
         if (this.items[item] && this.items[item] > 0) {

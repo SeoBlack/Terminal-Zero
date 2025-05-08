@@ -177,8 +177,42 @@ export function animateWin(){
 
 }
 
-export function animateLose(){
-    // TODO: replace with real animation
+export function animateLose(reason){
+        // play sound effect
+    playSoundEffect(soundEffects.PIANO_SMASH);
+    showInformationDialog("You Lost", reason );
+     const body = document.body;
+    const overlay = document.createElement('div');
+    overlay.classList.add('lose-over-overlay');
+    body.appendChild(overlay);
+
+
+    // Add shake effect
+    body.classList.add('shake');
+
+    // Show red overlay and message
+    overlay.classList.add('fade-in');
+
+    // Remove shake class after animation completes
+    setTimeout(() => {
+        body.classList.remove('shake');
+        body.classList.add('dim-overlay');
+    }, 2000);
+
+    // Optional: Reset after 3 seconds
+    setTimeout(() => {
+        overlay.classList.remove('fade-in');
+    }, 4000);
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            // Clean up DOM elements and classes
+           body.classList.remove('dim-overlay');
+           overlay.remove();
+            resolve();
+        }, 7000);
+
+    }
+    );
 }
 
 
