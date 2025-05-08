@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <script src="../../js/components/dynamic_bg/dynamic_bg.js"  defer></script>
+    <script src="../../js/components/quick_buttons.js"  defer type="module"></script>
+    <script src="./start_screen.js"  defer type="module"></script>
+    <link rel="stylesheet" href="./styles.css" >
+    <link rel="stylesheet" href="../global.css">
+     <link rel="icon" type="image/png" href="../../assets/images/favicon.ico"/>
+    <title>Terminal Zero</title>
+
+</head>
+<body>
+
+<!-- Authors -->
+ <div class="topleft">
+    <div><strong>Authors:</strong></div>
+    <div class="author">👻 Soreen Oraibi</div>
+    <div class="author">👻 Alabass Alkhrsany</div>
+    <div class="author">👻 Nikita Soo</div>
+    <div class="author">👻 Isla Mannerheimo</div>
+  </div>
+<!-- Authors -->
+
+ <canvas id="fireflies"></canvas>
+ <div class="menu">
+     <form class="flex row" id="newGameForm" method="POST" >
+         <input class="transparent_input" type="text" name="username" id="usernameInput" placeholder="Enter your name">
+            <button id="newGame" type="submit">New Game</button>
+     </form>
+     <div id="previous-players">
+
+
+     </div>
+
+ </div>
+ <!-- Klik-ääni -->
+ <script type="module" src="../../js/components/global_click_sound.js"></script>
+</body>
+</html>

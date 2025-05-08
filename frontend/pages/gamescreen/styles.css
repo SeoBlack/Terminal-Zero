@@ -1,0 +1,561 @@
+@import '../global.css';
+
+main{
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background-color);
+    display: flex;
+}
+#map-view{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+
+}
+#status-panel {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    /*width: 300px;*/
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+}
+#player-location {
+    display: flex;
+    align-items: center;
+}
+#player-location p {
+    margin-left: 10px;
+}
+#sidebar{
+    width: 30%;
+    height: 100%;
+    background-color: var(--background-color);
+    padding: 30px;
+    position: relative;
+    z-index: 2;
+}
+body{
+    color: var(--text-color);
+}
+h3{
+    color: var(--text-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.status-item {
+    margin-bottom: 10px;
+    top: 15px;
+}
+.status-title div{
+    display: flex;
+    gap: 10px;
+    color: var(--grey-color);
+}
+.status-title {
+    display: flex  ;
+    justify-content: space-between;
+}
+
+.progress-container {
+    display: inline-block;
+    width: 100%;
+    height: 12px;
+    background-color: var(--black-color);
+    border-radius: 6px;
+    vertical-align: middle;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 6px;
+}
+
+.health-bar {
+    width: 80%;
+    background-color: var(--red-color);
+}
+.heart{
+    color: var(--red-color);
+    font-size: 1.5em;
+}
+.fuel-bar {
+    width: 65%;
+    background-color: var(--primary-color);
+}
+.fuel{
+    color: var(--primary-color);
+    font-size: 1.5em;
+}
+
+.pin{
+    color: var(--primary-color);
+}
+
+.inventory-category {
+    margin-left: 10px;
+}
+
+.category-title {
+    font-weight: bold;
+}
+
+.items-list {
+    list-style-type: none;
+    padding-left: 20px;
+    margin: 5px 0;
+}
+
+.items-list li::before {
+    content: "- ";
+}
+
+.actions-list {
+    list-style-type: none;
+    padding-left: 10px;
+    margin: 10px 0;
+}
+
+.actions-list li::before {
+    content: "- ";
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+
+.inventory {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    max-height: 30vh;
+    overflow-y: auto;
+    padding: 10px;
+
+
+}
+
+.inventory-item{
+    width: calc(100% / 3 - 10px);
+    min-width: 120px;
+    height: 100px;
+    background-color: var(--black2-color);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+.inventory-item:hover{
+    background-color: var(--black-color);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+
+.inventory-item:disabled{
+    background-color: var(--black-color);
+    cursor: not-allowed;
+    box-shadow: none;
+    transition: all 0.3s ease-in-out;
+
+}
+
+.inventory-item span{
+    color: var(--text-color);
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.inventory-item-title{
+    color: var(--text-color);
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+.inventory-item-quantity{
+    color: var(--grey-color);
+}
+
+
+.actions-list{
+    margin: 0;
+    padding: 0;
+}
+
+.action-button{
+    width: 100%;
+    padding: 15px 10px;
+    background-color: var(--black2-color);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    margin: 5px 0;
+    color: var(--text-color);
+    font-size: 1em;
+}
+
+.actions-list button{
+    width: 100%;
+    padding: 15px 10px;
+
+    background-color: var(--black2-color);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    margin: 5px 0;
+
+
+}
+.actions-list button:hover{
+    background-color: var(--black-color);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: all 0.1s ease-in-out;
+}
+
+.player-marker{
+    /*border-radius: 50%;*/
+    /*background-color: var(--primary-color);*/
+    color: var(--grey-color);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+
+    align-items: center;
+    border-radius: 50px;
+    /*padding: 10px;*/
+}
+.player{
+    width: 70px;
+    height: 70px;
+    background-color: transparent;
+    font-weight: lighter;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+
+    padding: 5px;
+
+
+}
+/*animate progress bar*/
+.progress-bar{
+    transition: width 0.5s ease-in-out;
+
+}
+#player-profile{
+    color: var(--blue-color);
+    margin-bottom: 20px;
+}
+#player-name{
+    margin-bottom:0px
+}
+
+
+.airport-icon{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    animation: radarPulse 1.5s ease-out forwards infinite;
+    transform: scale(0.5);
+
+}
+.airport{
+
+    background-color: transparent;
+    color: var(--blue-color);
+    font-weight: lighter;
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 5px;
+}
+@keyframes radarPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse-ring {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s linear infinite;
+    background-color: var(--grey-color);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0);
+    opacity: 0.8;
+  }
+    50% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    70%{
+        transform: scale(0.8);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+
+}
+@keyframes scan {
+/* gradually grows until disappears*/
+    0% {
+        transform: scale(0);
+        opacity: 0.8;
+        background-color: var(--blue-color);
+    }
+    50% {
+        transform: scale(5);
+        opacity: 0.5;
+        background-color: var(--blue-color);
+    }
+    100% {
+        transform: scale(10);
+        opacity: 0;
+        background-color: var(--blue-color);
+    }
+
+}
+.airplane-animation {
+  animation: breathing 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes breathing {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px); /* Adjust this value for more/less movement */
+  }
+}
+
+.map-view{
+    font-family: poppins , sans-serif;
+}
+
+.leaflet-popup-content-wrapper{
+        background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: 1px solid rgba(255,255,100,0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 5px;
+    font-family: poppins , sans-serif;
+
+}
+.leaflet-popup-content-wrapper h2{
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-family: poppins , sans-serif;
+
+}
+
+.leaflet-popup-close-button span{
+    color: var(--primary-color);
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.teleport-spawn {
+    transform-origin: center center; /* Explicitly set the origin */
+  animation: teleportIn 1.5s forwards;
+
+}
+
+@keyframes teleportIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.1) rotate(360deg);
+    filter: blur(20px) brightness(3);
+  }
+  30% {
+    opacity: 0.8;
+    transform: scale(1.2) rotate(180deg);
+    filter: blur(10px) brightness(5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(0.9) rotate(90deg);
+    filter: blur(5px) brightness(3);
+  }
+  70% {
+    transform: scale(1.05) rotate(0deg);
+    filter: blur(2px) brightness(1.5);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    filter: blur(0) brightness(1);
+  }
+}
+.teleport-spawn::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle, rgba(100,200,255,0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: player-pulse 1.5s forwards;
+  opacity: 0;
+}
+
+@keyframes player-pulse {
+  0% { transform: scale(0.1); opacity: 0.9; }
+  50% { opacity: 0.4; }
+  100% { transform: scale(5); opacity: 0; }
+}
+
+.food{
+    color: saddlebrown;
+}
+.water{
+    color: lightblue;
+}
+.medicine{
+    color: lightgreen;
+}
+.weapon{
+    color: purple;
+}
+.fuel{
+    color: orange;
+}
+.dim-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 1;
+    pointer-events: none; /* Allows interaction with content underneath */
+    animation: dim 2s forwards;
+}
+
+@keyframes dim {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.firework {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px;
+    animation: explode 1s ease-out forwards;
+    opacity: 0;
+    z-index: 6000;
+
+    }
+
+    @keyframes explode {
+        0% {
+            transform: translate(0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(var(--tx), var(--ty));
+            opacity: 0;
+        }
+    }
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    transition: all 0.1s;
+}
+
+.content {
+    padding: 20px;
+    height: 100%;
+    background: #222;
+    color: white;
+}
+
+.lose-over-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(200, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Shake animation */
+@keyframes shake {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-10px, 5px); }
+    20% { transform: translate(8px, -6px); }
+    30% { transform: translate(-7px, 4px); }
+    40% { transform: translate(6px, -5px); }
+    50% { transform: translate(-5px, 3px); }
+    60% { transform: translate(4px, -2px); }
+    70% { transform: translate(-3px, 1px); }
+    80% { transform: translate(2px, 0); }
+    90% { transform: translate(-1px, 0); }
+    100% { transform: translate(0, 0); }
+}
+
+.shake {
+    animation: shake 0.8s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}

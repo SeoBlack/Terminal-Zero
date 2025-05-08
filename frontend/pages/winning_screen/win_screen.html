@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winning page</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="win_style.css">
+    <link rel="stylesheet" href="../global.css" />
+     <link rel="icon" type="image/png" href="../../assets/images/favicon.ico"/>
+    <!-- CSS -->
+
+    <!-- JAVASCRIPT -->
+    <script src="../../js/components/dynamic_bg/dynamic_bg2_leafs.js" defer></script>
+    <script src="win_screen.js" defer type="module"></script>
+    <script src="../../js/components/quick_buttons.js" defer type="module"></script>
+    <script src="../../js/components/global_click_sound.js" defer type="module"></script>
+    <!-- JAVASCRIPT -->
+
+</head>
+
+<body>
+
+<!-- LEAFS -->
+<div id="leaves">
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+    <!-- LEAFS -->
+</div>
+   <div class="overlay"></div>
+  <div class="end-container">
+    <h1 class="title">You Are Champion!</h1>
+
+    <div class="status-box">
+      <h2>Status</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Player Name</th>
+            <th>Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="players-table-body">
+          <!-- Pelaajatiedot lisätään dynaamisesti JavaScriptin avulla -->
+        </tbody>
+      </table>
+
+      <button onclick="window.location.href='../startscreen/index.html'">Start Over</button>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+@import '../global.css';
+
+.menu{
+    position: absolute;
+    bottom: 20%;
+    left: 20%;
+    height: 20%;
+
+}
+.transparent_input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    outline: none;
+}
+.transparent_input:focus{
+    border-bottom: 1px solid var(--primary-color);
+}
+#info-text{
+    color: var(--primary-color);
+    font-size: 16px;
+    margin-top: 10px;
+}
+.username-text{
+    color: var(--text-color);
+    font-size: 1.2em;
+     transition: all 0.3s ease-in-out;
+}
+.flex{
+    display: flex;
+}
+.row{
+    flex-direction: row;
+    align-items: center;
+}
+
+.arrow{
+    color: var(--text-color);
+    font-size: 1.5em;
+    margin-left: 10px;
+     transition: all 0.3s ease-in-out;
+}
+.username-container:hover{
+    border-radius: 5px;
+    cursor: pointer;
+}
+#previous-players{
+    overflow: auto;
+    height: 300px;
+
+}
+.username-container{
+    align-items: center;
+}
+
+.username-container:hover .arrow{
+    margin-left: 100px;
+    transition: all 0.3s ease-in-out;
+}
+
+.username-container:hover .username-text{
+    color: var(--primary-color);
+    transition: all 0.3s ease-in-out;
+}
+
+#newGame{
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 1em;
+    padding: 10px 20px;
+    margin-left: 30px;
+}
+#newGame:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/*Authors styling*/
+.topleft {
+    color: var(--text-color);
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 18px;
+    font-family: poppins , sans-serif;
+    background-color: var(--background-color);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/*Also authors styling*/
+.author {
+    color: var(--primary-color);
+    margin: 5px;
+}
+
+/* Popup-vahvistusikkuna poistamiseen */
+.confirmation-dialog p {
+    margin-bottom: 25px;
+}
+
+.trash{
+    color: var(--text-color);
+    font-size: 1.5em;
+
+    transition: all 0.3s ease-in-out;
+}
+.trash:hover{
+    color: #CE5F60;
+    transition: all 0.3s ease-in-out;
+}

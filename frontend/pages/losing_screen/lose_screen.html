@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Over - Terminal Zero</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tagesschrift&display=swap" rel="stylesheet" />
+  <script src="lose_screen.js" defer type="module"></script>
+  <script src="../../js/components/quick_buttons.js" defer type="module"></script>
+  <script src="../../js/components/global_click_sound.js" defer type="module"></script>
+  <link rel="stylesheet" href="../global.css" />
+   <link rel="icon" type="image/png" href="../../assets/images/favicon.ico"/>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="end_style.css" />
+
+  <!-- Rain Effect -->
+  <script src="../../js/components/dynamic_bg/dynamic_bg3_rain.js" defer></script>
+
+</head>
+<body>
+  <div class="rain back-row"></div>
+
+  <div class="end-container">
+    <h1 class="title">Game Over</h1>
+
+    <div class="status-box">
+      <h2>Status</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Player Name</th>
+            <th>Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="players-table-body">
+          <!-- Pelaajatiedot lisätään dynaamisesti JavaScriptin avulla -->
+        </tbody>
+      </table>
+
+      <button onclick="window.location.href='../startscreen/index.html'">Start Over</button>
+    </div>
+  </div>
+</body>
+</html>
