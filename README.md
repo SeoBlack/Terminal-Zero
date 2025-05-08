@@ -71,7 +71,6 @@ Terminal-Zero/
 |   |── Api                  # Flask API
 |   |── Config               # Schema & settings
 |   |── Database             # Database manager
-|   |── Templates            # Templates
 |   |── app.py               # Server launcher
 │── frontend/                # Game logic
 |   |── assets/              # Audio & images
@@ -88,5 +87,6 @@ Terminal-Zero/
 |   |── Pages                # Web-pages and styling
 |── .env                     # database settings
 │── README.md                # Documentation
+│── .gitignore               # Git ignore 
 │── requirements.txt         # Dependencies
 ```
